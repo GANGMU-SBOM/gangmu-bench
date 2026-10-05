@@ -1,0 +1,42 @@
+name: bench
+
+on:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "41 5 * * 1"
+
+env:
+  GANGMU_REF: main
+  GANGMU_RULES_REF: main
+
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: GANGMU-SBOM/gangmu
+          ref: ${{ env.GANGMU_REF }}
+          path: .gangmu
+      - uses: actions/checkout@v4
+        with:
+          repository: GANGMU-SBOM/gangmu-rules
+          ref: ${{ env.GANGMU_RULES_REF }}
+          path: .gangmu-rules
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install ./.gangmu-rules "./.gangmu[fast]" pyyaml
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/gangmu-bench
+          key: bench-${{ hashFiles('cases/*.yaml') }}
+          restore-keys: bench-
+      - run: python bench.py -o /tmp/results/latest
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: results
+          path: /tmp/results/
