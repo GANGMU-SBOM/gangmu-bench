@@ -1,6 +1,6 @@
 {
   "versions": {
-    "gangmu": "gangmu-sbom 0.6.0.dev0",
+    "gangmu": "gangmu-sbom 0.6.0",
     "rules": "community 2026.10.5 (pack:community)"
   },
   "counts": {

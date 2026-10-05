@@ -1,6 +1,6 @@
 # Benchmark results
 
-gangmu-sbom 0.6.0.dev0; rules: community 2026.10.5 (pack:community)
+gangmu-sbom 0.6.0; rules: community 2026.10.5 (pack:community)
 
 | case | variant | truth | reported | rule | verdict |
 | --- | --- | --- | --- | --- | --- |
