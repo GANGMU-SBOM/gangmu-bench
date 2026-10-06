@@ -1,5 +1,7 @@
 # 纲目评测基准 · gangmu-bench
 
+[![bench](https://github.com/GANGMU-SBOM/gangmu-bench/actions/workflows/bench.yml/badge.svg?branch=main)](https://github.com/GANGMU-SBOM/gangmu-bench/actions/workflows/bench.yml)
+
 [English](README.en.md) · [纲目](https://github.com/GANGMU-SBOM/gangmu) · [免费规则库](https://github.com/GANGMU-SBOM/gangmu-rules)
 
 用真实的上游发布版和芯片 SDK，检验[纲目](https://github.com/GANGMU-SBOM/gangmu)能不能认对组件和版本。
