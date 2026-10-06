@@ -1,5 +1,7 @@
 # gangmu-bench
 
+[![bench](https://github.com/GANGMU-SBOM/gangmu-bench/actions/workflows/bench.yml/badge.svg?branch=main)](https://github.com/GANGMU-SBOM/gangmu-bench/actions/workflows/bench.yml)
+
 [中文](README.md) · [Gangmu](https://github.com/GANGMU-SBOM/gangmu) · [free rule base](https://github.com/GANGMU-SBOM/gangmu-rules)
 
 **Does [Gangmu](https://github.com/GANGMU-SBOM/gangmu) recognise the right component and version in real upstream
