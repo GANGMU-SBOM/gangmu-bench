@@ -29,9 +29,9 @@ python bench.py --case lwip-2.2.0        # one case
 python bench.py --rules my-rules/ -o results/mine   # add your own rules, write .md and .json
 ```
 
-All 9 cases use only the free rule base and are graded out of the box.
+All 21 cases use only the free rule base and are graded out of the box.
 
-Sources are cached in `~/.cache/gangmu-bench`. Latest results: [results/latest.md](results/latest.md) (anyone can reproduce it: all 13 rows graded, 9 exact, 4 range, 0 wrong, 0 missing).
+Sources are cached in `~/.cache/gangmu-bench`. Latest results: [results/latest.md](results/latest.md) (anyone can reproduce it: all 25 rows graded, 21 exact, 4 range, 0 wrong, 0 missing).
 
 ## Cases
 

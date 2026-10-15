@@ -1,0 +1,76 @@
+# Release trees of libraries the free rule base gained after the first nine cases:
+# network protocol stacks and industrial fieldbus stacks. Pristine copies under a
+# neutral directory name; truth is the release tag. A "wrong" or "missing" row is a
+# rule to fix, not a case to drop.
+
+- id: nghttp2-1.44.0
+  git: https://github.com/nghttp2/nghttp2
+  ref: v1.44.0
+  expect: {rule: generic/nghttp2, version: 1.44.0}
+  variants: [pristine]
+
+- id: nghttp2-1.64.0
+  git: https://github.com/nghttp2/nghttp2
+  ref: v1.64.0
+  expect: {rule: generic/nghttp2, version: 1.64.0}
+  variants: [pristine]
+
+- id: libwebsockets-4.1.4
+  git: https://github.com/warmcat/libwebsockets
+  ref: v4.1.4
+  expect: {rule: generic/libwebsockets, version: 4.1.4}
+  variants: [pristine]
+
+- id: libwebsockets-4.3.3
+  git: https://github.com/warmcat/libwebsockets
+  ref: v4.3.3
+  expect: {rule: generic/libwebsockets, version: 4.3.3}
+  variants: [pristine]
+
+- id: open62541-1.4.4
+  git: https://github.com/open62541/open62541
+  ref: v1.4.4
+  expect: {rule: generic/open62541, version: 1.4.4}
+  variants: [pristine]
+
+- id: paho-mqtt-c-1.3.5
+  git: https://github.com/eclipse-paho/paho.mqtt.c
+  ref: v1.3.5
+  expect: {rule: generic/paho-mqtt-c, version: 1.3.5}
+  variants: [pristine]
+
+- id: hostap-2.10
+  git: https://w1.fi/hostap.git
+  ref: hostap_2_10
+  expect: {rule: generic/hostap, version: "2.10"}
+  variants: [pristine]
+
+- id: soem-1.4.0
+  git: https://github.com/OpenEtherCATsociety/SOEM
+  ref: v1.4.0
+  expect: {rule: generic/soem, version: 1.4.0}
+  variants: [pristine]
+
+- id: canopennode-4.0
+  git: https://github.com/CANopenNode/CANopenNode
+  ref: v4.0
+  expect: {rule: generic/canopennode, version: "4.0"}
+  variants: [pristine]
+
+- id: canopennode-2.0
+  git: https://github.com/CANopenNode/CANopenNode
+  ref: v2.0
+  expect: {rule: generic/canopennode, version: "2.0"}
+  variants: [pristine]
+
+- id: freertos-kernel-10.4.4
+  git: https://github.com/FreeRTOS/FreeRTOS-Kernel
+  ref: V10.4.4
+  expect: {rule: generic/freertos-kernel, version: 10.4.4}
+  variants: [pristine]
+
+- id: zlib-1.3.1
+  git: https://github.com/madler/zlib
+  ref: v1.3.1
+  expect: {rule: generic/zlib, version: 1.3.1}
+  variants: [pristine]
