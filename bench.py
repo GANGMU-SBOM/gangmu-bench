@@ -83,7 +83,8 @@ def prepare(source: Path, work: Path, variant) -> Tuple[str, Path]:
     name = "pristine" if variant == "pristine" else "stripped"
     root = work / name
     tree = root / NEUTRAL
-    shutil.copytree(source, tree, ignore=shutil.ignore_patterns(".complete"))
+    shutil.copytree(source, tree, symlinks=True,
+                    ignore=shutil.ignore_patterns(".complete"))
     if isinstance(variant, dict):
         for rel in variant.get("strip", []):
             target = tree / rel
