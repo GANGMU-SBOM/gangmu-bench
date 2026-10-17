@@ -1,0 +1,29 @@
+# Cases graded on a firmware image instead of a source tree. The pinned tree is cross-compiled
+# with the recipe of gangmu's benchmarks/binary/build_corpus.py (library code only, stripped,
+# no libc) and the one ELF is scanned. Each release below is NOT among the releases the rule's
+# fingerprints were built from, so the answer has to come from the functions of neighbouring
+# releases, not from a copy of this very build. Needs a cross compiler for the target.
+- id: littlefs-2.4.0-riscv32
+  git: https://github.com/littlefs-project/littlefs
+  ref: v2.4.0
+  requires: generic/littlefs
+  expect: {rule: binary/littlefs, version: 2.4.0}
+  binary:
+    target: riscv32
+    opt: O2
+    sources: [lfs.c, lfs_util.c]
+    include: ["."]
+    defines: [LFS_NO_DEBUG, LFS_NO_WARN, LFS_NO_ERROR]
+- id: mbedtls-3.4.0-riscv32
+  git: https://github.com/Mbed-TLS/mbedtls
+  ref: v3.4.0
+  requires: generic/mbedtls
+  expect: {rule: binary/mbedtls, version: 3.4.0}
+  binary:
+    target: riscv32
+    opt: O2
+    sources: ["library/*.c"]
+    exclude: ["library/net_sockets.c", "library/timing.c", "library/threading.c",
+              "library/entropy_poll.c", "library/psa_*.c", "library/ssl_*.c",
+              "library/x509*.c", "library/pkcs*.c", "library/pem.c", "library/debug.c"]
+    include: [include, library]

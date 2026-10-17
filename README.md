@@ -46,6 +46,10 @@ python bench.py --rules my-rules/ -o results/mine   # 叠加自己的规则，�
     - strip: [include/mbedtls/version.h, include/mbedtls/build_info.h]   # 只剩函数能判断
 ```
 
+固件镜像用例（`cases/firmware-images.yaml`）带一个 `binary:` 块：把固定的源码树只编译库代码、去符号（RISC-V rv32imac，不链接 libc），
+对这一个 ELF 做扫描并评分。所选发布版刻意不在规则的指纹发布版之列，所以答案只能来自相邻版本的函数，而不是同一份构建。
+需要 `riscv64-unknown-elf-gcc`、`pip install "gangmu-sbom[disasm]"`（capstone）和纲目源码（`--gangmu-src`，取其 `benchmarks/binary/build_corpus.py` 的构建方法）；缺编译器或源码时该用例标为 skipped。
+
 欢迎补充用例，尤其是国产芯片 SDK 里的真实副本：写明 SDK 仓库、固定的提交、组件所在目录和厂商自己声明的版本。
 一个 `wrong` 的用例和一个 `exact` 的用例同样有价值，它会变成规则库的修复。
 
