@@ -35,6 +35,8 @@ Sources are cached in `~/.cache/gangmu-bench`. Latest results: [results/latest.m
 
 ## Cases
 
+Firmware-image cases (`cases/firmware-images.yaml`) carry a `binary:` block: the pinned tree is cross-compiled (library code only, stripped, no libc, RISC-V rv32imac) and the one ELF is scanned and graded the same way. The releases are deliberately not among those the rule's fingerprints were built from, so the answer must come from neighbouring releases, not from a copy of the same build. Needs `riscv64-unknown-elf-gcc` and a gangmu checkout (`--gangmu-src`, for the build recipe in `benchmarks/binary/build_corpus.py`); without them the case is skipped.
+
 `cases/*.yaml`; contributions welcome, especially real copies inside vendor SDKs: give the SDK repository, a pinned
 commit, the component directory and the version the vendor declares. A `wrong` case is as valuable as an `exact` one:
 it becomes a fix in the rule base.

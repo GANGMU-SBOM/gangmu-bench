@@ -19,12 +19,20 @@ Usage:
   python bench.py --rules DIR            # scan with these rules (repeatable)
   python bench.py -o results/latest      # write latest.md and latest.json
 
+A case with a ``binary:`` block is graded the same way but scans a firmware image
+instead of a source tree: the pinned tree is cross-compiled (library code only, stripped,
+no libc) for the given target with the build recipe of gangmu's
+``benchmarks/binary/build_corpus.py``, and the one ELF is scanned. Needs that checkout
+(``--gangmu-src``, default ``.gangmu`` or ``../gangmu``) and the target's cross compiler; a case
+whose compiler is missing is skipped.
+
 Clones are cached under ~/.cache/gangmu-bench (or --cache).
 """
 
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import os
 import re
@@ -107,11 +115,11 @@ def _le(a: str, b: str) -> bool:
     return version_key(a) <= version_key(b)
 
 
-def grade(findings: List[dict], expect: dict) -> Tuple[str, Optional[dict]]:
+def grade(findings: List[dict], expect: dict, where: str = NEUTRAL) -> Tuple[str, Optional[dict]]:
     # The component may be found at the copy's root or in a subdirectory of it
     # (TinyCrypt's sources sit in lib/); the shallowest, most confident wins.
-    here = [f for f in findings if f.get("directory") == NEUTRAL
-            or str(f.get("directory", "")).startswith(NEUTRAL + "/")]
+    here = [f for f in findings if f.get("directory") == where
+            or str(f.get("directory", "")).startswith(where + "/")]
     if not here:
         return "missing", None
     finding = min(here, key=lambda f: (f["directory"].count("/"),
@@ -126,6 +134,38 @@ def grade(findings: List[dict], expect: dict) -> Tuple[str, Optional[dict]]:
         if _le(low, truth) and _le(truth, high):
             return "range", finding
     return "wrong", finding
+
+
+def find_builder(explicit: Optional[str]):
+    """gangmu's build_corpus module, or None when no checkout is at hand."""
+    for cand in ([explicit] if explicit else []) + [str(HERE / ".gangmu"), str(HERE.parent / "gangmu")]:
+        path = Path(cand) / "benchmarks" / "binary" / "build_corpus.py"
+        if path.is_file():
+            spec = importlib.util.spec_from_file_location("gangmu_build_corpus", path)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            return module
+    return None
+
+
+def build_image(case: dict, source: Path, work: Path, builder) -> Optional[Path]:
+    """A directory holding the stripped firmware image built from *source*, or None."""
+    spec = case["binary"]
+    recipe = {k: spec[k] for k in ("sources", "exclude", "include", "defines") if k in spec}
+    target = spec.get("target", "arm")
+    if shutil.which(builder.TARGETS[target]["cc"]) is None:
+        return None
+    root = work / "image"
+    root.mkdir(parents=True)
+    elf = work / "build" / "fw.elf"
+    elf.parent.mkdir()
+    why = builder.build(case["id"], recipe, case["ref"], source, spec.get("opt", "Os"), elf,
+                        target=target)
+    stripped = elf.with_suffix(".strip.elf")
+    if not stripped.exists():
+        raise SystemExit(f"{case['id']}: build failed: {why}")
+    shutil.copy(stripped, root / "firmware.elf")
+    return root
 
 
 def scan(root: Path, rules: List[str]) -> Tuple[List[dict], float]:
@@ -162,6 +202,7 @@ def main(argv=None) -> int:
     p.add_argument("--rules", action="append", default=[])
     p.add_argument("--cache", default=os.environ.get(
         "GANGMU_BENCH_CACHE", str(Path.home() / ".cache" / "gangmu-bench")))
+    p.add_argument("--gangmu-src", help="gangmu checkout, for the build recipe of binary cases")
     p.add_argument("-o", "--output", help="write OUTPUT.md and OUTPUT.json")
     p.add_argument("--no-fail", action="store_true")
     args = p.parse_args(argv)
@@ -170,8 +211,17 @@ def main(argv=None) -> int:
     cache.mkdir(parents=True, exist_ok=True)
     rows = []
     installed = available_rules(args.rules)
+    builder = None
     for case in load_cases(args.case):
-        if case["expect"]["rule"] not in installed:
+        needed = case.get("requires", case["expect"]["rule"])
+        reason = f"rule {needed} not installed" if needed not in installed else ""
+        if not reason and "binary" in case:
+            builder = builder or find_builder(args.gangmu_src)
+            if builder is None:
+                reason = "no gangmu checkout for the build recipe (--gangmu-src)"
+            elif shutil.which(builder.TARGETS[case["binary"].get("target", "arm")]["cc"]) is None:
+                reason = f"cross compiler for {case['binary'].get('target', 'arm')} not installed"
+        if reason:
             for variant in case.get("variants", ["pristine"]):
                 name = "pristine" if variant == "pristine" else "stripped"
                 rows.append({
@@ -182,14 +232,20 @@ def main(argv=None) -> int:
                     "directory": None, "other_findings": 0, "seconds": 0.0,
                 })
                 print(f"skipped  {case['id']:22s} {name:9s} "
-                      f"rule {case['expect']['rule']} not installed", flush=True)
+                      f"{reason}", flush=True)
             continue
         source = fetch(case, cache)
         with tempfile.TemporaryDirectory(prefix="gangmu-bench-") as tmp:
             for variant in case.get("variants", ["pristine"]):
-                name, root = prepare(source, Path(tmp) / case["id"], variant)
+                if "binary" in case:
+                    name = f"{case['binary'].get('target', 'arm')}-{case['binary'].get('opt', 'Os')}"
+                    root = build_image(case, source, Path(tmp) / case["id"], builder)
+                    where = "firmware.elf"
+                else:
+                    name, root = prepare(source, Path(tmp) / case["id"], variant)
+                    where = NEUTRAL
                 findings, seconds = scan(root, args.rules)
-                verdict, finding = grade(findings, case["expect"])
+                verdict, finding = grade(findings, case["expect"], where)
                 row = {
                     "case": case["id"], "variant": name,
                     "truth": str(case["expect"]["version"]),

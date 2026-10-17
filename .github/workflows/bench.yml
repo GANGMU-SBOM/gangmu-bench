@@ -28,13 +28,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - run: sudo apt-get update && sudo apt-get install -y gcc-riscv64-unknown-elf libnewlib-dev
       - run: pip install ./.gangmu-rules "./.gangmu[fast]" pyyaml
       - uses: actions/cache@v4
         with:
           path: ~/.cache/gangmu-bench
           key: bench-${{ hashFiles('cases/*.yaml') }}
           restore-keys: bench-
-      - run: python bench.py -o /tmp/results/latest
+      - run: python bench.py --gangmu-src .gangmu -o /tmp/results/latest
       - uses: actions/upload-artifact@v4
         if: always()
         with:
