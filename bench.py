@@ -122,8 +122,11 @@ def grade(findings: List[dict], expect: dict, where: str = NEUTRAL) -> Tuple[str
             or str(f.get("directory", "")).startswith(where + "/")]
     if not here:
         return "missing", None
-    finding = min(here, key=lambda f: (f["directory"].count("/"),
-                                       -(f.get("confidence") or 0)))
+    # A package manifest at the root (Arduino library.properties) is a separate, declared
+    # finding of the same library; the expected rule's own finding is the one graded.
+    own = [f for f in here if f.get("rule_id") == expect["rule"]]
+    finding = min(own or here, key=lambda f: (f["directory"].count("/"),
+                                              -(f.get("confidence") or 0)))
     if finding.get("rule_id") != expect["rule"]:
         return "wrong", finding
     reported, truth = str(finding.get("version") or ""), str(expect["version"])
