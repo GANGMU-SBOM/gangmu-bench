@@ -29,7 +29,7 @@ jobs:
         with:
           python-version: "3.11"
       - run: sudo apt-get update && sudo apt-get install -y gcc-riscv64-unknown-elf libnewlib-dev
-      - run: pip install ./.gangmu-rules "./.gangmu[fast]" pyyaml
+      - run: pip install ./.gangmu-rules "./.gangmu[fast,disasm]" pyyaml
       - uses: actions/cache@v4
         with:
           path: ~/.cache/gangmu-bench
