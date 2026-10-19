@@ -196,7 +196,33 @@ def tool_versions() -> Dict[str, str]:
     out = subprocess.run(["gangmu", "--version"], capture_output=True, text=True).stdout.strip()
     lint = subprocess.run(["gangmu", "rules", "lint"], capture_output=True, text=True).stdout
     roots = [line[5:].rsplit(": ", 1)[0] for line in lint.splitlines() if line.startswith("root ")]
-    return {"gangmu": out, "rules": "; ".join(roots)}
+    return {"gangmu": out, "rules": "; ".join(roots), "gangmu_path": which_gangmu() or ""}
+
+
+def which_gangmu() -> Optional[str]:
+    """The ``gangmu`` every scan below runs: the first one on PATH, not necessarily the one
+    installed next to the Python that runs this script."""
+    found = shutil.which("gangmu")
+    return str(Path(found).resolve()) if found else None
+
+
+def report_tool() -> None:
+    """Say which gangmu and which rules are being measured, and warn when that gangmu is not
+    the one installed in this Python's environment (a venv's python with another gangmu
+    first on PATH measures the wrong tool and says nothing)."""
+    path = which_gangmu()
+    if path is None:
+        print("error: no `gangmu` on PATH; pip install gangmu-sbom", file=sys.stderr)
+        raise SystemExit(2)
+    meta = tool_versions()
+    print(f"gangmu:  {meta['gangmu']}  ({path})")
+    print(f"rules:   {meta['rules'] or 'none found'}")
+    own = Path(sys.prefix)
+    on_path = Path(shutil.which("gangmu") or "")
+    if own not in on_path.parents and Path(sys.executable).parent != on_path.parent:
+        print(f"warning: this gangmu is not in the Python environment running bench.py "
+              f"({own}); put that environment's bin first on PATH to measure its gangmu "
+              f"and rules", file=sys.stderr)
 
 
 def main(argv=None) -> int:
@@ -209,6 +235,7 @@ def main(argv=None) -> int:
     p.add_argument("-o", "--output", help="write OUTPUT.md and OUTPUT.json")
     p.add_argument("--no-fail", action="store_true")
     args = p.parse_args(argv)
+    report_tool()
 
     cache = Path(args.cache)
     cache.mkdir(parents=True, exist_ok=True)

@@ -28,6 +28,8 @@ python bench.py --case lwip-2.2.0        # 单个用例
 python bench.py --rules my-rules/ -o results/mine   # 叠加自己的规则，写出 .md 和 .json
 ```
 
+开始时会打印实际被测的 `gangmu`（PATH 里的第一个）的路径和版本，以及加载的规则库；它不在运行 `bench.py` 的 Python 环境里时会警告。想测某个虚拟环境里的版本，就把它的 `bin` 放到 PATH 最前面。结果的 `.json` 里记录了路径（`versions.gangmu_path`）。
+
 全部 23 个用例都只用免费规则库；其中 21 个开箱即评分，2 个固件镜像用例需要交叉编译器、capstone 和纲目源码，缺时标为 skipped。
 
 源码缓存在 `~/.cache/gangmu-bench`。最近一次结果见 [results/latest.md](results/latest.md)（用 gangmu-sbom 0.12.0 和规则库 2026.10.18 跑的；任何人可复现，27 行全部评分：22 exact、5 range，0 错 0 漏）。
