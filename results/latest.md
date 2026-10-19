@@ -1,9 +1,11 @@
 # Benchmark results
 
-gangmu-sbom 0.10.0; rules: community 2026.10.15 (pack:community)
+gangmu-sbom 0.12.0; rules: community 2026.10.18 (pack:community)
 
 | case | variant | truth | reported | rule | verdict |
 | --- | --- | --- | --- | --- | --- |
+| littlefs-2.4.0-riscv32 | riscv32-O2 | 2.4.0 | 2.0.4~2.11.0 | binary/littlefs | range |
+| mbedtls-3.4.0-riscv32 | riscv32-O2 | 3.4.0 | 3.4.0 | binary/mbedtls | exact |
 | nghttp2-1.44.0 | pristine | 1.44.0 | 1.44.0 | generic/nghttp2 | exact |
 | nghttp2-1.64.0 | pristine | 1.64.0 | 1.64.0 | generic/nghttp2 | exact |
 | libwebsockets-4.1.4 | pristine | 4.1.4 | 4.1.4 | generic/libwebsockets | exact |
@@ -30,4 +32,4 @@ gangmu-sbom 0.10.0; rules: community 2026.10.15 (pack:community)
 | lvgl-8.3.11 | pristine | 8.3.11 | 8.3.11 | generic/lvgl | exact |
 | lvgl-8.3.11 | stripped | 8.3.11 | 8.3.11~8.4.0 | generic/lvgl | range |
 
-**exact** 21, **range** 4, **wrong** 0, **missing** 0, **skipped** 0
+**exact** 22, **range** 5, **wrong** 0, **missing** 0, **skipped** 0
