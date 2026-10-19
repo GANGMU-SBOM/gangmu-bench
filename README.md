@@ -28,9 +28,9 @@ python bench.py --case lwip-2.2.0        # 单个用例
 python bench.py --rules my-rules/ -o results/mine   # 叠加自己的规则，写出 .md 和 .json
 ```
 
-全部 21 个用例都只用免费规则库，开箱即评分。
+全部 23 个用例都只用免费规则库；其中 21 个开箱即评分，2 个固件镜像用例需要交叉编译器、capstone 和纲目源码，缺时标为 skipped。
 
-源码缓存在 `~/.cache/gangmu-bench`。最近一次结果见 [results/latest.md](results/latest.md)（任何人可复现，25 行全部评分：21 exact、4 range，0 错 0 漏）。
+源码缓存在 `~/.cache/gangmu-bench`。最近一次结果见 [results/latest.md](results/latest.md)（用 gangmu-sbom 0.12.0 和规则库 2026.10.18 跑的；任何人可复现，27 行全部评分：22 exact、5 range，0 错 0 漏）。
 
 ## 用例
 

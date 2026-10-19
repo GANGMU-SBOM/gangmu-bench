@@ -1,16 +1,42 @@
 {
   "versions": {
-    "gangmu": "gangmu-sbom 0.10.0",
-    "rules": "community 2026.10.15 (pack:community)"
+    "gangmu": "gangmu-sbom 0.12.0",
+    "rules": "community 2026.10.18 (pack:community)"
   },
   "counts": {
-    "exact": 21,
-    "range": 4,
+    "exact": 22,
+    "range": 5,
     "wrong": 0,
     "missing": 0,
     "skipped": 0
   },
   "rows": [
+    {
+      "case": "littlefs-2.4.0-riscv32",
+      "variant": "riscv32-O2",
+      "truth": "2.4.0",
+      "expected_rule": "binary/littlefs",
+      "rule": "binary/littlefs",
+      "reported": "2.0.4~2.11.0",
+      "confidence": 0.6,
+      "verdict": "range",
+      "directory": "firmware.elf",
+      "other_findings": 0,
+      "seconds": 1.41
+    },
+    {
+      "case": "mbedtls-3.4.0-riscv32",
+      "variant": "riscv32-O2",
+      "truth": "3.4.0",
+      "expected_rule": "binary/mbedtls",
+      "rule": "binary/mbedtls",
+      "reported": "3.4.0",
+      "confidence": 0.6,
+      "verdict": "exact",
+      "directory": "firmware.elf",
+      "other_findings": 0,
+      "seconds": 3.28
+    },
     {
       "case": "nghttp2-1.44.0",
       "variant": "pristine",
@@ -22,7 +48,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 2.66
+      "seconds": 2.04
     },
     {
       "case": "nghttp2-1.64.0",
@@ -35,7 +61,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 2.61
+      "seconds": 2.04
     },
     {
       "case": "libwebsockets-4.1.4",
@@ -44,11 +70,11 @@
       "expected_rule": "generic/libwebsockets",
       "rule": "generic/libwebsockets",
       "reported": "4.1.4",
-      "confidence": 0.85,
+      "confidence": 0.88,
       "verdict": "exact",
       "directory": "vendored_lib",
-      "other_findings": 0,
-      "seconds": 3.69
+      "other_findings": 1,
+      "seconds": 3.3
     },
     {
       "case": "libwebsockets-4.3.3",
@@ -57,11 +83,11 @@
       "expected_rule": "generic/libwebsockets",
       "rule": "generic/libwebsockets",
       "reported": "4.3.3",
-      "confidence": 0.85,
+      "confidence": 0.88,
       "verdict": "exact",
       "directory": "vendored_lib",
-      "other_findings": 0,
-      "seconds": 4.5
+      "other_findings": 1,
+      "seconds": 4.2
     },
     {
       "case": "open62541-1.4.4",
@@ -70,11 +96,11 @@
       "expected_rule": "generic/open62541",
       "rule": "generic/open62541",
       "reported": "1.4.4",
-      "confidence": 0.85,
+      "confidence": 0.88,
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 3.63
+      "seconds": 2.67
     },
     {
       "case": "paho-mqtt-c-1.3.5",
@@ -87,7 +113,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 2.29
+      "seconds": 1.79
     },
     {
       "case": "hostap-2.10",
@@ -100,7 +126,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 5.06
+      "seconds": 4.15
     },
     {
       "case": "soem-1.4.0",
@@ -113,7 +139,7 @@
       "verdict": "exact",
       "directory": "vendored_lib/soem",
       "other_findings": 0,
-      "seconds": 2.39
+      "seconds": 1.73
     },
     {
       "case": "canopennode-4.0",
@@ -126,7 +152,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 2.34
+      "seconds": 1.59
     },
     {
       "case": "canopennode-2.0",
@@ -139,7 +165,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 2.42
+      "seconds": 1.53
     },
     {
       "case": "freertos-kernel-10.4.4",
@@ -152,7 +178,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 2.84
+      "seconds": 2.15
     },
     {
       "case": "zlib-1.3.1",
@@ -165,7 +191,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 2.33
+      "seconds": 1.9
     },
     {
       "case": "mbedtls-2.28.10",
@@ -178,7 +204,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 3.28
+      "seconds": 2.14
     },
     {
       "case": "mbedtls-2.28.10",
@@ -191,7 +217,7 @@
       "verdict": "range",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 3.31
+      "seconds": 2.62
     },
     {
       "case": "mbedtls-3.6.4",
@@ -204,7 +230,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 3.52
+      "seconds": 2.51
     },
     {
       "case": "mbedtls-3.6.4",
@@ -217,7 +243,7 @@
       "verdict": "range",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 3.5
+      "seconds": 2.71
     },
     {
       "case": "littlefs-2.9.1",
@@ -230,7 +256,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 2.11
+      "seconds": 1.41
     },
     {
       "case": "littlefs-2.11.3",
@@ -243,7 +269,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 2.03
+      "seconds": 1.59
     },
     {
       "case": "tinycrypt-0.2.8",
@@ -256,7 +282,7 @@
       "verdict": "exact",
       "directory": "vendored_lib/lib",
       "other_findings": 0,
-      "seconds": 2.37
+      "seconds": 1.61
     },
     {
       "case": "lwip-2.2.0",
@@ -269,7 +295,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 3.43
+      "seconds": 2.5
     },
     {
       "case": "lwip-2.1.3",
@@ -282,7 +308,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 3.0
+      "seconds": 2.24
     },
     {
       "case": "libcoap-4.3.4",
@@ -295,7 +321,7 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 1,
-      "seconds": 2.73
+      "seconds": 1.85
     },
     {
       "case": "libcoap-4.3.4",
@@ -308,7 +334,7 @@
       "verdict": "range",
       "directory": "vendored_lib",
       "other_findings": 1,
-      "seconds": 2.43
+      "seconds": 1.95
     },
     {
       "case": "lvgl-8.3.11",
@@ -317,11 +343,11 @@
       "expected_rule": "generic/lvgl",
       "rule": "generic/lvgl",
       "reported": "8.3.11",
-      "confidence": 0.95,
+      "confidence": 0.88,
       "verdict": "exact",
-      "directory": "vendored_lib",
-      "other_findings": 1,
-      "seconds": 12.55
+      "directory": "vendored_lib/src",
+      "other_findings": 2,
+      "seconds": 17.93
     },
     {
       "case": "lvgl-8.3.11",
@@ -333,8 +359,8 @@
       "confidence": 0.88,
       "verdict": "range",
       "directory": "vendored_lib/src",
-      "other_findings": 1,
-      "seconds": 12.33
+      "other_findings": 2,
+      "seconds": 17.39
     }
   ]
 }
