@@ -1,6 +1,6 @@
 # Benchmark results
 
-gangmu-sbom 0.12.0; rules: community 2026.10.18 (pack:community)
+gangmu-sbom 0.15.0; rules: community 2026.10.29 (pack:community)
 
 | case | variant | truth | reported | rule | verdict |
 | --- | --- | --- | --- | --- | --- |
@@ -19,17 +19,17 @@ gangmu-sbom 0.12.0; rules: community 2026.10.18 (pack:community)
 | freertos-kernel-10.4.4 | pristine | 10.4.4 | 10.4.4 | generic/freertos-kernel | exact |
 | zlib-1.3.1 | pristine | 1.3.1 | 1.3.1 | generic/zlib | exact |
 | mbedtls-2.28.10 | pristine | 2.28.10 | 2.28.10 | generic/mbedtls | exact |
-| mbedtls-2.28.10 | stripped | 2.28.10 | 2.28.8~2.28.10 | generic/mbedtls | range |
+| mbedtls-2.28.10 | stripped | 2.28.10 | 2.28.10 | generic/mbedtls | exact |
 | mbedtls-3.6.4 | pristine | 3.6.4 | 3.6.4 | generic/mbedtls | exact |
-| mbedtls-3.6.4 | stripped | 3.6.4 | 3.6.4~3.6.5 | generic/mbedtls | range |
+| mbedtls-3.6.4 | stripped | 3.6.4 | 3.6.4 | generic/mbedtls | exact |
 | littlefs-2.9.1 | pristine | 2.9.1 | 2.9.1 | generic/littlefs | exact |
 | littlefs-2.11.3 | pristine | 2.11.3 | 2.11.3 | generic/littlefs | exact |
 | tinycrypt-0.2.8 | pristine | 0.2.8 | 0.2.8 | generic/tinycrypt | exact |
 | lwip-2.2.0 | pristine | 2.2.0 | 2.2.0 | generic/lwip | exact |
 | lwip-2.1.3 | pristine | 2.1.3 | 2.1.3 | generic/lwip | exact |
 | libcoap-4.3.4 | pristine | 4.3.4 | 4.3.4 | generic/libcoap | exact |
-| libcoap-4.3.4 | stripped | 4.3.4 | 4.3.2~4.3.4a | generic/libcoap | range |
+| libcoap-4.3.4 | stripped | 4.3.4 | 4.3.4 | generic/libcoap | exact |
 | lvgl-8.3.11 | pristine | 8.3.11 | 8.3.11 | generic/lvgl | exact |
-| lvgl-8.3.11 | stripped | 8.3.11 | 8.3.11~8.4.0 | generic/lvgl | range |
+| lvgl-8.3.11 | stripped | 8.3.11 | 8.3.11 | generic/lvgl | exact |
 
-**exact** 22, **range** 5, **wrong** 0, **missing** 0, **skipped** 0
+**exact** 26, **range** 1, **wrong** 0, **missing** 0, **skipped** 0

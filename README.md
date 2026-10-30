@@ -32,7 +32,7 @@ python bench.py --rules my-rules/ -o results/mine   # 叠加自己的规则，�
 
 全部 23 个用例都只用免费规则库；其中 21 个开箱即评分，2 个固件镜像用例需要交叉编译器、capstone 和纲目源码，缺时标为 skipped。
 
-源码缓存在 `~/.cache/gangmu-bench`。最近一次结果见 [results/latest.md](results/latest.md)（用 gangmu-sbom 0.12.0 和规则库 2026.10.18 跑的；任何人可复现，27 行全部评分：22 exact、5 range，0 错 0 漏）。
+源码缓存在 `~/.cache/gangmu-bench`。最近一次结果见 [results/latest.md](results/latest.md)（用 gangmu-sbom 0.15.0 和规则库 2026.10.29 跑的；任何人可复现，27 行全部评分：26 exact、1 range，0 错 0 漏。唯一的 range 是 littlefs 2.4.0 的 RISC-V 固件镜像，报 `2.0.4~2.11.0`）。
 
 ## 用例
 
