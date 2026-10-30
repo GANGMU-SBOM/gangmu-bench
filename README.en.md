@@ -41,9 +41,9 @@ python bench.py --rules my-rules/ -o results/mine   # add your own rules, write 
 
 It starts by printing the path and version of the `gangmu` it measures (the first one on PATH) and the rule roots it loads, and warns when that gangmu is not in the Python environment running `bench.py`. To measure a virtual environment's gangmu, put its `bin` first on PATH. The result `.json` records the path as `versions.gangmu_path`.
 
-All 23 cases use only the free rule base; 21 are graded out of the box, and the 2 firmware-image cases need a cross compiler, capstone and the gangmu sources, and are marked skipped without them.
+All 140 cases use only the free rule base: 131 upstream release trees (each pinned to a tag or commit) and 9 vendor SDKs (pinned commits, 57 copies). 138 are graded out of the box; the 2 firmware-image cases need a cross compiler, capstone and the gangmu sources, and are marked skipped without them.
 
-Sources are cached in `~/.cache/gangmu-bench`. Latest results: [results/latest.md](results/latest.md) (run with gangmu-sbom 0.15.0 and rules 2026.10.29; anyone can reproduce it: all 27 rows graded, 26 exact, 1 range, 0 wrong, 0 missing. The one range is the littlefs 2.4.0 RISC-V firmware image, reported as `2.0.4~2.11.0`).
+Sources are cached in `~/.cache/gangmu-bench`. Latest results: [results/latest.md](results/latest.md) (2026-10-30, gangmu `main` after 0.15.0, with #155 and the Mbed TLS 4.1.1 fix, and rules 2026.10.29 plus the libcoap fix; anyone can reproduce them): 263 rows graded, 227 exact, 23 ranges containing the truth, 8 identified (the copy states no version), 3 wrong, 2 missed; of the 326 components reported, **0 false positives** (65 more are components these trees really carry, each checked, and 48 are manifest-declared dependencies). The 3 wrong: two TinyCrypt copies that say 0.2.7 but carry 0.2.8's fixes, reported as 0.2.8, and libwebsockets' v4.0.21 tag, whose `CMakeLists.txt` already says 4.0.22. The 2 missed: the Allwinner R128 SDK's two FreeRTOS kernels side by side (10.2.0 and 10.4.3) are reported as one finding in their parent directory (10.4.0~10.4.3), so the 10.2.0 copy is not reported on its own.
 
 ## Cases
 

@@ -191,97 +191,97 @@
 - id: openthread-2026.06.0
   git: https://github.com/openthread/openthread
   ref: v2026.06.0
-  expect: {rule: generic/openthread, version: '2026.06.0'}
+  expect: {rule: generic/openthread, version: '2026.06.0', bundled: [generic/mbedtls, binary/mbedtls]}
   variants: [pristine]
 
 - id: openthread-2026.07.0
   git: https://github.com/openthread/openthread
   ref: v2026.07.0
-  expect: {rule: generic/openthread, version: '2026.07.0'}
+  expect: {rule: generic/openthread, version: '2026.07.0', bundled: [generic/mbedtls, binary/mbedtls]}
   variants: [pristine]
 
 - id: openthread-2026.08.0
   git: https://github.com/openthread/openthread
   ref: v2026.08.0
-  expect: {rule: generic/openthread, version: '2026.08.0'}
+  expect: {rule: generic/openthread, version: '2026.08.0', bundled: [generic/mbedtls, binary/mbedtls]}
   variants: [pristine]
 
 - id: openthread-2026.09.0
   git: https://github.com/openthread/openthread
   ref: v2026.09.0
-  expect: {rule: generic/openthread, version: '2026.09.0'}
+  expect: {rule: generic/openthread, version: '2026.09.0', bundled: [generic/mbedtls, binary/mbedtls]}
   variants: [pristine]
 
 - id: openthread-2026.10.0
   git: https://github.com/openthread/openthread
   ref: v2026.10.0
-  expect: {rule: generic/openthread, version: '2026.10.0'}
+  expect: {rule: generic/openthread, version: '2026.10.0', bundled: [generic/mbedtls, binary/mbedtls]}
   variants: [pristine]
 
 - id: openthread-20191113
   git: https://github.com/openthread/openthread
   ref: thread-reference-20191113
-  expect: {rule: generic/openthread, version: '20191113'}
+  expect: {rule: generic/openthread, version: '20191113', bundled: [generic/mbedtls, binary/mbedtls]}
   variants: [pristine]
 
 - id: openthread-20200818
   git: https://github.com/openthread/openthread
   ref: thread-reference-20200818
-  expect: {rule: generic/openthread, version: '20200818'}
+  expect: {rule: generic/openthread, version: '20200818', bundled: [generic/mbedtls, binary/mbedtls]}
   variants: [pristine]
 
 - id: openthread-20221027
   git: https://github.com/openthread/openthread
   ref: thread-reference-20221027
-  expect: {rule: generic/openthread, version: '20221027'}
+  expect: {rule: generic/openthread, version: '20221027', bundled: [generic/mbedtls, binary/mbedtls]}
   variants: [pristine]
 
 - id: openthread-20230119
   git: https://github.com/openthread/openthread
   ref: thread-reference-20230119
-  expect: {rule: generic/openthread, version: '20230119'}
+  expect: {rule: generic/openthread, version: '20230119', bundled: [generic/mbedtls, binary/mbedtls]}
   variants: [pristine]
 
 - id: openthread-20230706
   git: https://github.com/openthread/openthread
   ref: thread-reference-20230706
-  expect: {rule: generic/openthread, version: '20230706'}
+  expect: {rule: generic/openthread, version: '20230706', bundled: [generic/mbedtls, binary/mbedtls]}
   variants: [pristine]
 
 - id: openthread-20250612
   git: https://github.com/openthread/openthread
   ref: thread-reference-20250612
-  expect: {rule: generic/openthread, version: '20250612'}
+  expect: {rule: generic/openthread, version: '20250612', bundled: [generic/mbedtls, binary/mbedtls]}
   variants: [pristine]
 
 - id: aws-iot-device-sdk-c-2.0.0
   git: https://github.com/aws/aws-iot-device-sdk-embedded-C
   ref: v2.0.0
-  expect: {rule: generic/aws-iot-device-sdk-c, version: '2.0.0'}
+  expect: {rule: generic/aws-iot-device-sdk-c, version: '2.0.0', bundled: [generic/jsmn]}
   variants: [pristine]
 
 - id: aws-iot-device-sdk-c-2.2.1
   git: https://github.com/aws/aws-iot-device-sdk-embedded-C
   ref: v2.2.1
-  expect: {rule: generic/aws-iot-device-sdk-c, version: '2.2.1'}
+  expect: {rule: generic/aws-iot-device-sdk-c, version: '2.2.1', bundled: [generic/jsmn]}
   variants: [pristine]
 
 - id: aws-iot-device-sdk-c-3.0.1
   git: https://github.com/aws/aws-iot-device-sdk-embedded-C
   ref: v3.0.1
-  expect: {rule: generic/aws-iot-device-sdk-c, version: '3.0.1'}
+  expect: {rule: generic/aws-iot-device-sdk-c, version: '3.0.1', bundled: [generic/jsmn]}
   variants: [pristine]
 
 - id: aws-iot-device-sdk-c-3.1.0
   git: https://github.com/aws/aws-iot-device-sdk-embedded-C
   ref: v3.1.0
-  expect: {rule: generic/aws-iot-device-sdk-c, version: '3.1.0'}
+  expect: {rule: generic/aws-iot-device-sdk-c, version: '3.1.0', bundled: [generic/jsmn]}
   variants: [pristine]
 
 - id: aws-iot-device-sdk-c-3.1.5
   git: https://github.com/aws/aws-iot-device-sdk-embedded-C
   ref: v3.1.5
-  expect: {rule: generic/aws-iot-device-sdk-c, version: '3.1.5'}
+  expect: {rule: generic/aws-iot-device-sdk-c, version: '3.1.5', bundled: [generic/jsmn]}
   variants: [pristine]
 
 - id: alios-things-kernel-1.1.0

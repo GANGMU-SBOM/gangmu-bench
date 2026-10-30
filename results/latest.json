@@ -2,15 +2,24 @@
   "versions": {
     "gangmu": "gangmu-sbom 0.15.0",
     "rules": "community 2026.10.29 (pack:community)",
-    "gangmu_path": "venv/bin/gangmu (pip install gangmu-sbom==0.15.0)"
+    "gangmu_path": "/tmp/claude-0/-home-user/10d901ed-93a7-5494-8526-a13f97f99098/scratchpad/venvbin/bin/gangmu"
   },
   "counts": {
-    "exact": 26,
-    "range": 1,
-    "wrong": 0,
-    "missing": 0,
-    "skipped": 0
+    "exact": 227,
+    "range": 23,
+    "identified": 8,
+    "wrong": 3,
+    "missing": 2,
+    "skipped": 0,
+    "false_positive": 0
   },
+  "other_findings": {
+    "bundled": 65,
+    "declared": 48,
+    "duplicate": 0,
+    "unexpected": 0
+  },
+  "components_reported": 326,
   "rows": [
     {
       "case": "littlefs-2.4.0-riscv32",
@@ -23,7 +32,8 @@
       "verdict": "range",
       "directory": "firmware.elf",
       "other_findings": 0,
-      "seconds": 5.74
+      "others": [],
+      "seconds": 23.64
     },
     {
       "case": "mbedtls-3.4.0-riscv32",
@@ -36,7 +46,8 @@
       "verdict": "exact",
       "directory": "firmware.elf",
       "other_findings": 0,
-      "seconds": 7.19
+      "others": [],
+      "seconds": 9.54
     },
     {
       "case": "nghttp2-1.44.0",
@@ -49,7 +60,15 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 1,
-      "seconds": 10.2
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/llhttp",
+          "directory": "vendored_lib/third-party/llhttp/src",
+          "version": null
+        }
+      ],
+      "seconds": 10.17
     },
     {
       "case": "nghttp2-1.64.0",
@@ -62,7 +81,15 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 1,
-      "seconds": 10.23
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/llhttp",
+          "directory": "vendored_lib/third-party/llhttp",
+          "version": null
+        }
+      ],
+      "seconds": 9.12
     },
     {
       "case": "libwebsockets-4.1.4",
@@ -75,7 +102,15 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 1,
-      "seconds": 12.71
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/zlib",
+          "directory": "vendored_lib/win32port/zlib",
+          "version": "1.2.5"
+        }
+      ],
+      "seconds": 11.8
     },
     {
       "case": "libwebsockets-4.3.3",
@@ -88,7 +123,15 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 1,
-      "seconds": 13.48
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/zlib",
+          "directory": "vendored_lib/win32port/zlib",
+          "version": "1.2.5"
+        }
+      ],
+      "seconds": 11.97
     },
     {
       "case": "open62541-1.4.4",
@@ -101,7 +144,8 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 10.58
+      "others": [],
+      "seconds": 11.42
     },
     {
       "case": "paho-mqtt-c-1.3.5",
@@ -114,7 +158,8 @@
       "verdict": "exact",
       "directory": "vendored_lib/src",
       "other_findings": 0,
-      "seconds": 8.65
+      "others": [],
+      "seconds": 10.17
     },
     {
       "case": "hostap-2.10",
@@ -127,7 +172,8 @@
       "verdict": "exact",
       "directory": "vendored_lib/src",
       "other_findings": 0,
-      "seconds": 16.97
+      "others": [],
+      "seconds": 16.27
     },
     {
       "case": "soem-1.4.0",
@@ -140,7 +186,8 @@
       "verdict": "exact",
       "directory": "vendored_lib/soem",
       "other_findings": 0,
-      "seconds": 9.24
+      "others": [],
+      "seconds": 11.12
     },
     {
       "case": "canopennode-4.0",
@@ -153,7 +200,8 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 7.44
+      "others": [],
+      "seconds": 10.91
     },
     {
       "case": "canopennode-2.0",
@@ -166,7 +214,8 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 7.14
+      "others": [],
+      "seconds": 9.26
     },
     {
       "case": "freertos-kernel-10.4.4",
@@ -179,7 +228,8 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 8.38
+      "others": [],
+      "seconds": 9.34
     },
     {
       "case": "zlib-1.3.1",
@@ -192,9 +242,3106 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
+      "others": [],
+      "seconds": 9.55
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.1.0",
+      "variant": "pristine",
+      "truth": "2.1.0",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.1.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.23
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.2.0",
+      "variant": "pristine",
+      "truth": "2.2.0",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.2.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.52
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.2.0",
+      "variant": "stripped",
+      "truth": "2.2.0",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.2.0~2.4.3",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.45
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.2.1",
+      "variant": "pristine",
+      "truth": "2.2.1",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.2.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.35
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.2.1",
+      "variant": "stripped",
+      "truth": "2.2.1",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.2.0~2.4.3",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.06
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.3.1",
+      "variant": "pristine",
+      "truth": "2.3.1",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.3.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.86
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.3.1",
+      "variant": "stripped",
+      "truth": "2.3.1",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.2.0~2.4.3",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.99
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.4.0",
+      "variant": "pristine",
+      "truth": "2.4.0",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.4.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.78
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.4.0",
+      "variant": "stripped",
+      "truth": "2.4.0",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.2.0~2.4.3",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.74
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.4.1",
+      "variant": "pristine",
+      "truth": "2.4.1",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.4.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.03
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.4.1",
+      "variant": "stripped",
+      "truth": "2.4.1",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.2.0~2.4.3",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.66
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.4.2",
+      "variant": "pristine",
+      "truth": "2.4.2",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.4.2",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.86
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.4.2",
+      "variant": "stripped",
+      "truth": "2.4.2",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.2.0~2.4.3",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.15
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.4.3",
+      "variant": "pristine",
+      "truth": "2.4.3",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.4.3",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.19
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.4.3",
+      "variant": "stripped",
+      "truth": "2.4.3",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.2.0~2.4.3",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.92
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.4.4",
+      "variant": "pristine",
+      "truth": "2.4.4",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.4.4",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.66
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.4.4",
+      "variant": "stripped",
+      "truth": "2.4.4",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.4.4",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.96
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.4.5",
+      "variant": "pristine",
+      "truth": "2.4.5",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.4.5",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.22
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.4.5",
+      "variant": "stripped",
+      "truth": "2.4.5",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.4.5",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.48
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.5.0",
+      "variant": "pristine",
+      "truth": "2.5.0",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.5.0",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.34
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.5.0",
+      "variant": "stripped",
+      "truth": "2.5.0",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.5.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.57
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.5.1",
+      "variant": "pristine",
+      "truth": "2.5.1",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.5.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.81
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.5.1",
+      "variant": "stripped",
+      "truth": "2.5.1",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.5.1~2.5.2",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.95
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.5.2",
+      "variant": "pristine",
+      "truth": "2.5.2",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.5.2",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.23
+    },
+    {
+      "case": "tencentos-tiny-kernel-2.5.2",
+      "variant": "stripped",
+      "truth": "2.5.2",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.5.1~2.5.2",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.48
+    },
+    {
+      "case": "nghttp2-1.20.0",
+      "variant": "pristine",
+      "truth": "1.20.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.20.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/http-parser",
+          "directory": "vendored_lib/third-party/http-parser",
+          "version": "2.7.1"
+        }
+      ],
+      "seconds": 9.42
+    },
+    {
+      "case": "nghttp2-1.20.0",
+      "variant": "stripped",
+      "truth": "1.20.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.20.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/http-parser",
+          "directory": "vendored_lib/third-party/http-parser",
+          "version": "2.7.1"
+        }
+      ],
+      "seconds": 10.63
+    },
+    {
+      "case": "nghttp2-1.40.0",
+      "variant": "pristine",
+      "truth": "1.40.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.40.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.93
+    },
+    {
+      "case": "nghttp2-1.40.0",
+      "variant": "stripped",
+      "truth": "1.40.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.40.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 10.52
+    },
+    {
+      "case": "nghttp2-1.52.0",
+      "variant": "pristine",
+      "truth": "1.52.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.52.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/llhttp",
+          "directory": "vendored_lib/third-party/llhttp",
+          "version": null
+        }
+      ],
+      "seconds": 10.53
+    },
+    {
+      "case": "nghttp2-1.52.0",
+      "variant": "stripped",
+      "truth": "1.52.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.50.0~1.52.0",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib/lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/llhttp",
+          "directory": "vendored_lib/third-party/llhttp",
+          "version": null
+        }
+      ],
+      "seconds": 10.08
+    },
+    {
+      "case": "nghttp2-1.59.0",
+      "variant": "pristine",
+      "truth": "1.59.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.59.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/llhttp",
+          "directory": "vendored_lib/third-party/llhttp",
+          "version": null
+        }
+      ],
+      "seconds": 9.81
+    },
+    {
+      "case": "nghttp2-1.59.0",
+      "variant": "stripped",
+      "truth": "1.59.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.59.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/llhttp",
+          "directory": "vendored_lib/third-party/llhttp",
+          "version": null
+        }
+      ],
+      "seconds": 11.35
+    },
+    {
+      "case": "nghttp2-1.66.0",
+      "variant": "pristine",
+      "truth": "1.66.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.66.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/llhttp",
+          "directory": "vendored_lib/third-party/llhttp",
+          "version": null
+        }
+      ],
+      "seconds": 9.69
+    },
+    {
+      "case": "nghttp2-1.66.0",
+      "variant": "stripped",
+      "truth": "1.66.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.66.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/llhttp",
+          "directory": "vendored_lib/third-party/llhttp",
+          "version": null
+        }
+      ],
+      "seconds": 10.28
+    },
+    {
+      "case": "nghttp2-1.70.0",
+      "variant": "pristine",
+      "truth": "1.70.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.70.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/llhttp",
+          "directory": "vendored_lib/third-party/llhttp",
+          "version": null
+        }
+      ],
+      "seconds": 9.27
+    },
+    {
+      "case": "nghttp2-1.70.0",
+      "variant": "stripped",
+      "truth": "1.70.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.70.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/llhttp",
+          "directory": "vendored_lib/third-party/llhttp",
+          "version": null
+        }
+      ],
+      "seconds": 10.5
+    },
+    {
+      "case": "libwebsockets-3.0.1",
+      "variant": "pristine",
+      "truth": "3.0.1",
+      "expected_rule": "generic/libwebsockets",
+      "rule": "generic/libwebsockets",
+      "reported": "3.0.1",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/zlib",
+          "directory": "vendored_lib/win32port/zlib",
+          "version": "1.2.5"
+        }
+      ],
+      "seconds": 9.68
+    },
+    {
+      "case": "libwebsockets-3.0.1",
+      "variant": "stripped",
+      "truth": "3.0.1",
+      "expected_rule": "generic/libwebsockets",
+      "rule": "generic/libwebsockets",
+      "reported": "3.0.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/zlib",
+          "directory": "vendored_lib/win32port/zlib",
+          "version": "1.2.5"
+        }
+      ],
+      "seconds": 9.38
+    },
+    {
+      "case": "libwebsockets-3.2.2",
+      "variant": "pristine",
+      "truth": "3.2.2",
+      "expected_rule": "generic/libwebsockets",
+      "rule": "generic/libwebsockets",
+      "reported": "3.2.2",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/zlib",
+          "directory": "vendored_lib/win32port/zlib",
+          "version": "1.2.5"
+        }
+      ],
+      "seconds": 10.48
+    },
+    {
+      "case": "libwebsockets-3.2.2",
+      "variant": "stripped",
+      "truth": "3.2.2",
+      "expected_rule": "generic/libwebsockets",
+      "rule": "generic/libwebsockets",
+      "reported": "3.2.2",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/zlib",
+          "directory": "vendored_lib/win32port/zlib",
+          "version": "1.2.5"
+        }
+      ],
+      "seconds": 10.5
+    },
+    {
+      "case": "libwebsockets-4.0.21",
+      "variant": "pristine",
+      "truth": "4.0.21",
+      "expected_rule": "generic/libwebsockets",
+      "rule": "generic/libwebsockets",
+      "reported": "4.0.22",
+      "confidence": 0.85,
+      "verdict": "wrong",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/zlib",
+          "directory": "vendored_lib/win32port/zlib",
+          "version": "1.2.5"
+        }
+      ],
+      "seconds": 9.42
+    },
+    {
+      "case": "libwebsockets-4.0.21",
+      "variant": "stripped",
+      "truth": "4.0.21",
+      "expected_rule": "generic/libwebsockets",
+      "rule": "generic/libwebsockets",
+      "reported": "4.0.21",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/zlib",
+          "directory": "vendored_lib/win32port/zlib",
+          "version": "1.2.5"
+        }
+      ],
+      "seconds": 9.66
+    },
+    {
+      "case": "libwebsockets-4.1.6",
+      "variant": "pristine",
+      "truth": "4.1.6",
+      "expected_rule": "generic/libwebsockets",
+      "rule": "generic/libwebsockets",
+      "reported": "4.1.6",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/zlib",
+          "directory": "vendored_lib/win32port/zlib",
+          "version": "1.2.5"
+        }
+      ],
+      "seconds": 10.64
+    },
+    {
+      "case": "libwebsockets-4.1.6",
+      "variant": "stripped",
+      "truth": "4.1.6",
+      "expected_rule": "generic/libwebsockets",
+      "rule": "generic/libwebsockets",
+      "reported": "4.1.6",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/zlib",
+          "directory": "vendored_lib/win32port/zlib",
+          "version": "1.2.5"
+        }
+      ],
+      "seconds": 10.84
+    },
+    {
+      "case": "libwebsockets-4.5.8",
+      "variant": "pristine",
+      "truth": "4.5.8",
+      "expected_rule": "generic/libwebsockets",
+      "rule": "generic/libwebsockets",
+      "reported": "4.5.8",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 3,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/cmsis5-core",
+          "directory": "vendored_lib/minimal-examples/embedded/rt595/hello_world/project/CMSIS",
+          "version": "5.5.0~5.6.0"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/zlib",
+          "directory": "vendored_lib/win32port/zlib",
+          "version": "1.2.5"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/pico_sdk",
+          "directory": "vendored_lib/cmake",
+          "version": null
+        }
+      ],
+      "seconds": 12.68
+    },
+    {
+      "case": "libwebsockets-4.5.8",
+      "variant": "stripped",
+      "truth": "4.5.8",
+      "expected_rule": "generic/libwebsockets",
+      "rule": "generic/libwebsockets",
+      "reported": "4.5.8",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 3,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/cmsis5-core",
+          "directory": "vendored_lib/minimal-examples/embedded/rt595/hello_world/project/CMSIS",
+          "version": "5.5.0~5.6.0"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/zlib",
+          "directory": "vendored_lib/win32port/zlib",
+          "version": "1.2.5"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/pico_sdk",
+          "directory": "vendored_lib/cmake",
+          "version": null
+        }
+      ],
+      "seconds": 12.38
+    },
+    {
+      "case": "paho-mqtt-c-1.1.0",
+      "variant": "pristine",
+      "truth": "1.1.0",
+      "expected_rule": "generic/paho-mqtt-c",
+      "rule": "generic/paho-mqtt-c",
+      "reported": "1.1.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.04
+    },
+    {
+      "case": "paho-mqtt-c-1.1.0",
+      "variant": "stripped",
+      "truth": "1.1.0",
+      "expected_rule": "generic/paho-mqtt-c",
+      "rule": "generic/paho-mqtt-c",
+      "reported": "1.1.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.66
+    },
+    {
+      "case": "paho-mqtt-c-1.3.1",
+      "variant": "pristine",
+      "truth": "1.3.1",
+      "expected_rule": "generic/paho-mqtt-c",
+      "rule": "generic/paho-mqtt-c",
+      "reported": "1.3.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/conan/OpenSSL",
+          "directory": "vendored_lib",
+          "version": "1.0.2n"
+        }
+      ],
+      "seconds": 8.19
+    },
+    {
+      "case": "paho-mqtt-c-1.3.1",
+      "variant": "stripped",
+      "truth": "1.3.1",
+      "expected_rule": "generic/paho-mqtt-c",
+      "rule": "generic/paho-mqtt-c",
+      "reported": "1.3.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/conan/OpenSSL",
+          "directory": "vendored_lib",
+          "version": "1.0.2n"
+        }
+      ],
+      "seconds": 8.66
+    },
+    {
+      "case": "paho-mqtt-c-1.3.11",
+      "variant": "pristine",
+      "truth": "1.3.11",
+      "expected_rule": "generic/paho-mqtt-c",
+      "rule": "generic/paho-mqtt-c",
+      "reported": "1.3.11",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.2
+    },
+    {
+      "case": "paho-mqtt-c-1.3.11",
+      "variant": "stripped",
+      "truth": "1.3.11",
+      "expected_rule": "generic/paho-mqtt-c",
+      "rule": "generic/paho-mqtt-c",
+      "reported": "1.3.11",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.16
+    },
+    {
+      "case": "paho-mqtt-c-1.3.14",
+      "variant": "pristine",
+      "truth": "1.3.14",
+      "expected_rule": "generic/paho-mqtt-c",
+      "rule": "generic/paho-mqtt-c",
+      "reported": "1.3.14",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 10.9
+    },
+    {
+      "case": "paho-mqtt-c-1.3.14",
+      "variant": "stripped",
+      "truth": "1.3.14",
+      "expected_rule": "generic/paho-mqtt-c",
+      "rule": "generic/paho-mqtt-c",
+      "reported": "1.3.14",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.66
+    },
+    {
+      "case": "paho-mqtt-c-1.3.16",
+      "variant": "pristine",
+      "truth": "1.3.16",
+      "expected_rule": "generic/paho-mqtt-c",
+      "rule": "generic/paho-mqtt-c",
+      "reported": "1.3.16",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.16
+    },
+    {
+      "case": "paho-mqtt-c-1.3.16",
+      "variant": "stripped",
+      "truth": "1.3.16",
+      "expected_rule": "generic/paho-mqtt-c",
+      "rule": "generic/paho-mqtt-c",
+      "reported": "1.3.16",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.1
+    },
+    {
+      "case": "openthread-2026.06.0",
+      "variant": "pristine",
+      "truth": "2026.06.0",
+      "expected_rule": "generic/openthread",
+      "rule": "generic/openthread",
+      "reported": "2026.06.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 11.74
+    },
+    {
+      "case": "openthread-2026.07.0",
+      "variant": "pristine",
+      "truth": "2026.07.0",
+      "expected_rule": "generic/openthread",
+      "rule": "generic/openthread",
+      "reported": "2026.07.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 11.58
+    },
+    {
+      "case": "openthread-2026.08.0",
+      "variant": "pristine",
+      "truth": "2026.08.0",
+      "expected_rule": "generic/openthread",
+      "rule": "generic/openthread",
+      "reported": "2026.08.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 11.69
+    },
+    {
+      "case": "openthread-2026.09.0",
+      "variant": "pristine",
+      "truth": "2026.09.0",
+      "expected_rule": "generic/openthread",
+      "rule": "generic/openthread",
+      "reported": "2026.09.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 11.74
+    },
+    {
+      "case": "openthread-2026.10.0",
+      "variant": "pristine",
+      "truth": "2026.10.0",
+      "expected_rule": "generic/openthread",
+      "rule": "generic/openthread",
+      "reported": "2026.10.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 11.31
+    },
+    {
+      "case": "openthread-20191113",
+      "variant": "pristine",
+      "truth": "20191113",
+      "expected_rule": "generic/openthread",
+      "rule": "generic/openthread",
+      "reported": "20191113",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 2,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/mbedtls",
+          "directory": "vendored_lib/third_party/mbedtls/repo",
+          "version": "2.14.0"
+        },
+        {
+          "kind": "bundled",
+          "rule": "binary/mbedtls",
+          "directory": "vendored_lib/third_party/NordicSemiconductor/libraries/nrf_security/lib/libmbedtls_base_vanilla.a",
+          "version": "2.16.2"
+        }
+      ],
+      "seconds": 14.97
+    },
+    {
+      "case": "openthread-20200818",
+      "variant": "pristine",
+      "truth": "20200818",
+      "expected_rule": "generic/openthread",
+      "rule": "generic/openthread",
+      "reported": "20200818",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 2,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/mbedtls",
+          "directory": "vendored_lib/third_party/mbedtls/repo",
+          "version": "2.14.0"
+        },
+        {
+          "kind": "bundled",
+          "rule": "binary/mbedtls",
+          "directory": "vendored_lib/third_party/NordicSemiconductor/libraries/nrf_security/lib/libmbedtls_base_vanilla.a",
+          "version": "2.16.3"
+        }
+      ],
+      "seconds": 16.24
+    },
+    {
+      "case": "openthread-20221027",
+      "variant": "pristine",
+      "truth": "20221027",
+      "expected_rule": "generic/openthread",
+      "rule": "generic/openthread",
+      "reported": "20221027",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/mbedtls",
+          "directory": "vendored_lib/third_party/mbedtls/repo",
+          "version": "2.28.0"
+        }
+      ],
+      "seconds": 11.64
+    },
+    {
+      "case": "openthread-20230119",
+      "variant": "pristine",
+      "truth": "20230119",
+      "expected_rule": "generic/openthread",
+      "rule": "generic/openthread",
+      "reported": "20230119",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/mbedtls",
+          "directory": "vendored_lib/third_party/mbedtls/repo",
+          "version": "2.28.0"
+        }
+      ],
+      "seconds": 11.82
+    },
+    {
+      "case": "openthread-20230706",
+      "variant": "pristine",
+      "truth": "20230706",
+      "expected_rule": "generic/openthread",
+      "rule": "generic/openthread",
+      "reported": "20230706",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/mbedtls",
+          "directory": "vendored_lib/third_party/mbedtls/repo",
+          "version": "2.28.0"
+        }
+      ],
+      "seconds": 11.49
+    },
+    {
+      "case": "openthread-20250612",
+      "variant": "pristine",
+      "truth": "20250612",
+      "expected_rule": "generic/openthread",
+      "rule": "generic/openthread",
+      "reported": "20250612",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/mbedtls",
+          "directory": "vendored_lib/third_party/mbedtls/repo",
+          "version": "3.6.0"
+        }
+      ],
+      "seconds": 12.56
+    },
+    {
+      "case": "aws-iot-device-sdk-c-2.0.0",
+      "variant": "pristine",
+      "truth": "2.0.0",
+      "expected_rule": "generic/aws-iot-device-sdk-c",
+      "rule": "generic/aws-iot-device-sdk-c",
+      "reported": "2.0.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.58
+    },
+    {
+      "case": "aws-iot-device-sdk-c-2.2.1",
+      "variant": "pristine",
+      "truth": "2.2.1",
+      "expected_rule": "generic/aws-iot-device-sdk-c",
+      "rule": "generic/aws-iot-device-sdk-c",
+      "reported": "2.2.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/jsmn",
+          "directory": "vendored_lib/external_libs/jsmn",
+          "version": "1.0.0"
+        }
+      ],
+      "seconds": 7.69
+    },
+    {
+      "case": "aws-iot-device-sdk-c-3.0.1",
+      "variant": "pristine",
+      "truth": "3.0.1",
+      "expected_rule": "generic/aws-iot-device-sdk-c",
+      "rule": "generic/aws-iot-device-sdk-c",
+      "reported": "3.0.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/jsmn",
+          "directory": "vendored_lib/external_libs/jsmn",
+          "version": "1.0.0"
+        }
+      ],
+      "seconds": 7.65
+    },
+    {
+      "case": "aws-iot-device-sdk-c-3.1.0",
+      "variant": "pristine",
+      "truth": "3.1.0",
+      "expected_rule": "generic/aws-iot-device-sdk-c",
+      "rule": "generic/aws-iot-device-sdk-c",
+      "reported": "3.1.0~3.1.2",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/jsmn",
+          "directory": "vendored_lib/external_libs/jsmn",
+          "version": "1.0.0"
+        }
+      ],
+      "seconds": 7.78
+    },
+    {
+      "case": "aws-iot-device-sdk-c-3.1.5",
+      "variant": "pristine",
+      "truth": "3.1.5",
+      "expected_rule": "generic/aws-iot-device-sdk-c",
+      "rule": "generic/aws-iot-device-sdk-c",
+      "reported": "3.1.4~3.1.5",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/jsmn",
+          "directory": "vendored_lib/external_libs/jsmn",
+          "version": "1.0.0"
+        }
+      ],
       "seconds": 7.52
     },
     {
+      "case": "alios-things-kernel-1.1.0",
+      "variant": "pristine",
+      "truth": "1.1.0",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "1.1.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.65
+    },
+    {
+      "case": "alios-things-kernel-1.1.1",
+      "variant": "pristine",
+      "truth": "1.1.1",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "1.1.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.62
+    },
+    {
+      "case": "alios-things-kernel-1.1.2",
+      "variant": "pristine",
+      "truth": "1.1.2",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "1.1.2",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.82
+    },
+    {
+      "case": "alios-things-kernel-1.2.0",
+      "variant": "pristine",
+      "truth": "1.2.0",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "1.2.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.96
+    },
+    {
+      "case": "alios-things-kernel-1.2.1",
+      "variant": "pristine",
+      "truth": "1.2.1",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "1.2.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.83
+    },
+    {
+      "case": "alios-things-kernel-1.2.2",
+      "variant": "pristine",
+      "truth": "1.2.2",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "1.2.2",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.05
+    },
+    {
+      "case": "alios-things-kernel-1.3.0",
+      "variant": "pristine",
+      "truth": "1.3.0",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "1.3.0~1.3.3",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.21
+    },
+    {
+      "case": "alios-things-kernel-1.3.1",
+      "variant": "pristine",
+      "truth": "1.3.1",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "1.3.0~1.3.3",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.96
+    },
+    {
+      "case": "alios-things-kernel-1.3.2",
+      "variant": "pristine",
+      "truth": "1.3.2",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "1.3.2~1.3.3",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.88
+    },
+    {
+      "case": "alios-things-kernel-1.3.3",
+      "variant": "pristine",
+      "truth": "1.3.3",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "1.3.3",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.24
+    },
+    {
+      "case": "alios-things-kernel-1.3.4",
+      "variant": "pristine",
+      "truth": "1.3.4",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "1.3.4",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.74
+    },
+    {
+      "case": "alios-things-kernel-2.0.0",
+      "variant": "pristine",
+      "truth": "2.0.0",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "2.0.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.29
+    },
+    {
+      "case": "alios-things-kernel-2.1.0",
+      "variant": "pristine",
+      "truth": "2.1.0",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "2.1.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.51
+    },
+    {
+      "case": "alios-things-kernel-3.0.0",
+      "variant": "pristine",
+      "truth": "3.0.0",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "3.0.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.77
+    },
+    {
+      "case": "alios-things-kernel-3.1.0",
+      "variant": "pristine",
+      "truth": "3.1.0",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "3.1.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.99
+    },
+    {
+      "case": "alios-things-kernel-3.3.0",
+      "variant": "pristine",
+      "truth": "3.3.0",
+      "expected_rule": "generic/alios-things-kernel",
+      "rule": "generic/alios-things-kernel",
+      "reported": "3.3.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.13
+    },
+    {
+      "case": "liteos-kernel-5.0.0",
+      "variant": "pristine",
+      "truth": "5.0.0",
+      "expected_rule": "generic/liteos-kernel",
+      "rule": "generic/liteos-kernel",
+      "reported": "5.0.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.75
+    },
+    {
+      "case": "liteos-kernel-5.0.0",
+      "variant": "touched",
+      "truth": "5.0.0",
+      "expected_rule": "generic/liteos-kernel",
+      "rule": "generic/liteos-kernel",
+      "reported": "5.0.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.62
+    },
+    {
+      "case": "liteos-kernel-5.1.0",
+      "variant": "pristine",
+      "truth": "5.1.0",
+      "expected_rule": "generic/liteos-kernel",
+      "rule": "generic/liteos-kernel",
+      "reported": "5.1.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.78
+    },
+    {
+      "case": "liteos-kernel-5.1.0",
+      "variant": "touched",
+      "truth": "5.1.0",
+      "expected_rule": "generic/liteos-kernel",
+      "rule": "generic/liteos-kernel",
+      "reported": "5.1.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.63
+    },
+    {
+      "case": "gmssl-2.0.0",
+      "variant": "pristine",
+      "truth": "2.0.0",
+      "expected_rule": "generic/gmssl-2",
+      "rule": "generic/gmssl-2",
+      "reported": "2.0.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.98
+    },
+    {
+      "case": "gmssl-2.0.0",
+      "variant": "stripped",
+      "truth": "2.0.0",
+      "expected_rule": "generic/gmssl-2",
+      "rule": "generic/gmssl-2",
+      "reported": "2.0.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 13.06
+    },
+    {
+      "case": "gmssl-2.3.3",
+      "variant": "pristine",
+      "truth": "2.3.3",
+      "expected_rule": "generic/gmssl-2",
+      "rule": "generic/gmssl-2",
+      "reported": "2.3.3",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 13.76
+    },
+    {
+      "case": "gmssl-2.3.3",
+      "variant": "stripped",
+      "truth": "2.3.3",
+      "expected_rule": "generic/gmssl-2",
+      "rule": "generic/gmssl-2",
+      "reported": "2.3.3~2.3.4",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 15.26
+    },
+    {
+      "case": "gmssl-2.4.5",
+      "variant": "pristine",
+      "truth": "2.4.5",
+      "expected_rule": "generic/gmssl-2",
+      "rule": "generic/gmssl-2",
+      "reported": "2.4.5",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 15.67
+    },
+    {
+      "case": "gmssl-2.4.5",
+      "variant": "stripped",
+      "truth": "2.4.5",
+      "expected_rule": "generic/gmssl-2",
+      "rule": "generic/gmssl-2",
+      "reported": "2.4.5",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.44
+    },
+    {
+      "case": "gmssl-2.5.0",
+      "variant": "pristine",
+      "truth": "2.5.0",
+      "expected_rule": "generic/gmssl-2",
+      "rule": "generic/gmssl-2",
+      "reported": "2.5.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.33
+    },
+    {
+      "case": "gmssl-2.5.0",
+      "variant": "stripped",
+      "truth": "2.5.0",
+      "expected_rule": "generic/gmssl-2",
+      "rule": "generic/gmssl-2",
+      "reported": "2.5.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.23
+    },
+    {
+      "case": "gmssl-2.5.3",
+      "variant": "pristine",
+      "truth": "2.5.3",
+      "expected_rule": "generic/gmssl-2",
+      "rule": "generic/gmssl-2",
+      "reported": "2.5.3",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.39
+    },
+    {
+      "case": "gmssl-2.5.3",
+      "variant": "stripped",
+      "truth": "2.5.3",
+      "expected_rule": "generic/gmssl-2",
+      "rule": "generic/gmssl-2",
+      "reported": "2.5.3",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 11.92
+    },
+    {
+      "case": "gmssl-2.5.4",
+      "variant": "pristine",
+      "truth": "2.5.4",
+      "expected_rule": "generic/gmssl-2",
+      "rule": "generic/gmssl-2",
+      "reported": "2.5.4",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.71
+    },
+    {
+      "case": "gmssl-2.5.4",
+      "variant": "stripped",
+      "truth": "2.5.4",
+      "expected_rule": "generic/gmssl-2",
+      "rule": "generic/gmssl-2",
+      "reported": "2.5.4",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.16
+    },
+    {
+      "case": "gmssl-3.0.0",
+      "variant": "pristine",
+      "truth": "3.0.0",
+      "expected_rule": "generic/gmssl",
+      "rule": "generic/gmssl",
+      "reported": "3.0.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.92
+    },
+    {
+      "case": "gmssl-3.0.0",
+      "variant": "stripped",
+      "truth": "3.0.0",
+      "expected_rule": "generic/gmssl",
+      "rule": "generic/gmssl",
+      "reported": "3.0.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.07
+    },
+    {
+      "case": "gmssl-3.2.0",
+      "variant": "pristine",
+      "truth": "3.2.0",
+      "expected_rule": "generic/gmssl",
+      "rule": "generic/gmssl",
+      "reported": "3.2.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.74
+    },
+    {
+      "case": "gmssl-3.2.0",
+      "variant": "stripped",
+      "truth": "3.2.0",
+      "expected_rule": "generic/gmssl",
+      "rule": "generic/gmssl",
+      "reported": "3.2.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 10.31
+    },
+    {
+      "case": "tongsuo-8.1.3",
+      "variant": "pristine",
+      "truth": "8.1.3",
+      "expected_rule": "generic/tongsuo",
+      "rule": "generic/tongsuo",
+      "reported": "8.1.3",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.74
+    },
+    {
+      "case": "tongsuo-8.1.3",
+      "variant": "stripped",
+      "truth": "8.1.3",
+      "expected_rule": "generic/tongsuo",
+      "rule": "generic/tongsuo",
+      "reported": "8.1.3",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 13.12
+    },
+    {
+      "case": "tongsuo-8.2.1",
+      "variant": "pristine",
+      "truth": "8.2.1",
+      "expected_rule": "generic/tongsuo",
+      "rule": "generic/tongsuo",
+      "reported": "8.2.1",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.69
+    },
+    {
+      "case": "tongsuo-8.2.1",
+      "variant": "stripped",
+      "truth": "8.2.1",
+      "expected_rule": "generic/tongsuo",
+      "rule": "generic/tongsuo",
+      "reported": "8.2.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 14.23
+    },
+    {
+      "case": "tongsuo-8.3.3",
+      "variant": "pristine",
+      "truth": "8.3.3",
+      "expected_rule": "generic/tongsuo",
+      "rule": "generic/tongsuo",
+      "reported": "8.3.3",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 14.07
+    },
+    {
+      "case": "tongsuo-8.3.3",
+      "variant": "stripped",
+      "truth": "8.3.3",
+      "expected_rule": "generic/tongsuo",
+      "rule": "generic/tongsuo",
+      "reported": "8.3.3",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 13.99
+    },
+    {
+      "case": "tongsuo-8.4.0",
+      "variant": "pristine",
+      "truth": "8.4.0",
+      "expected_rule": "generic/tongsuo",
+      "rule": "generic/tongsuo",
+      "reported": "8.4.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 14.01
+    },
+    {
+      "case": "tongsuo-8.4.0",
+      "variant": "stripped",
+      "truth": "8.4.0",
+      "expected_rule": "generic/tongsuo",
+      "rule": "generic/tongsuo",
+      "reported": "8.4.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 15.76
+    },
+    {
+      "case": "tongsuo-8.5.0",
+      "variant": "pristine",
+      "truth": "8.5.0",
+      "expected_rule": "generic/tongsuo",
+      "rule": "generic/tongsuo",
+      "reported": "8.5.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.12
+    },
+    {
+      "case": "tongsuo-8.5.0",
+      "variant": "stripped",
+      "truth": "8.5.0",
+      "expected_rule": "generic/tongsuo",
+      "rule": "generic/tongsuo",
+      "reported": "8.5.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.32
+    },
+    {
+      "case": "openssl-1.1.0g",
+      "variant": "pristine",
+      "truth": "1.1.0g",
+      "expected_rule": "generic/openssl",
+      "rule": "generic/openssl",
+      "reported": "1.1.0g",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 14.6
+    },
+    {
+      "case": "openssl-1.1.0g",
+      "variant": "stripped",
+      "truth": "1.1.0g",
+      "expected_rule": "generic/openssl",
+      "rule": "generic/openssl",
+      "reported": "1.1.0g",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 13.04
+    },
+    {
+      "case": "openssl-1.1.0l",
+      "variant": "pristine",
+      "truth": "1.1.0l",
+      "expected_rule": "generic/openssl",
+      "rule": "generic/openssl",
+      "reported": "1.1.0l",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 14.3
+    },
+    {
+      "case": "openssl-1.1.0l",
+      "variant": "stripped",
+      "truth": "1.1.0l",
+      "expected_rule": "generic/openssl",
+      "rule": "generic/openssl",
+      "reported": "1.1.0l",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 14.58
+    },
+    {
+      "case": "openssl-1.1.1k",
+      "variant": "pristine",
+      "truth": "1.1.1k",
+      "expected_rule": "generic/openssl",
+      "rule": "generic/openssl",
+      "reported": "1.1.1k",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 14.62
+    },
+    {
+      "case": "openssl-1.1.1k",
+      "variant": "stripped",
+      "truth": "1.1.1k",
+      "expected_rule": "generic/openssl",
+      "rule": "generic/openssl",
+      "reported": "1.1.1k",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 15.3
+    },
+    {
+      "case": "openssl-1.1.1w",
+      "variant": "pristine",
+      "truth": "1.1.1w",
+      "expected_rule": "generic/openssl",
+      "rule": "generic/openssl",
+      "reported": "1.1.1w",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 13.34
+    },
+    {
+      "case": "openssl-1.1.1w",
+      "variant": "stripped",
+      "truth": "1.1.1w",
+      "expected_rule": "generic/openssl",
+      "rule": "generic/openssl",
+      "reported": "1.1.1w",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.79
+    },
+    {
+      "case": "openssl-3.0.22",
+      "variant": "pristine",
+      "truth": "3.0.22",
+      "expected_rule": "generic/openssl",
+      "rule": "generic/openssl",
+      "reported": "3.0.22",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 14.46
+    },
+    {
+      "case": "openssl-3.0.22",
+      "variant": "stripped",
+      "truth": "3.0.22",
+      "expected_rule": "generic/openssl",
+      "rule": "generic/openssl",
+      "reported": "3.0.22",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 15.35
+    },
+    {
+      "case": "openssl-3.5.9",
+      "variant": "pristine",
+      "truth": "3.5.9",
+      "expected_rule": "generic/openssl",
+      "rule": "generic/openssl",
+      "reported": "3.5.9",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 15.45
+    },
+    {
+      "case": "openssl-3.5.9",
+      "variant": "stripped",
+      "truth": "3.5.9",
+      "expected_rule": "generic/openssl",
+      "rule": "generic/openssl",
+      "reported": "3.5.9",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 14.42
+    },
+    {
+      "case": "mbedtls-2.7.19",
+      "variant": "pristine",
+      "truth": "2.7.19",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "2.7.19",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.18
+    },
+    {
+      "case": "mbedtls-2.7.19",
+      "variant": "stripped",
+      "truth": "2.7.19",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "2.7.19",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.42
+    },
+    {
+      "case": "mbedtls-2.16.12",
+      "variant": "pristine",
+      "truth": "2.16.12",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "2.16.12",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.32
+    },
+    {
+      "case": "mbedtls-2.16.12",
+      "variant": "stripped",
+      "truth": "2.16.12",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "2.16.12",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.04
+    },
+    {
+      "case": "mbedtls-3.1.0",
+      "variant": "pristine",
+      "truth": "3.1.0",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "3.1.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.66
+    },
+    {
+      "case": "mbedtls-3.1.0",
+      "variant": "stripped",
+      "truth": "3.1.0",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "3.1.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 10.32
+    },
+    {
+      "case": "mbedtls-3.5.2",
+      "variant": "pristine",
+      "truth": "3.5.2",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "3.5.2",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 11.08
+    },
+    {
+      "case": "mbedtls-3.5.2",
+      "variant": "stripped",
+      "truth": "3.5.2",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "3.5.2",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 10.22
+    },
+    {
+      "case": "mbedtls-3.6.7",
+      "variant": "pristine",
+      "truth": "3.6.7",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "3.6.7",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 10.56
+    },
+    {
+      "case": "mbedtls-3.6.7",
+      "variant": "stripped",
+      "truth": "3.6.7",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "3.6.7",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 11.57
+    },
+    {
+      "case": "mbedtls-4.1.1",
+      "variant": "pristine",
+      "truth": "4.1.1",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "4.1.1",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.49
+    },
+    {
+      "case": "mbedtls-4.1.1",
+      "variant": "stripped",
+      "truth": "4.1.1",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "4.1.1~4.2.0",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.5
+    },
+    {
+      "case": "fatfs-0.10c",
+      "variant": "pristine",
+      "truth": "0.10c",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.10c",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.08
+    },
+    {
+      "case": "fatfs-0.10c",
+      "variant": "touched",
+      "truth": "0.10c",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.10c",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.29
+    },
+    {
+      "case": "fatfs-0.12c",
+      "variant": "pristine",
+      "truth": "0.12c",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.12c",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.98
+    },
+    {
+      "case": "fatfs-0.12c",
+      "variant": "touched",
+      "truth": "0.12c",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.12c",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.87
+    },
+    {
+      "case": "fatfs-0.13c",
+      "variant": "pristine",
+      "truth": "0.13c",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.13c",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib/source",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.42
+    },
+    {
+      "case": "fatfs-0.13c",
+      "variant": "touched",
+      "truth": "0.13c",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.13c",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib/source",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.38
+    },
+    {
+      "case": "fatfs-0.14b",
+      "variant": "pristine",
+      "truth": "0.14b",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.14b",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib/source",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.19
+    },
+    {
+      "case": "fatfs-0.14b",
+      "variant": "touched",
+      "truth": "0.14b",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.14b",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib/source",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.99
+    },
+    {
+      "case": "fatfs-0.15a",
+      "variant": "pristine",
+      "truth": "0.15a",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.15a",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib/source",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.29
+    },
+    {
+      "case": "fatfs-0.15a",
+      "variant": "touched",
+      "truth": "0.15a",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.15a",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib/source",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.68
+    },
+    {
+      "case": "fatfs-0.16",
+      "variant": "pristine",
+      "truth": "0.16",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.16",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib/source",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.6
+    },
+    {
+      "case": "fatfs-0.16",
+      "variant": "touched",
+      "truth": "0.16",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.16",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib/source",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.16
+    },
+    {
+      "case": "littlefs-2.0.5",
+      "variant": "pristine",
+      "truth": "2.0.5",
+      "expected_rule": "generic/littlefs",
+      "rule": "generic/littlefs",
+      "reported": "2.0.5",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.22
+    },
+    {
+      "case": "littlefs-2.0.5",
+      "variant": "touched",
+      "truth": "2.0.5",
+      "expected_rule": "generic/littlefs",
+      "rule": "generic/littlefs",
+      "reported": "2.0.5",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.83
+    },
+    {
+      "case": "littlefs-2.5.0",
+      "variant": "pristine",
+      "truth": "2.5.0",
+      "expected_rule": "generic/littlefs",
+      "rule": "generic/littlefs",
+      "reported": "2.5.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.09
+    },
+    {
+      "case": "littlefs-2.5.0",
+      "variant": "touched",
+      "truth": "2.5.0",
+      "expected_rule": "generic/littlefs",
+      "rule": "generic/littlefs",
+      "reported": "2.5.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.63
+    },
+    {
+      "case": "lvgl-7.11.0",
+      "variant": "pristine",
+      "truth": "7.11.0",
+      "expected_rule": "generic/lvgl",
+      "rule": "generic/lvgl",
+      "reported": "7.11.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 10.31
+    },
+    {
+      "case": "lvgl-7.11.0",
+      "variant": "stripped",
+      "truth": "7.11.0",
+      "expected_rule": "generic/lvgl",
+      "rule": "generic/lvgl",
+      "reported": "7.11.0",
+      "confidence": 0.9,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 10.42
+    },
+    {
+      "case": "lvgl-8.4.0",
+      "variant": "pristine",
+      "truth": "8.4.0",
+      "expected_rule": "generic/lvgl",
+      "rule": "generic/lvgl",
+      "reported": "8.4.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 3,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/cmsis-pack/LVGL.lvgl",
+          "directory": "vendored_lib/env_support/cmsis-pack",
+          "version": "8.4.0"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/lodepng",
+          "directory": "vendored_lib/src/extra/libs/png",
+          "version": "2020-10-17"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/unity",
+          "directory": "vendored_lib/tests/unity",
+          "version": "2.5.1~2.5.2"
+        }
+      ],
+      "seconds": 19.26
+    },
+    {
+      "case": "lvgl-8.4.0",
+      "variant": "stripped",
+      "truth": "8.4.0",
+      "expected_rule": "generic/lvgl",
+      "rule": "generic/lvgl",
+      "reported": "8.4.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 4,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/arduino/lvgl",
+          "directory": "vendored_lib",
+          "version": "8.4.0"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmsis-pack/LVGL.lvgl",
+          "directory": "vendored_lib/env_support/cmsis-pack",
+          "version": "8.4.0"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/lodepng",
+          "directory": "vendored_lib/src/extra/libs/png",
+          "version": "2020-10-17"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/unity",
+          "directory": "vendored_lib/tests/unity",
+          "version": "2.5.1~2.5.2"
+        }
+      ],
+      "seconds": 20.51
+    },
+    {
+      "case": "lvgl-9.2.2",
+      "variant": "pristine",
+      "truth": "9.2.2",
+      "expected_rule": "generic/lvgl",
+      "rule": "generic/lvgl",
+      "reported": "9.2.2",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 3,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/cmsis-pack/LVGL.lvgl",
+          "directory": "vendored_lib/env_support/cmsis-pack",
+          "version": "9.2.2"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/lodepng",
+          "directory": "vendored_lib/src/libs/lodepng",
+          "version": "2023-04-10"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/unity",
+          "directory": "vendored_lib/tests/unity",
+          "version": "2.6.0"
+        }
+      ],
+      "seconds": 25.51
+    },
+    {
+      "case": "lvgl-9.2.2",
+      "variant": "stripped",
+      "truth": "9.2.2",
+      "expected_rule": "generic/lvgl",
+      "rule": "generic/lvgl",
+      "reported": "9.2.1~9.2.2",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "vendored_lib/src",
+      "other_findings": 4,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/arduino/lvgl",
+          "directory": "vendored_lib",
+          "version": "9.2.2"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmsis-pack/LVGL.lvgl",
+          "directory": "vendored_lib/env_support/cmsis-pack",
+          "version": "9.2.2"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/lodepng",
+          "directory": "vendored_lib/src/libs/lodepng",
+          "version": "2023-04-10"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/unity",
+          "directory": "vendored_lib/tests/unity",
+          "version": "2.6.0"
+        }
+      ],
+      "seconds": 23.02
+    },
+    {
+      "case": "lvgl-9.5.0",
+      "variant": "pristine",
+      "truth": "9.5.0",
+      "expected_rule": "generic/lvgl",
+      "rule": "generic/lvgl",
+      "reported": "9.5.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 3,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/cmsis-pack/LVGL.lvgl",
+          "directory": "vendored_lib/env_support/cmsis-pack",
+          "version": "9.5.0"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/lodepng",
+          "directory": "vendored_lib/src/libs/lodepng",
+          "version": "2023-04-10"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/unity",
+          "directory": "vendored_lib/tests/unity",
+          "version": "2.6.0"
+        }
+      ],
+      "seconds": 28.13
+    },
+    {
+      "case": "lvgl-9.5.0",
+      "variant": "stripped",
+      "truth": "9.5.0",
+      "expected_rule": "generic/lvgl",
+      "rule": "generic/lvgl",
+      "reported": "9.5.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 4,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/arduino/lvgl",
+          "directory": "vendored_lib",
+          "version": "9.5.0"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmsis-pack/LVGL.lvgl",
+          "directory": "vendored_lib/env_support/cmsis-pack",
+          "version": "9.5.0"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/lodepng",
+          "directory": "vendored_lib/src/libs/lodepng",
+          "version": "2023-04-10"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/unity",
+          "directory": "vendored_lib/tests/unity",
+          "version": "2.6.0"
+        }
+      ],
+      "seconds": 27.84
+    },
+    {
+      "case": "lvgl-9.6.0",
+      "variant": "pristine",
+      "truth": "9.6.0",
+      "expected_rule": "generic/lvgl",
+      "rule": "generic/lvgl",
+      "reported": "9.6.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 14,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/arduino/lvgl",
+          "directory": "vendored_lib",
+          "version": "9.6.0"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/glfw",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": "3.4"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/libjpeg-turbo",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": "3.1.0"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/libpng",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": "1.6.47"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/SDL2",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": "2.30.11"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/SDL2_image",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": "2.8.4"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/zlib",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": "1.3.1"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmsis-pack/LVGL.lvgl",
+          "directory": "vendored_lib/env_support/cmsis-pack",
+          "version": "9.6.0"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/lodepng",
+          "directory": "vendored_lib/src/libs/lodepng",
+          "version": "2023-04-10"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/unity",
+          "directory": "vendored_lib/tests/unity",
+          "version": "2.6.0"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/fastgltf",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": null
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/freetype",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": null
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/lv_demos_ext",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": null
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/webp",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": null
+        }
+      ],
+      "seconds": 26.81
+    },
+    {
+      "case": "lvgl-9.6.0",
+      "variant": "stripped",
+      "truth": "9.6.0",
+      "expected_rule": "generic/lvgl",
+      "rule": "generic/lvgl",
+      "reported": "9.6.0",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib/src",
+      "other_findings": 14,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/arduino/lvgl",
+          "directory": "vendored_lib",
+          "version": "9.6.0"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/glfw",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": "3.4"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/libjpeg-turbo",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": "3.1.0"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/libpng",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": "1.6.47"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/SDL2",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": "2.30.11"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/SDL2_image",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": "2.8.4"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/zlib",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": "1.3.1"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmsis-pack/LVGL.lvgl",
+          "directory": "vendored_lib/env_support/cmsis-pack",
+          "version": "9.6.0"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/lodepng",
+          "directory": "vendored_lib/src/libs/lodepng",
+          "version": "2023-04-10"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/unity",
+          "directory": "vendored_lib/tests/unity",
+          "version": "2.6.0"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/fastgltf",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": null
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/freetype",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": null
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/lv_demos_ext",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": null
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/webp",
+          "directory": "vendored_lib/env_support/cmake/dependencies",
+          "version": null
+        }
+      ],
+      "seconds": 28.71
+    },
+    {
+      "case": "libcoap-4.1.2",
+      "variant": "pristine",
+      "truth": "4.1.2",
+      "expected_rule": "generic/libcoap",
+      "rule": "generic/libcoap",
+      "reported": "4.1.2",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.61
+    },
+    {
+      "case": "libcoap-4.1.2",
+      "variant": "stripped",
+      "truth": "4.1.2",
+      "expected_rule": "generic/libcoap",
+      "rule": "generic/libcoap",
+      "reported": "4.1.2",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.11
+    },
+    {
+      "case": "libcoap-4.2.1",
+      "variant": "pristine",
+      "truth": "4.2.1",
+      "expected_rule": "generic/libcoap",
+      "rule": "generic/libcoap",
+      "reported": "4.2.1",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 7.79
+    },
+    {
+      "case": "libcoap-4.2.1",
+      "variant": "stripped",
+      "truth": "4.2.1",
+      "expected_rule": "generic/libcoap",
+      "rule": "generic/libcoap",
+      "reported": "4.2.1",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.09
+    },
+    {
+      "case": "libcoap-4.3.0",
+      "variant": "pristine",
+      "truth": "4.3.0",
+      "expected_rule": "generic/libcoap",
+      "rule": "generic/libcoap",
+      "reported": "4.3.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/external_tinydtls",
+          "directory": "vendored_lib",
+          "version": null
+        }
+      ],
+      "seconds": 9.53
+    },
+    {
+      "case": "libcoap-4.3.0",
+      "variant": "stripped",
+      "truth": "4.3.0",
+      "expected_rule": "generic/libcoap",
+      "rule": "generic/libcoap",
+      "reported": "4.3.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/external_tinydtls",
+          "directory": "vendored_lib",
+          "version": null
+        }
+      ],
+      "seconds": 9.66
+    },
+    {
+      "case": "libcoap-4.3.5",
+      "variant": "pristine",
+      "truth": "4.3.5",
+      "expected_rule": "generic/libcoap",
+      "rule": "generic/libcoap",
+      "reported": "4.3.5",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/external_tinydtls",
+          "directory": "vendored_lib",
+          "version": null
+        }
+      ],
+      "seconds": 11.21
+    },
+    {
+      "case": "libcoap-4.3.5",
+      "variant": "stripped",
+      "truth": "4.3.5",
+      "expected_rule": "generic/libcoap",
+      "rule": "generic/libcoap",
+      "reported": "4.3.5",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/external_tinydtls",
+          "directory": "vendored_lib",
+          "version": null
+        }
+      ],
+      "seconds": 9.8
+    },
+    {
+      "case": "tinycrypt-0.2.5",
+      "variant": "pristine",
+      "truth": "0.2.5",
+      "expected_rule": "generic/tinycrypt",
+      "rule": "generic/tinycrypt",
+      "reported": "0.2.5",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.3
+    },
+    {
+      "case": "tinycrypt-0.2.7",
+      "variant": "pristine",
+      "truth": "0.2.7",
+      "expected_rule": "generic/tinycrypt",
+      "rule": "generic/tinycrypt",
+      "reported": "0.2.7",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "vendored_lib/lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.13
+    },
+    {
       "case": "mbedtls-2.28.10",
       "variant": "pristine",
       "truth": "2.28.10",
@@ -205,7 +3352,8 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 9.29
+      "others": [],
+      "seconds": 10.88
     },
     {
       "case": "mbedtls-2.28.10",
@@ -218,7 +3366,8 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 9.54
+      "others": [],
+      "seconds": 10.3
     },
     {
       "case": "mbedtls-3.6.4",
@@ -231,7 +3380,8 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 9.79
+      "others": [],
+      "seconds": 10.63
     },
     {
       "case": "mbedtls-3.6.4",
@@ -244,7 +3394,8 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 9.92
+      "others": [],
+      "seconds": 10.9
     },
     {
       "case": "littlefs-2.9.1",
@@ -257,7 +3408,8 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 6.48
+      "others": [],
+      "seconds": 8.19
     },
     {
       "case": "littlefs-2.11.3",
@@ -270,7 +3422,8 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 0,
-      "seconds": 6.78
+      "others": [],
+      "seconds": 8.59
     },
     {
       "case": "tinycrypt-0.2.8",
@@ -283,7 +3436,8 @@
       "verdict": "exact",
       "directory": "vendored_lib/lib",
       "other_findings": 0,
-      "seconds": 6.69
+      "others": [],
+      "seconds": 8.22
     },
     {
       "case": "lwip-2.2.0",
@@ -296,7 +3450,8 @@
       "verdict": "exact",
       "directory": "vendored_lib/src",
       "other_findings": 0,
-      "seconds": 9.99
+      "others": [],
+      "seconds": 10.94
     },
     {
       "case": "lwip-2.1.3",
@@ -309,7 +3464,8 @@
       "verdict": "exact",
       "directory": "vendored_lib/src",
       "other_findings": 0,
-      "seconds": 9.07
+      "others": [],
+      "seconds": 10.09
     },
     {
       "case": "libcoap-4.3.4",
@@ -322,7 +3478,15 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 1,
-      "seconds": 7.93
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/external_tinydtls",
+          "directory": "vendored_lib",
+          "version": null
+        }
+      ],
+      "seconds": 9.83
     },
     {
       "case": "libcoap-4.3.4",
@@ -335,7 +3499,15 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 1,
-      "seconds": 8.2
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/external_tinydtls",
+          "directory": "vendored_lib",
+          "version": null
+        }
+      ],
+      "seconds": 9.54
     },
     {
       "case": "lvgl-8.3.11",
@@ -348,7 +3520,27 @@
       "verdict": "exact",
       "directory": "vendored_lib",
       "other_findings": 3,
-      "seconds": 22.42
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/cmsis-pack/LVGL.lvgl",
+          "directory": "vendored_lib/env_support/cmsis-pack",
+          "version": "8.3.11"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/lodepng",
+          "directory": "vendored_lib/src/extra/libs/png",
+          "version": "2020-10-17"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/unity",
+          "directory": "vendored_lib/tests/unity",
+          "version": "2.5.1~2.5.2"
+        }
+      ],
+      "seconds": 18.25
     },
     {
       "case": "lvgl-8.3.11",
@@ -361,7 +3553,888 @@
       "verdict": "exact",
       "directory": "vendored_lib/src",
       "other_findings": 4,
-      "seconds": 22.94
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/arduino/lvgl",
+          "directory": "vendored_lib",
+          "version": "8.3.11"
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmsis-pack/LVGL.lvgl",
+          "directory": "vendored_lib/env_support/cmsis-pack",
+          "version": "8.3.11"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/lodepng",
+          "directory": "vendored_lib/src/extra/libs/png",
+          "version": "2020-10-17"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/unity",
+          "directory": "vendored_lib/tests/unity",
+          "version": "2.5.1~2.5.2"
+        }
+      ],
+      "seconds": 19.2
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos/components/thirdparty/elmfat/src",
+      "truth": "0.13c",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.13c",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "lichee/rtos/components/thirdparty/elmfat/src",
+      "other_findings": 3,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/lodepng",
+          "directory": "lichee/rtos-components/thirdparty/littlevgl-8/lvgl/src/extra/libs/png",
+          "version": "2020-10-17"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/unity",
+          "directory": "lichee/rtos-components/thirdparty/littlevgl-8/lvgl/tests/unity",
+          "version": "2.5.1~2.5.2"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/freertos-kernel",
+          "directory": "lichee/rtos/kernel",
+          "version": "10.4.0~10.4.3"
+        }
+      ],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/dsp/kernel/FreeRTOS_xtensa_v1.7/FreeRTOS",
+      "truth": "not stated",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": "generic/freertos-kernel",
+      "reported": "10.2.0~10.2.1",
+      "confidence": 0.88,
+      "verdict": "identified",
+      "directory": "lichee/dsp/kernel/FreeRTOS_xtensa_v1.7/FreeRTOS",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos/kernel/FreeRTOS-orig/Source",
+      "truth": "10.4.3",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": null,
+      "reported": null,
+      "confidence": null,
+      "verdict": "missing",
+      "directory": null,
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos/kernel/FreeRTOS/Source",
+      "truth": "10.2.0",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": null,
+      "reported": null,
+      "confidence": null,
+      "verdict": "missing",
+      "directory": null,
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos-components/thirdparty/freetype",
+      "truth": "2.13.0",
+      "expected_rule": "generic/freetype",
+      "rule": "generic/freetype",
+      "reported": "2.13.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "lichee/rtos-components/thirdparty/freetype",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos-components/thirdparty/giflib/giflib-5.2.1",
+      "truth": "5.2.1",
+      "expected_rule": "generic/giflib",
+      "rule": "generic/giflib",
+      "reported": "5.2.1",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "lichee/rtos-components/thirdparty/giflib/giflib-5.2.1",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos-components/thirdparty/libjpeg-turbo/source",
+      "truth": "2.1.5.1",
+      "expected_rule": "generic/libjpeg-turbo",
+      "rule": "generic/libjpeg-turbo",
+      "reported": "2.1.5~2.1.5.1",
+      "confidence": 0.8,
+      "verdict": "range",
+      "directory": "lichee/rtos-components/thirdparty/libjpeg-turbo/source",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos/components/thirdparty/lfs/littlefs-2.2.1",
+      "truth": "2.2",
+      "expected_rule": "generic/littlefs",
+      "rule": "generic/littlefs",
+      "reported": "2.2.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "lichee/rtos/components/thirdparty/lfs/littlefs-2.2.1",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos-components/thirdparty/littlevgl-8/lvgl",
+      "truth": "8.1.0",
+      "expected_rule": "generic/lvgl",
+      "rule": "generic/lvgl",
+      "reported": "8.1.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "lichee/rtos-components/thirdparty/littlevgl-8/lvgl",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos-components/thirdparty/network/mbedtls-2.16.0",
+      "truth": "2.16.0",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "2.16.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "lichee/rtos-components/thirdparty/network/mbedtls-2.16.0",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos-components/thirdparty/network/mbedtls-2.7.0",
+      "truth": "2.7.0",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "2.7.0",
+      "confidence": 0.8,
+      "verdict": "exact",
+      "directory": "lichee/rtos-components/thirdparty/network/mbedtls-2.7.0",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos-components/thirdparty/opus",
+      "truth": "not stated",
+      "expected_rule": "generic/opus",
+      "rule": "generic/opus",
+      "reported": "1.3.1",
+      "confidence": 0.95,
+      "verdict": "identified",
+      "directory": "lichee/rtos-components/thirdparty/opus",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos-components/thirdparty/bluetooth/zephyr/src/tinycrypt",
+      "truth": "not stated",
+      "expected_rule": "generic/tinycrypt",
+      "rule": "generic/tinycrypt",
+      "reported": "0.2.8",
+      "confidence": 0.88,
+      "verdict": "identified",
+      "directory": "lichee/rtos-components/thirdparty/bluetooth/zephyr/src/tinycrypt",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-allwinner-r128s2-sdk-09",
+      "variant": "lichee/rtos-components/thirdparty/tinycrypt",
+      "truth": "not stated",
+      "expected_rule": "generic/tinycrypt",
+      "rule": "generic/tinycrypt",
+      "reported": "0.2.8",
+      "confidence": 0.88,
+      "verdict": "identified",
+      "directory": "lichee/rtos-components/thirdparty/tinycrypt",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 17.74
+    },
+    {
+      "case": "sdk-d1s-melis",
+      "variant": "ekernel/components/thirdparty/dfs/filesystems/elmfat",
+      "truth": "0.12b",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.12b",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "ekernel/components/thirdparty/dfs/filesystems/elmfat",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 11.56
+    },
+    {
+      "case": "sdk-d1s-melis",
+      "variant": "ekernel/components/thirdparty/dfs/filesystems/littlefs",
+      "truth": "2.1",
+      "expected_rule": "generic/littlefs",
+      "rule": "generic/littlefs",
+      "reported": "2.1.3",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "ekernel/components/thirdparty/dfs/filesystems/littlefs",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 11.56
+    },
+    {
+      "case": "sdk-d1s-melis",
+      "variant": "ekernel/components/thirdparty/net/rt-thread/lwip/src/apps/mbedtls",
+      "truth": "2.7.0",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "2.7.0",
+      "confidence": 0.82,
+      "verdict": "exact",
+      "directory": "ekernel/components/thirdparty/net/rt-thread/lwip/src/apps/mbedtls",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 11.56
+    },
+    {
+      "case": "sdk-esp8266_rtos_sdk",
+      "variant": "components/fatfs/src",
+      "truth": "0.13c",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.13c",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "components/fatfs/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.09
+    },
+    {
+      "case": "sdk-esp8266_rtos_sdk",
+      "variant": "components/freertos/freertos",
+      "truth": "10.0.1",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": "generic/freertos-kernel",
+      "reported": "10.0.0~10.0.1",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "components/freertos/freertos",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.09
+    },
+    {
+      "case": "sdk-bl_iot_sdk",
+      "variant": "components/3rdparty/aws-iot/aws-iot-device-sdk-embedded-C",
+      "truth": "3.0.1",
+      "expected_rule": "generic/aws-iot-device-sdk-c",
+      "rule": "generic/aws-iot-device-sdk-c",
+      "reported": "3.0.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "components/3rdparty/aws-iot/aws-iot-device-sdk-embedded-C",
+      "other_findings": 1,
+      "others": [
+        {
+          "kind": "bundled",
+          "rule": "generic/jsmn",
+          "directory": "components/3rdparty/aws-iot/aws-iot-device-sdk-embedded-C/external_libs/jsmn",
+          "version": "1.0.0"
+        }
+      ],
+      "seconds": 12.61
+    },
+    {
+      "case": "sdk-bl_iot_sdk",
+      "variant": "components/os/freertos_e907",
+      "truth": "10.4.1",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": "generic/freertos-kernel",
+      "reported": "10.4.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "components/os/freertos_e907",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.61
+    },
+    {
+      "case": "sdk-bl_iot_sdk",
+      "variant": "components/platform/soc/bl602/freertos_riscv",
+      "truth": "10.2.0",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": "generic/freertos-kernel",
+      "reported": "10.2.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "components/platform/soc/bl602/freertos_riscv",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.61
+    },
+    {
+      "case": "sdk-bl_iot_sdk",
+      "variant": "components/platform/soc/bl602/freertos_riscv_ram",
+      "truth": "10.2.0",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": "generic/freertos-kernel",
+      "reported": "10.2.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "components/platform/soc/bl602/freertos_riscv_ram",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.61
+    },
+    {
+      "case": "sdk-bl_iot_sdk",
+      "variant": "components/platform/soc/bl702/bl702_freertos",
+      "truth": "10.2.0",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": "generic/freertos-kernel",
+      "reported": "10.2.0",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "components/platform/soc/bl702/bl702_freertos",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.61
+    },
+    {
+      "case": "sdk-bl_iot_sdk",
+      "variant": "components/platform/soc/bl808/bl808_c906_freertos/Source",
+      "truth": "10.2.1",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": "generic/freertos-kernel",
+      "reported": "10.2.1",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "components/platform/soc/bl808/bl808_c906_freertos/Source",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.61
+    },
+    {
+      "case": "sdk-bl_iot_sdk",
+      "variant": "components/network/thread/openthread/third_party/mbedtls/repo",
+      "truth": "2.28.0",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "2.28.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "components/network/thread/openthread/third_party/mbedtls/repo",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.61
+    },
+    {
+      "case": "sdk-bl_iot_sdk",
+      "variant": "components/security/mbedtls_lts/mbedtls",
+      "truth": "2.28.1",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "2.28.1",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "components/security/mbedtls_lts/mbedtls",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.61
+    },
+    {
+      "case": "sdk-bl_iot_sdk",
+      "variant": "components/network/thread/openthread",
+      "truth": "not stated",
+      "expected_rule": "generic/openthread",
+      "rule": "generic/openthread",
+      "reported": "20221027",
+      "confidence": 0.88,
+      "verdict": "identified",
+      "directory": "components/network/thread/openthread",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.61
+    },
+    {
+      "case": "sdk-bl_iot_sdk",
+      "variant": "components/network/ble/blestack/src/common/tinycrypt",
+      "truth": "0.2.7",
+      "expected_rule": "generic/tinycrypt",
+      "rule": "generic/tinycrypt",
+      "reported": "0.2.8",
+      "confidence": 0.88,
+      "verdict": "wrong",
+      "directory": "components/network/ble/blestack/src/common/tinycrypt",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.61
+    },
+    {
+      "case": "sdk-bouffalo_sdk",
+      "variant": "components/fs/fatfs",
+      "truth": "0.15",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.15",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "components/fs/fatfs",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.94
+    },
+    {
+      "case": "sdk-bouffalo_sdk",
+      "variant": "components/os/freertos",
+      "truth": "10.6.2",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": "generic/freertos-kernel",
+      "reported": "10.6.2",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "components/os/freertos",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.94
+    },
+    {
+      "case": "sdk-bouffalo_sdk",
+      "variant": "components/fs/littlefs/littlefs",
+      "truth": "2.11",
+      "expected_rule": "generic/littlefs",
+      "rule": "generic/littlefs",
+      "reported": "2.11.3",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "components/fs/littlefs/littlefs",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.94
+    },
+    {
+      "case": "sdk-bouffalo_sdk",
+      "variant": "components/crypto/mbedtls/mbedtls",
+      "truth": "2.28.2",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "2.28.2",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "components/crypto/mbedtls/mbedtls",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.94
+    },
+    {
+      "case": "sdk-bouffalo_sdk",
+      "variant": "components/crypto/mbedtls/mbedtls_v3",
+      "truth": "3.6.5",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "3.6.5",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "components/crypto/mbedtls/mbedtls_v3",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.94
+    },
+    {
+      "case": "sdk-bouffalo_sdk",
+      "variant": "components/ipc/open-amp/open-amp",
+      "truth": "not stated",
+      "expected_rule": "generic/open-amp",
+      "rule": "generic/open-amp",
+      "reported": "2025.10.0",
+      "confidence": 0.88,
+      "verdict": "identified",
+      "directory": "components/ipc/open-amp/open-amp/lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.94
+    },
+    {
+      "case": "sdk-bouffalo_sdk",
+      "variant": "components/wireless/bluetooth/blestack/src/common/tinycrypt",
+      "truth": "0.2.7",
+      "expected_rule": "generic/tinycrypt",
+      "rule": "generic/tinycrypt",
+      "reported": "0.2.8",
+      "confidence": 0.88,
+      "verdict": "wrong",
+      "directory": "components/wireless/bluetooth/blestack/src/common/tinycrypt",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 12.94
+    },
+    {
+      "case": "sdk-ch32v20x",
+      "variant": "EVT/EXAM/FreeRTOS/FreeRTOS_Core/FreeRTOS",
+      "truth": "10.4.6",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": "generic/freertos-kernel",
+      "reported": "10.4.6",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "EVT/EXAM/FreeRTOS/FreeRTOS_Core/FreeRTOS",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.56
+    },
+    {
+      "case": "sdk-ch32v20x",
+      "variant": "EVT/EXAM/HarmonyOS/LiteOS_m/LiteOS/kernel",
+      "truth": "not stated",
+      "expected_rule": "generic/liteos-m-kernel",
+      "rule": "generic/liteos-m-kernel",
+      "reported": "3.0~3.0.3",
+      "confidence": 0.8,
+      "verdict": "identified",
+      "directory": "EVT/EXAM/HarmonyOS/LiteOS_m/LiteOS/kernel",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.56
+    },
+    {
+      "case": "sdk-ch32v20x",
+      "variant": "EVT/EXAM/RT-Thread/rt-thread/rtthread",
+      "truth": "3.1.3",
+      "expected_rule": "generic/rt-thread-kernel",
+      "rule": "generic/rt-thread-kernel",
+      "reported": "3.1.3",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "EVT/EXAM/RT-Thread/rt-thread/rtthread",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.56
+    },
+    {
+      "case": "sdk-ch32v20x",
+      "variant": "EVT/EXAM/TencentOS/TencentOS/TencentOS_Tiny/kernel/core",
+      "truth": "2.4.5",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.4.5",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "EVT/EXAM/TencentOS/TencentOS/TencentOS_Tiny/kernel/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.56
+    },
+    {
+      "case": "sdk-ch32v307",
+      "variant": "EVT/EXAM/SDIO/SDIO_SD_FATFS/FATFS",
+      "truth": "0.14b",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.14b",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "EVT/EXAM/SDIO/SDIO_SD_FATFS/FATFS",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.13
+    },
+    {
+      "case": "sdk-ch32v307",
+      "variant": "EVT/EXAM/FreeRTOS/FreeRTOS_Core/FreeRTOS",
+      "truth": "10.4.6",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": "generic/freertos-kernel",
+      "reported": "10.4.6",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "EVT/EXAM/FreeRTOS/FreeRTOS_Core/FreeRTOS",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.13
+    },
+    {
+      "case": "sdk-ch32v307",
+      "variant": "EVT/EXAM/HarmonyOS/LiteOS_m/LiteOS/kernel",
+      "truth": "not stated",
+      "expected_rule": "generic/liteos-m-kernel",
+      "rule": "generic/liteos-m-kernel",
+      "reported": "3.0~3.0.3",
+      "confidence": 0.8,
+      "verdict": "identified",
+      "directory": "EVT/EXAM/HarmonyOS/LiteOS_m/LiteOS/kernel",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.13
+    },
+    {
+      "case": "sdk-ch32v307",
+      "variant": "EVT/EXAM/RT-Thread/rt-thread/rtthread",
+      "truth": "3.1.3",
+      "expected_rule": "generic/rt-thread-kernel",
+      "rule": "generic/rt-thread-kernel",
+      "reported": "3.1.3",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "EVT/EXAM/RT-Thread/rt-thread/rtthread",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.13
+    },
+    {
+      "case": "sdk-ch32v307",
+      "variant": "EVT/EXAM/TencentOS/TencentOS/TencentOS_Tiny/kernel/core",
+      "truth": "2.4.5",
+      "expected_rule": "generic/tencentos-tiny-kernel",
+      "rule": "generic/tencentos-tiny-kernel",
+      "reported": "2.4.5",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "EVT/EXAM/TencentOS/TencentOS/TencentOS_Tiny/kernel/core",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 9.13
+    },
+    {
+      "case": "sdk-ch583",
+      "variant": "EVT/EXAM/FreeRTOS/FreeRTOS",
+      "truth": "10.5.1",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": "generic/freertos-kernel",
+      "reported": "10.5.1",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "EVT/EXAM/FreeRTOS/FreeRTOS",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.38
+    },
+    {
+      "case": "sdk-ch583",
+      "variant": "EVT/EXAM/HarmonyOS/kernel_liteos_m/kernel",
+      "truth": "3.2.3",
+      "expected_rule": "generic/liteos-m-kernel",
+      "rule": "generic/liteos-m-kernel",
+      "reported": "3.2~3.2.4",
+      "confidence": 0.88,
+      "verdict": "range",
+      "directory": "EVT/EXAM/HarmonyOS/kernel_liteos_m/kernel",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.38
+    },
+    {
+      "case": "sdk-ch583",
+      "variant": "EVT/EXAM/RT-Thread/rt-thread",
+      "truth": "3.1.5",
+      "expected_rule": "generic/rt-thread-kernel",
+      "rule": "generic/rt-thread-kernel",
+      "reported": "3.1.5",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "EVT/EXAM/RT-Thread/rt-thread",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 8.38
+    },
+    {
+      "case": "sdk-wm_iot_sdk",
+      "variant": "components/fatfs/src",
+      "truth": "0.15",
+      "expected_rule": "generic/fatfs",
+      "rule": "generic/fatfs",
+      "reported": "0.15",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "components/fatfs/src",
+      "other_findings": 5,
+      "others": [
+        {
+          "kind": "declared",
+          "rule": "declared/arduino/lvgl",
+          "directory": "components/lvgl/lvgl",
+          "version": "8.4.0"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/lodepng",
+          "directory": "components/lvgl/lvgl/src/extra/libs/png",
+          "version": "2020-10-17"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/unity",
+          "directory": "components/lvgl/lvgl/tests/unity",
+          "version": "2.5.1~2.5.2"
+        },
+        {
+          "kind": "bundled",
+          "rule": "generic/llhttp",
+          "directory": "components/wm_httpclient/http2/nghttp2/third-party/llhttp",
+          "version": null
+        },
+        {
+          "kind": "declared",
+          "rule": "declared/cmake/external_tinydtls",
+          "directory": "components/coap/libcoap",
+          "version": null
+        }
+      ],
+      "seconds": 27.12
+    },
+    {
+      "case": "sdk-wm_iot_sdk",
+      "variant": "components/freertos/src",
+      "truth": "10.4.1",
+      "expected_rule": "generic/freertos-kernel",
+      "rule": "generic/freertos-kernel",
+      "reported": "10.4.0~10.4.1",
+      "confidence": 0.8,
+      "verdict": "range",
+      "directory": "components/freertos/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 27.12
+    },
+    {
+      "case": "sdk-wm_iot_sdk",
+      "variant": "components/coap/libcoap",
+      "truth": "4.3.4",
+      "expected_rule": "generic/libcoap",
+      "rule": "generic/libcoap",
+      "reported": "4.3.4",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "components/coap/libcoap",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 27.12
+    },
+    {
+      "case": "sdk-wm_iot_sdk",
+      "variant": "components/websockets/libwebsockets",
+      "truth": "4.3.3",
+      "expected_rule": "generic/libwebsockets",
+      "rule": "generic/libwebsockets",
+      "reported": "4.3.3",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "components/websockets/libwebsockets",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 27.12
+    },
+    {
+      "case": "sdk-wm_iot_sdk",
+      "variant": "components/littlefs/src",
+      "truth": "2.10",
+      "expected_rule": "generic/littlefs",
+      "rule": "generic/littlefs",
+      "reported": "2.10.2",
+      "confidence": 0.88,
+      "verdict": "exact",
+      "directory": "components/littlefs/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 27.12
+    },
+    {
+      "case": "sdk-wm_iot_sdk",
+      "variant": "components/lvgl/lvgl",
+      "truth": "8.4.0",
+      "expected_rule": "generic/lvgl",
+      "rule": "generic/lvgl",
+      "reported": "8.4.0",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "components/lvgl/lvgl/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 27.12
+    },
+    {
+      "case": "sdk-wm_iot_sdk",
+      "variant": "components/mbedtls/src",
+      "truth": "3.4.0",
+      "expected_rule": "generic/mbedtls",
+      "rule": "generic/mbedtls",
+      "reported": "3.4.0",
+      "confidence": 0.95,
+      "verdict": "exact",
+      "directory": "components/mbedtls/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 27.12
+    },
+    {
+      "case": "sdk-wm_iot_sdk",
+      "variant": "components/wm_httpclient/http2/nghttp2",
+      "truth": "1.59.0",
+      "expected_rule": "generic/nghttp2",
+      "rule": "generic/nghttp2",
+      "reported": "1.59.0",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "components/wm_httpclient/http2/nghttp2/lib",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 27.12
+    },
+    {
+      "case": "sdk-wm_iot_sdk",
+      "variant": "components/mqtt/paho.mqtt.c",
+      "truth": "1.3.11",
+      "expected_rule": "generic/paho-mqtt-c",
+      "rule": "generic/paho-mqtt-c",
+      "reported": "1.3.11",
+      "confidence": 0.85,
+      "verdict": "exact",
+      "directory": "components/mqtt/paho.mqtt.c/src",
+      "other_findings": 0,
+      "others": [],
+      "seconds": 27.12
     }
   ]
 }

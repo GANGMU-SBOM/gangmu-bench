@@ -191,7 +191,9 @@ def grade(findings: List[dict], expect: dict, where: str = NEUTRAL) -> Tuple[str
     if expect.get("version") is None:      # the tree states no version to check against
         return "identified", finding
     reported, truth = str(finding.get("version") or ""), str(expect["version"])
-    if reported == truth:
+    # A vendor that states less than a release number (littlefs's LFS_VERSION is
+    # major.minor: 2.11) is matched by any release of it (2.11.3).
+    if reported == truth or (reported.startswith(truth + ".") and "~" not in reported):
         return "exact", finding
     if "~" in reported:
         low, high = reported.split("~", 1)
