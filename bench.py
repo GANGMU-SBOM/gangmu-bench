@@ -202,6 +202,19 @@ def grade(findings: List[dict], expect: dict, where: str = NEUTRAL) -> Tuple[str
     return "wrong", finding
 
 
+def known(verdict: str, reported, expect: dict, variant: str) -> str:
+    """``known`` for a wrong answer the case records as understood: the vendor's
+    or upstream's own statement is off, and the tool reports what the code is
+    (``expect.known``: the reported version, or {variant: reported version},
+    with ``known_why``). Shown in the results, not a failure; any other wrong
+    answer still is."""
+    k = expect.get("known")
+    if verdict != "wrong" or k is None:
+        return verdict
+    want = k.get(variant) if isinstance(k, dict) else k
+    return "known" if want is not None and str(want) == str(reported) else verdict
+
+
 def extras(findings: List[dict], graded: Optional[dict], expect: dict) -> List[dict]:
     """Every finding besides the graded one, labelled. ``unexpected`` is a false
     positive: neither the expected component again, nor a dependency a manifest
@@ -300,6 +313,7 @@ def run_sdk(case: dict, cache: Path, rules: List[str], installed: set) -> List[d
     chosen = []
     for copy in graded:
         verdict, finding = grade(findings, copy["expect"], copy["path"].strip("/"))
+        verdict = known(verdict, finding and finding.get("version"), copy["expect"], "copy")
         chosen.append((copy, verdict, finding))
     # The SDK's other findings are labelled once, on its first row: against the
     # components the case lists as bundled, or any rule a graded copy expects.
@@ -424,6 +438,7 @@ def main(argv=None) -> int:
                     where = NEUTRAL
                 findings, seconds = scan(root, args.rules)
                 verdict, finding = grade(findings, case["expect"], where)
+                verdict = known(verdict, finding and finding.get("version"), case["expect"], name)
                 others = extras(findings, finding, case["expect"])
                 row = {
                     "case": case["id"], "variant": name,
@@ -447,10 +462,10 @@ def main(argv=None) -> int:
                               f"at {o['directory']}", flush=True)
 
     counts = {v: sum(r["verdict"] == v for r in rows)
-              for v in ("exact", "range", "identified", "wrong", "missing", "skipped")}
+              for v in ("exact", "range", "identified", "known", "wrong", "missing", "skipped")}
     kinds = ("bundled", "declared", "duplicate", "unexpected")
     other = {k: sum(o["kind"] == k for r in rows for o in r["others"]) for k in kinds}
-    reported = sum(r["verdict"] in ("exact", "range", "identified", "wrong") for r in rows) + sum(
+    reported = sum(r["verdict"] in ("exact", "range", "identified", "known", "wrong") for r in rows) + sum(
         other[k] for k in ("bundled", "unexpected"))
     counts["false_positive"] = other["unexpected"]
     print("\n" + ", ".join(f"{v} {n}" for v, n in counts.items()))

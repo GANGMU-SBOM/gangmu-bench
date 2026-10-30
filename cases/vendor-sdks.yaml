@@ -183,6 +183,8 @@
     expect:
       rule: generic/tinycrypt
       version: 0.2.7
+      known: 0.2.8
+      known_why: 'the copy states 0.2.7 (README) but holds 6 of the 7 functions 0.2.8 changed and none of 0.2.7''s own: 0.2.7 with 0.2.8''s fixes backported'
     stated_in: README
   bundled:
   - generic/jsmn
@@ -227,6 +229,8 @@
     expect:
       rule: generic/tinycrypt
       version: 0.2.7
+      known: 0.2.8
+      known_why: 'the copy states 0.2.7 (README) but holds 6 of the 7 functions 0.2.8 changed and none of 0.2.7''s own: 0.2.7 with 0.2.8''s fixes backported'
     stated_in: README
 
 - id: sdk-ch32v20x

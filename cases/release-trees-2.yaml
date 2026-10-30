@@ -143,7 +143,9 @@
 - id: libwebsockets-4.0.21
   git: https://github.com/warmcat/libwebsockets
   ref: v4.0.21
-  expect: {rule: generic/libwebsockets, version: '4.0.21', bundled: [generic/zlib]}
+  expect: {rule: generic/libwebsockets, version: '4.0.21', bundled: [generic/zlib],
+           known: {pristine: '4.0.22'},
+           known_why: "the v4.0.21 tag's own CMakeLists.txt already says 4.0.22 (upstream bumped it before tagging)"}
   variants: [pristine, {strip: [CMakeLists.txt]}]
 
 - id: libwebsockets-4.1.6

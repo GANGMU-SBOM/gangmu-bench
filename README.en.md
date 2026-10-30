@@ -14,6 +14,7 @@ installed tool and [rule base](https://github.com/GANGMU-SBOM/gangmu-rules), and
 | exact | the reported version is the true version |
 | range | the reported range contains the true version (those versions have identical functions) |
 | identified | the right component; the copy states no version of its own, so the version cannot be checked (vendor-SDK copies only) |
+| known | a wrong answer the case records as understood (`expect.known` with `known_why`): the vendor's or upstream's own statement is off and the tool reports what the code is. Listed in the results, not a failure; any other wrong answer still is |
 | wrong | another component, or a range that excludes the true version |
 | missing | nothing was reported for the directory |
 | skipped | the case expects a rule that is not installed (for example a rule pack you did not load); not graded, not a failure |
