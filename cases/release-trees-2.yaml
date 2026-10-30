@@ -95,7 +95,7 @@
 - id: nghttp2-1.20.0
   git: https://github.com/nghttp2/nghttp2
   ref: v1.20.0
-  expect: {rule: generic/nghttp2, version: '1.20.0'}
+  expect: {rule: generic/nghttp2, version: '1.20.0', bundled: [generic/http-parser]}
   variants: [pristine, {strip: [CMakeLists.txt, configure.ac]}]
 
 - id: nghttp2-1.40.0
@@ -155,7 +155,7 @@
 - id: libwebsockets-4.5.8
   git: https://github.com/warmcat/libwebsockets
   ref: v4.5.8
-  expect: {rule: generic/libwebsockets, version: '4.5.8', bundled: [generic/zlib]}
+  expect: {rule: generic/libwebsockets, version: '4.5.8', bundled: [generic/zlib, generic/cmsis5-core]}
   variants: [pristine, {strip: [CMakeLists.txt]}]
 
 - id: paho-mqtt-c-1.1.0
