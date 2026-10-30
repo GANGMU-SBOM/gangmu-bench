@@ -73,6 +73,10 @@ def load_cases(selected: List[str]) -> List[dict]:
     return cases
 
 
+class FetchError(Exception):
+    """A case's source could not be fetched: the case is skipped, the run goes on."""
+
+
 def fetch(case: dict, cache: Path) -> Path:
     """A checkout of the case's ref, without .git, cached by URL and ref."""
     subdirs = _subdirs(case)
@@ -87,17 +91,30 @@ def fetch(case: dict, cache: Path) -> Path:
     dest.mkdir(parents=True)
     git = ["git", "-c", "advice.detachedHead=false"]
     subprocess.run(git + ["init", "-q", str(dest)], check=True)
+    fetch_cmd = git + ["-C", str(dest), "fetch", "-q", "--depth", "1", case["git"], case["ref"]]
     if subdirs:
         # Only the component's directory of a large repository (an RTOS kernel
-        # inside a whole SDK): a blobless fetch and a sparse checkout.
+        # inside a whole SDK): a blobless fetch and a sparse checkout. A server
+        # without partial clone (Gitee) gets the plain shallow fetch.
         subprocess.run(git + ["-C", str(dest), "sparse-checkout", "set", "--no-cone",
                               *[f"/{d}/" for d in subdirs]], check=True)
-        subprocess.run(git + ["-C", str(dest), "fetch", "-q", "--depth", "1",
-                              "--filter=blob:none", case["git"], case["ref"]], check=True)
+        attempts = [fetch_cmd[:6] + ["--filter=blob:none"] + fetch_cmd[6:], fetch_cmd]
     else:
-        subprocess.run(git + ["-C", str(dest), "fetch", "-q", "--depth", "1",
-                              case["git"], case["ref"]], check=True)
-    subprocess.run(git + ["-C", str(dest), "checkout", "-q", "FETCH_HEAD"], check=True)
+        attempts = [fetch_cmd]
+    checkout = git + ["-C", str(dest), "checkout", "-q", "FETCH_HEAD"]
+
+    def done(cmd) -> bool:
+        # A blobless checkout fetches its blobs then, so the checkout can fail too.
+        return (subprocess.run(cmd).returncode == 0
+                and subprocess.run(checkout).returncode == 0)
+
+    for attempt in range(3):            # some hosts drop connections now and then
+        if any(done(cmd) for cmd in attempts):
+            break
+        time.sleep(5 * (attempt + 1))
+    else:
+        shutil.rmtree(dest, ignore_errors=True)
+        raise FetchError(f"{case['git']} {case['ref']}: fetch failed three times")
     shutil.rmtree(dest / ".git")
     (dest / ".complete").write_text(case["ref"])
     return dest
@@ -272,7 +289,11 @@ def run_sdk(case: dict, cache: Path, rules: List[str], installed: set) -> List[d
               f"not installed", flush=True)
     if not graded:
         return out
-    source = fetch(case, cache)
+    try:
+        source = fetch(case, cache)
+    except FetchError as exc:
+        print(f"skipped  {case['id']:22s} {exc}", flush=True)
+        return out + [row(c, "skipped") for c in graded]
     findings, seconds = scan(source, rules)
     chosen = []
     for copy in graded:
@@ -367,9 +388,16 @@ def main(argv=None) -> int:
                 reason = "no gangmu checkout for the build recipe (--gangmu-src)"
             elif shutil.which(builder.TARGETS[case["binary"].get("target", "arm")]["cc"]) is None:
                 reason = f"cross compiler for {case['binary'].get('target', 'arm')} not installed"
+        source = None
+        if not reason and "binary" not in case:
+            try:
+                source = fetch(case, cache)
+            except FetchError as exc:
+                reason = str(exc)
         if reason:
             for variant in case.get("variants", ["pristine"]):
-                name = "pristine" if variant == "pristine" else "stripped"
+                name = ("pristine" if variant == "pristine" else
+                        "touched" if variant == "touch" else "stripped")
                 rows.append({
                     "case": case["id"], "variant": name,
                     "truth": str(case["expect"]["version"]),
@@ -380,7 +408,8 @@ def main(argv=None) -> int:
                 print(f"skipped  {case['id']:22s} {name:9s} "
                       f"{reason}", flush=True)
             continue
-        source = fetch(case, cache)
+        if source is None:
+            source = fetch(case, cache)
         with tempfile.TemporaryDirectory(prefix="gangmu-bench-") as tmp:
             for variant in case.get("variants", ["pristine"]):
                 if "binary" in case:
