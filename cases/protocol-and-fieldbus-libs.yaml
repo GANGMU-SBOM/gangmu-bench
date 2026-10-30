@@ -6,26 +6,26 @@
 - id: nghttp2-1.44.0
   git: https://github.com/nghttp2/nghttp2
   ref: v1.44.0
-  expect: {rule: generic/nghttp2, version: 1.44.0}
+  expect: {rule: generic/nghttp2, version: 1.44.0, bundled: [generic/llhttp]}
   variants: [pristine]
 
 - id: nghttp2-1.64.0
   git: https://github.com/nghttp2/nghttp2
   ref: v1.64.0
-  expect: {rule: generic/nghttp2, version: 1.64.0}
+  expect: {rule: generic/nghttp2, version: 1.64.0, bundled: [generic/llhttp]}
   variants: [pristine]
 
 - id: libwebsockets-4.1.4
   git: https://github.com/warmcat/libwebsockets
   ref: v4.1.4
-  expect: {rule: generic/libwebsockets, version: 4.1.4}
+  expect: {rule: generic/libwebsockets, version: 4.1.4, bundled: [generic/zlib]}
   variants: [pristine]
 
 - id: libwebsockets-4.3.3
   git: https://github.com/warmcat/libwebsockets
   ref: v4.3.3
-  expect: {rule: generic/libwebsockets, version: 4.3.3}
-  variants: [pristine]
+  expect: {rule: generic/libwebsockets, version: 4.3.3, bundled: [generic/zlib]}
+  variants: [pristine, {strip: [CMakeLists.txt]}]
 
 - id: open62541-1.4.4
   git: https://github.com/open62541/open62541

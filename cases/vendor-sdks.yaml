@@ -1,0 +1,361 @@
+# Vendor SDKs as published, pinned to a commit and fetched sparsely: only the directories
+# holding the copies below (the whole trees run to gigabytes). Each copy is graded at its
+# own path against the version the vendor wrote in its own files; a copy whose files state
+# none is listed with version null and graded on the component alone.
+
+- id: sdk-allwinner-r128s2-sdk-09
+  git: https://github.com/bhgv/Allwinner-R128S2-SDK-09
+  ref: 2941d13fa48e43e96c4351a85bc6aa2a5a556ca6
+  subdir:
+  - lichee/dsp/kernel/FreeRTOS_xtensa_v1.7/FreeRTOS
+  - lichee/rtos-components/thirdparty/bluetooth/zephyr/src/tinycrypt
+  - lichee/rtos-components/thirdparty/freetype
+  - lichee/rtos-components/thirdparty/giflib/giflib-5.2.1
+  - lichee/rtos-components/thirdparty/libjpeg-turbo/source
+  - lichee/rtos-components/thirdparty/littlevgl-8/lvgl
+  - lichee/rtos-components/thirdparty/network/mbedtls-2.16.0
+  - lichee/rtos-components/thirdparty/network/mbedtls-2.7.0
+  - lichee/rtos-components/thirdparty/opus
+  - lichee/rtos-components/thirdparty/tinycrypt
+  - lichee/rtos/components/thirdparty/elmfat/src
+  - lichee/rtos/components/thirdparty/lfs/littlefs-2.2.1
+  - lichee/rtos/kernel/FreeRTOS-orig/Source
+  - lichee/rtos/kernel/FreeRTOS/Source
+  copies:
+  - path: lichee/rtos/components/thirdparty/elmfat/src
+    expect:
+      rule: generic/fatfs
+      version: 0.13c
+  - path: lichee/dsp/kernel/FreeRTOS_xtensa_v1.7/FreeRTOS
+    expect:
+      rule: generic/freertos-kernel
+      version: null
+  - path: lichee/rtos/kernel/FreeRTOS-orig/Source
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.4.3
+  - path: lichee/rtos/kernel/FreeRTOS/Source
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.2.0
+  - path: lichee/rtos-components/thirdparty/freetype
+    expect:
+      rule: generic/freetype
+      version: 2.13.0
+  - path: lichee/rtos-components/thirdparty/giflib/giflib-5.2.1
+    expect:
+      rule: generic/giflib
+      version: 5.2.1
+  - path: lichee/rtos-components/thirdparty/libjpeg-turbo/source
+    expect:
+      rule: generic/libjpeg-turbo
+      version: 2.1.5.1
+    stated_in: tarball name libjpeg-turbo-2.1.5.1.tar.gz
+  - path: lichee/rtos/components/thirdparty/lfs/littlefs-2.2.1
+    expect:
+      rule: generic/littlefs
+      version: '2.2'
+  - path: lichee/rtos-components/thirdparty/littlevgl-8/lvgl
+    expect:
+      rule: generic/lvgl
+      version: 8.1.0
+  - path: lichee/rtos-components/thirdparty/network/mbedtls-2.16.0
+    expect:
+      rule: generic/mbedtls
+      version: 2.16.0
+  - path: lichee/rtos-components/thirdparty/network/mbedtls-2.7.0
+    expect:
+      rule: generic/mbedtls
+      version: 2.7.0
+  - path: lichee/rtos-components/thirdparty/opus
+    expect:
+      rule: generic/opus
+      version: null
+  - path: lichee/rtos-components/thirdparty/bluetooth/zephyr/src/tinycrypt
+    expect:
+      rule: generic/tinycrypt
+      version: null
+  - path: lichee/rtos-components/thirdparty/tinycrypt
+    expect:
+      rule: generic/tinycrypt
+      version: null
+
+- id: sdk-d1s-melis
+  git: https://github.com/DongshanPI/D1s-Melis
+  ref: b289fdae3e6245c3f185259903c91e7db204cfb5
+  subdir:
+  - ekernel/components/thirdparty/dfs/filesystems/elmfat
+  - ekernel/components/thirdparty/dfs/filesystems/littlefs
+  - ekernel/components/thirdparty/net/rt-thread/lwip/src/apps/mbedtls
+  - emodules/mod_orange/GUI/core/font/TrueType
+  copies:
+  - path: ekernel/components/thirdparty/dfs/filesystems/elmfat
+    expect:
+      rule: generic/fatfs
+      version: 0.12b
+  - path: emodules/mod_orange/GUI/core/font/TrueType
+    expect:
+      rule: generic/freetype
+      version: 2.3.5
+  - path: ekernel/components/thirdparty/dfs/filesystems/littlefs
+    expect:
+      rule: generic/littlefs
+      version: '2.1'
+  - path: ekernel/components/thirdparty/net/rt-thread/lwip/src/apps/mbedtls
+    expect:
+      rule: generic/mbedtls
+      version: 2.7.0
+
+- id: sdk-esp8266_rtos_sdk
+  git: https://github.com/espressif/ESP8266_RTOS_SDK
+  ref: 858c7c2eb9004691f2c736c64a23715f6ea900c4
+  subdir:
+  - components/fatfs/src
+  - components/freertos/freertos
+  copies:
+  - path: components/fatfs/src
+    expect:
+      rule: generic/fatfs
+      version: 0.13c
+  - path: components/freertos/freertos
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.0.1
+    stated_in: file banner 'FreeRTOS Kernel V10.0.1'
+
+- id: sdk-bl_iot_sdk
+  git: https://github.com/bouffalolab/bl_iot_sdk
+  ref: edcf613f073d3ef7d2f290d7c285b69be35da75b
+  subdir:
+  - components/3rdparty/aws-iot/aws-iot-device-sdk-embedded-C
+  - components/network/ble/blestack/src/common/tinycrypt
+  - components/network/thread/openthread
+  - components/network/thread/openthread/third_party/mbedtls/repo
+  - components/os/freertos_e907
+  - components/platform/soc/bl602/freertos_riscv
+  - components/platform/soc/bl602/freertos_riscv_ram
+  - components/platform/soc/bl702/bl702_freertos
+  - components/platform/soc/bl808/bl808_c906_freertos/Source
+  - components/security/mbedtls_lts/mbedtls
+  copies:
+  - path: components/3rdparty/aws-iot/aws-iot-device-sdk-embedded-C
+    expect:
+      rule: generic/aws-iot-device-sdk-c
+      version: 3.0.1
+    stated_in: aws_iot_version.h
+  - path: components/os/freertos_e907
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.4.1
+  - path: components/platform/soc/bl602/freertos_riscv
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.2.0
+    stated_in: config/task.h tskKERNEL_VERSION_NUMBER (the file banners say V10.2.1)
+  - path: components/platform/soc/bl602/freertos_riscv_ram
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.2.0
+    stated_in: config/task.h tskKERNEL_VERSION_NUMBER (the file banners say V10.2.1)
+  - path: components/platform/soc/bl702/bl702_freertos
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.2.0
+    stated_in: config/task.h tskKERNEL_VERSION_NUMBER (the file banners say V10.2.1)
+  - path: components/platform/soc/bl808/bl808_c906_freertos/Source
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.2.1
+  - path: components/network/thread/openthread/third_party/mbedtls/repo
+    expect:
+      rule: generic/mbedtls
+      version: 2.28.0
+  - path: components/security/mbedtls_lts/mbedtls
+    expect:
+      rule: generic/mbedtls
+      version: 2.28.1
+  - path: components/network/thread/openthread
+    expect:
+      rule: generic/openthread
+      version: null
+  - path: components/network/ble/blestack/src/common/tinycrypt
+    expect:
+      rule: generic/tinycrypt
+      version: 0.2.7
+    stated_in: README
+
+- id: sdk-bouffalo_sdk
+  git: https://github.com/bouffalolab/bouffalo_sdk
+  ref: 237ed937856bf435f4f3642ea4728294723e1d87
+  subdir:
+  - components/crypto/mbedtls/mbedtls
+  - components/crypto/mbedtls/mbedtls_v3
+  - components/fs/fatfs
+  - components/fs/littlefs/littlefs
+  - components/ipc/open-amp/open-amp
+  - components/os/freertos
+  - components/wireless/bluetooth/blestack/src/common/tinycrypt
+  copies:
+  - path: components/fs/fatfs
+    expect:
+      rule: generic/fatfs
+      version: '0.15'
+  - path: components/os/freertos
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.6.2
+  - path: components/fs/littlefs/littlefs
+    expect:
+      rule: generic/littlefs
+      version: '2.11'
+  - path: components/crypto/mbedtls/mbedtls
+    expect:
+      rule: generic/mbedtls
+      version: 2.28.2
+  - path: components/crypto/mbedtls/mbedtls_v3
+    expect:
+      rule: generic/mbedtls
+      version: 3.6.5
+  - path: components/ipc/open-amp/open-amp
+    expect:
+      rule: generic/open-amp
+      version: null
+  - path: components/wireless/bluetooth/blestack/src/common/tinycrypt
+    expect:
+      rule: generic/tinycrypt
+      version: 0.2.7
+    stated_in: README
+
+- id: sdk-ch32v20x
+  git: https://github.com/openwch/ch32v20x
+  ref: b375bbbc7dfe8642d6fb7c17e6d3207ee1c3c9c1
+  subdir:
+  - EVT/EXAM/FreeRTOS/FreeRTOS_Core/FreeRTOS
+  - EVT/EXAM/HarmonyOS/LiteOS_m/LiteOS/kernel
+  - EVT/EXAM/RT-Thread/rt-thread/rtthread
+  - EVT/EXAM/TencentOS/TencentOS/TencentOS_Tiny/kernel/core
+  copies:
+  - path: EVT/EXAM/FreeRTOS/FreeRTOS_Core/FreeRTOS
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.4.6
+  - path: EVT/EXAM/HarmonyOS/LiteOS_m/LiteOS/kernel
+    expect:
+      rule: generic/liteos-m-kernel
+      version: null
+  - path: EVT/EXAM/RT-Thread/rt-thread/rtthread
+    expect:
+      rule: generic/rt-thread
+      version: 3.1.3
+  - path: EVT/EXAM/TencentOS/TencentOS/TencentOS_Tiny/kernel/core
+    expect:
+      rule: generic/tencentos-tiny-kernel
+      version: 2.4.5
+
+- id: sdk-ch32v307
+  git: https://github.com/openwch/ch32v307
+  ref: 8b3699d9e4eafc3102e382b74266a1165a2bb584
+  subdir:
+  - EVT/EXAM/FreeRTOS/FreeRTOS_Core/FreeRTOS
+  - EVT/EXAM/HarmonyOS/LiteOS_m/LiteOS/kernel
+  - EVT/EXAM/RT-Thread/rt-thread/rtthread
+  - EVT/EXAM/SDIO/SDIO_SD_FATFS/FATFS
+  - EVT/EXAM/TencentOS/TencentOS/TencentOS_Tiny/kernel/core
+  copies:
+  - path: EVT/EXAM/SDIO/SDIO_SD_FATFS/FATFS
+    expect:
+      rule: generic/fatfs
+      version: 0.14b
+  - path: EVT/EXAM/FreeRTOS/FreeRTOS_Core/FreeRTOS
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.4.6
+  - path: EVT/EXAM/HarmonyOS/LiteOS_m/LiteOS/kernel
+    expect:
+      rule: generic/liteos-m-kernel
+      version: null
+  - path: EVT/EXAM/RT-Thread/rt-thread/rtthread
+    expect:
+      rule: generic/rt-thread
+      version: 3.1.3
+  - path: EVT/EXAM/TencentOS/TencentOS/TencentOS_Tiny/kernel/core
+    expect:
+      rule: generic/tencentos-tiny-kernel
+      version: 2.4.5
+
+- id: sdk-ch583
+  git: https://github.com/openwch/ch583
+  ref: bd508ad7ceed48377619837051412a651952857f
+  subdir:
+  - EVT/EXAM/FreeRTOS/FreeRTOS
+  - EVT/EXAM/HarmonyOS/kernel_liteos_m/kernel
+  - EVT/EXAM/RT-Thread/rt-thread
+  copies:
+  - path: EVT/EXAM/FreeRTOS/FreeRTOS
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.5.1
+  - path: EVT/EXAM/HarmonyOS/kernel_liteos_m/kernel
+    expect:
+      rule: generic/liteos-m-kernel
+      version: 3.2.3
+    stated_in: 'EVT/EXAM/HarmonyOS/readme.txt: OpenHarmony-3.2.3-Release'
+  - path: EVT/EXAM/RT-Thread/rt-thread
+    expect:
+      rule: generic/rt-thread
+      version: 3.1.5
+
+- id: sdk-wm_iot_sdk
+  git: https://github.com/WinnerMicro/wm_iot_sdk
+  ref: cf963cdaf9e44a12e02cb9c86f848b4060c530cf
+  subdir:
+  - components/coap/libcoap
+  - components/fatfs/src
+  - components/freertos/src
+  - components/littlefs/src
+  - components/lvgl/lvgl
+  - components/mbedtls/src
+  - components/mqtt/paho.mqtt.c
+  - components/websockets/libwebsockets
+  - components/wm_httpclient/http2/nghttp2
+  copies:
+  - path: components/fatfs/src
+    expect:
+      rule: generic/fatfs
+      version: '0.15'
+  - path: components/freertos/src
+    expect:
+      rule: generic/freertos-kernel
+      version: 10.4.1
+    stated_in: file banner
+  - path: components/coap/libcoap
+    expect:
+      rule: generic/libcoap
+      version: 4.3.4
+    stated_in: coap_config.h LIBCOAP_PACKAGE_VERSION
+  - path: components/websockets/libwebsockets
+    expect:
+      rule: generic/libwebsockets
+      version: 4.3.3
+    stated_in: CMakeLists.txt CPACK_PACKAGE_VERSION
+  - path: components/littlefs/src
+    expect:
+      rule: generic/littlefs
+      version: '2.10'
+  - path: components/lvgl/lvgl
+    expect:
+      rule: generic/lvgl
+      version: 8.4.0
+  - path: components/mbedtls/src
+    expect:
+      rule: generic/mbedtls
+      version: 3.4.0
+  - path: components/wm_httpclient/http2/nghttp2
+    expect:
+      rule: generic/nghttp2
+      version: 1.59.0
+  - path: components/mqtt/paho.mqtt.c
+    expect:
+      rule: generic/paho-mqtt-c
+      version: 1.3.11
+    stated_in: CLIENT_VERSION

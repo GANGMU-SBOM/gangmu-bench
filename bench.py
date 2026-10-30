@@ -26,6 +26,10 @@ no libc) for the given target with the build recipe of gangmu's
 (``--gangmu-src``, default ``.gangmu`` or ``../gangmu``) and the target's cross compiler; a case
 whose compiler is missing is skipped.
 
+A case with a ``copies:`` list is a vendor SDK: the pinned tree is scanned once,
+in place and under its own name (that is how a vendor ships it), and each copy is
+graded at its own path against the version the vendor left in its own header.
+
 Clones are cached under ~/.cache/gangmu-bench (or --cache).
 """
 
@@ -33,6 +37,7 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
+import hashlib
 import json
 import os
 import re
@@ -70,7 +75,10 @@ def load_cases(selected: List[str]) -> List[dict]:
 
 def fetch(case: dict, cache: Path) -> Path:
     """A checkout of the case's ref, without .git, cached by URL and ref."""
+    subdirs = _subdirs(case)
     key = re.sub(r"[^A-Za-z0-9._-]+", "_", f"{case['git']}@{case['ref']}")
+    if subdirs:
+        key += "+" + hashlib.sha256("\n".join(subdirs).encode()).hexdigest()[:12]
     dest = cache / key
     if (dest / ".complete").exists():
         return dest
@@ -79,16 +87,45 @@ def fetch(case: dict, cache: Path) -> Path:
     dest.mkdir(parents=True)
     git = ["git", "-c", "advice.detachedHead=false"]
     subprocess.run(git + ["init", "-q", str(dest)], check=True)
-    subprocess.run(git + ["-C", str(dest), "fetch", "-q", "--depth", "1",
-                          case["git"], case["ref"]], check=True)
+    if subdirs:
+        # Only the component's directory of a large repository (an RTOS kernel
+        # inside a whole SDK): a blobless fetch and a sparse checkout.
+        subprocess.run(git + ["-C", str(dest), "sparse-checkout", "set", "--no-cone",
+                              *[f"/{d}/" for d in subdirs]], check=True)
+        subprocess.run(git + ["-C", str(dest), "fetch", "-q", "--depth", "1",
+                              "--filter=blob:none", case["git"], case["ref"]], check=True)
+    else:
+        subprocess.run(git + ["-C", str(dest), "fetch", "-q", "--depth", "1",
+                              case["git"], case["ref"]], check=True)
     subprocess.run(git + ["-C", str(dest), "checkout", "-q", "FETCH_HEAD"], check=True)
     shutil.rmtree(dest / ".git")
     (dest / ".complete").write_text(case["ref"])
     return dest
 
 
+def _subdirs(case: dict) -> List[str]:
+    sub = case.get("subdir")
+    return [] if not sub else [sub] if isinstance(sub, str) else list(sub)
+
+
+def component_root(case: dict, source: Path) -> Path:
+    """The directory a case grades: its first ``subdir`` present, or the checkout."""
+    for sub in _subdirs(case):
+        if (source / sub).is_dir():
+            return source / sub
+    if _subdirs(case):
+        raise SystemExit(f"{case['id']}: none of {_subdirs(case)} exists at {case['ref']}")
+    return source
+
+
 def prepare(source: Path, work: Path, variant) -> Tuple[str, Path]:
-    name = "pristine" if variant == "pristine" else "stripped"
+    """pristine; ``{strip: [files]}`` deletes those files (the version must come
+    from functions); ``touch`` appends a comment to every C source and header,
+    which breaks every byte-for-byte anchor and file-set hash."""
+    if variant == "touch":
+        name = "touched"
+    else:
+        name = "pristine" if variant == "pristine" else "stripped"
     root = work / name
     tree = root / NEUTRAL
     shutil.copytree(source, tree, symlinks=True,
@@ -99,6 +136,11 @@ def prepare(source: Path, work: Path, variant) -> Tuple[str, Path]:
             if not target.exists():
                 raise SystemExit(f"strip: {rel} does not exist in {source}")
             target.unlink()
+    if variant == "touch":
+        for path in sorted(tree.rglob("*")):
+            if path.suffix in (".c", ".h") and path.is_file() and not path.is_symlink():
+                with open(path, "a", encoding="utf-8", errors="replace") as fh:
+                    fh.write("\n/* vendor build */\n")
     return name, root
 
 
@@ -129,6 +171,8 @@ def grade(findings: List[dict], expect: dict, where: str = NEUTRAL) -> Tuple[str
                                               -(f.get("confidence") or 0)))
     if finding.get("rule_id") != expect["rule"]:
         return "wrong", finding
+    if expect.get("version") is None:      # the tree states no version to check against
+        return "identified", finding
     reported, truth = str(finding.get("version") or ""), str(expect["version"])
     if reported == truth:
         return "exact", finding
@@ -137,6 +181,28 @@ def grade(findings: List[dict], expect: dict, where: str = NEUTRAL) -> Tuple[str
         if _le(low, truth) and _le(truth, high):
             return "range", finding
     return "wrong", finding
+
+
+def extras(findings: List[dict], graded: Optional[dict], expect: dict) -> List[dict]:
+    """Every finding besides the graded one, labelled. ``unexpected`` is a false
+    positive: neither the expected component again, nor a dependency a manifest
+    in the tree declares, nor a component the case says this release bundles."""
+    out = []
+    for f in findings:
+        if f is graded:
+            continue
+        rule = str(f.get("rule_id") or "")
+        if rule == expect["rule"]:
+            kind = "duplicate"
+        elif rule.startswith("declared/"):
+            kind = "declared"
+        elif rule in expect.get("bundled", []):
+            kind = "bundled"
+        else:
+            kind = "unexpected"
+        out.append({"kind": kind, "rule": rule, "directory": f.get("directory"),
+                    "version": f.get("version")})
+    return out
 
 
 def find_builder(explicit: Optional[str]):
@@ -181,6 +247,53 @@ def scan(root: Path, rules: List[str]) -> Tuple[List[dict], float]:
     if proc.returncode != 0:
         raise RuntimeError(proc.stderr.strip()[-2000:])
     return json.loads(proc.stdout)["findings"], elapsed
+
+
+def run_sdk(case: dict, cache: Path, rules: List[str], installed: set) -> List[dict]:
+    """Scan a vendor SDK once and grade every copy it lists at its own path."""
+    def row(copy, verdict, finding=None, others=(), seconds=0.0):
+        return {
+            "case": case["id"], "variant": copy["path"],
+            "truth": str(copy["expect"]["version"] or "not stated"),
+            "expected_rule": copy["expect"]["rule"],
+            "rule": finding and finding.get("rule_id"),
+            "reported": finding and finding.get("version"),
+            "confidence": finding and finding.get("confidence"),
+            "verdict": verdict,
+            "directory": finding and finding.get("directory"),
+            "other_findings": len(others), "others": list(others),
+            "seconds": round(seconds, 2),
+        }
+
+    graded = [c for c in case["copies"] if c["expect"]["rule"] in installed]
+    out = [row(c, "skipped") for c in case["copies"] if c not in graded]
+    for c in out:
+        print(f"skipped  {case['id']:22s} {c['variant']}  rule {c['expected_rule']} "
+              f"not installed", flush=True)
+    if not graded:
+        return out
+    source = fetch(case, cache)
+    findings, seconds = scan(source, rules)
+    chosen = []
+    for copy in graded:
+        verdict, finding = grade(findings, copy["expect"], copy["path"].strip("/"))
+        chosen.append((copy, verdict, finding))
+    # The SDK's other findings are labelled once, on its first row: against the
+    # components the case lists as bundled, or any rule a graded copy expects.
+    picked = [f for _, _, f in chosen if f is not None]
+    expect = {"rule": None, "bundled": list(case.get("bundled", []))
+              + [c["expect"]["rule"] for c in graded]}
+    others = extras([f for f in findings if not any(f is p for p in picked)], None, expect)
+    for i, (copy, verdict, finding) in enumerate(chosen):
+        out.append(row(copy, verdict, finding, others if i == 0 else (), seconds))
+        print(f"{verdict:8s} {case['id']:22s} {copy['path']}  reported "
+              f"{finding and finding.get('version')} ({finding and finding.get('rule_id')})",
+              flush=True)
+    for o in others:
+        if o["kind"] == "unexpected":
+            print(f"         false positive: {o['rule']} {o['version']} at {o['directory']}",
+                  flush=True)
+    return out
 
 
 def available_rules(rules: List[str]) -> set:
@@ -243,6 +356,9 @@ def main(argv=None) -> int:
     installed = available_rules(args.rules)
     builder = None
     for case in load_cases(args.case):
+        if "copies" in case:
+            rows.extend(run_sdk(case, cache, args.rules, installed))
+            continue
         needed = case.get("requires", case["expect"]["rule"])
         reason = f"rule {needed} not installed" if needed not in installed else ""
         if not reason and "binary" in case:
@@ -259,7 +375,7 @@ def main(argv=None) -> int:
                     "truth": str(case["expect"]["version"]),
                     "expected_rule": case["expect"]["rule"], "rule": None,
                     "reported": None, "confidence": None, "verdict": "skipped",
-                    "directory": None, "other_findings": 0, "seconds": 0.0,
+                    "directory": None, "other_findings": 0, "others": [], "seconds": 0.0,
                 })
                 print(f"skipped  {case['id']:22s} {name:9s} "
                       f"{reason}", flush=True)
@@ -272,10 +388,12 @@ def main(argv=None) -> int:
                     root = build_image(case, source, Path(tmp) / case["id"], builder)
                     where = "firmware.elf"
                 else:
-                    name, root = prepare(source, Path(tmp) / case["id"], variant)
+                    name, root = prepare(component_root(case, source),
+                                         Path(tmp) / case["id"], variant)
                     where = NEUTRAL
                 findings, seconds = scan(root, args.rules)
                 verdict, finding = grade(findings, case["expect"], where)
+                others = extras(findings, finding, case["expect"])
                 row = {
                     "case": case["id"], "variant": name,
                     "truth": str(case["expect"]["version"]),
@@ -285,32 +403,56 @@ def main(argv=None) -> int:
                     "confidence": finding and finding.get("confidence"),
                     "verdict": verdict,
                     "directory": finding and finding.get("directory"),
-                    "other_findings": len(findings) - (1 if finding else 0),
+                    "other_findings": len(others),
+                    "others": others,
                     "seconds": round(seconds, 2),
                 }
                 rows.append(row)
                 print(f"{verdict:8s} {case['id']:22s} {name:9s} "
                       f"reported {row['reported']} ({row['rule']})", flush=True)
+                for o in others:
+                    if o["kind"] == "unexpected":
+                        print(f"         false positive: {o['rule']} {o['version']} "
+                              f"at {o['directory']}", flush=True)
 
     counts = {v: sum(r["verdict"] == v for r in rows)
-              for v in ("exact", "range", "wrong", "missing", "skipped")}
+              for v in ("exact", "range", "identified", "wrong", "missing", "skipped")}
+    kinds = ("bundled", "declared", "duplicate", "unexpected")
+    other = {k: sum(o["kind"] == k for r in rows for o in r["others"]) for k in kinds}
+    reported = sum(r["verdict"] in ("exact", "range", "identified", "wrong") for r in rows) + sum(
+        other[k] for k in ("bundled", "unexpected"))
+    counts["false_positive"] = other["unexpected"]
     print("\n" + ", ".join(f"{v} {n}" for v, n in counts.items()))
+    print("other findings: " + ", ".join(f"{k} {n}" for k, n in other.items())
+          + f"; components reported {reported}, of them false {other['unexpected']}")
     if args.output:
         meta = tool_versions()
         out = Path(args.output)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.with_suffix(".json").write_text(json.dumps(
-            {"versions": meta, "counts": counts, "rows": rows}, indent=2) + "\n")
+            {"versions": meta, "counts": counts, "other_findings": other,
+             "components_reported": reported, "rows": rows}, indent=2) + "\n")
         lines = [f"# Benchmark results", "",
                  f"{meta['gangmu']}; rules: {meta['rules']}", "",
-                 "| case | variant | truth | reported | rule | verdict |",
-                 "| --- | --- | --- | --- | --- | --- |"]
+                 "| case | variant | truth | reported | rule | verdict | other findings |",
+                 "| --- | --- | --- | --- | --- | --- | --- |"]
         lines += [f"| {r['case']} | {r['variant']} | {r['truth']} | {r['reported'] or '-'} "
-                  f"| {r['rule'] or '-'} | {r['verdict']} |" for r in rows]
-        lines += ["", ", ".join(f"**{v}** {n}" for v, n in counts.items()), ""]
+                  f"| {r['rule'] or '-'} | {r['verdict']} | {_others(r['others'])} |"
+                  for r in rows]
+        lines += ["", ", ".join(f"**{v.replace('_', ' ')}** {n}" for v, n in counts.items()),
+                  "", "Other findings: " + ", ".join(f"{k} {n}" for k, n in other.items())
+                  + f". Of {reported} components reported (graded ones and every other"
+                  f" code or binary finding), {other['unexpected']} are false positives.", ""]
         out.with_suffix(".md").write_text("\n".join(lines))
-    failed = counts["wrong"] + counts["missing"]      # a skipped case is not a failure
+    # a skipped case is not a failure; a false positive is
+    failed = counts["wrong"] + counts["missing"] + counts["false_positive"]
     return 0 if (failed == 0 or args.no_fail) else 1
+
+
+def _others(others: List[dict]) -> str:
+    if not others:
+        return "-"
+    return "; ".join(f"{o['kind']}: {o['rule']} {o['version'] or ''}".rstrip() for o in others)
 
 
 if __name__ == "__main__":

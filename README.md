@@ -12,9 +12,19 @@
 | --- | --- |
 | exact | 报告的版本就是真实版本 |
 | range | 报告的是一个包含真实版本的区间（这些版本的函数完全相同，无法再细分） |
+| identified | 认对了组件；这份副本自己没写版本，无从核对版本（只用于芯片 SDK 里的副本） |
 | wrong | 认成了别的组件，或者版本区间不包含真实版本 |
 | missing | 这个目录什么都没报 |
 | skipped | 用例要求的规则没装（比如你没加载某个规则包），不评分，也不算失败 |
+
+除了被评分的那条结论，扫描在这棵树里报出的其他结论也逐条列出并归类，这样**误报**也算进成绩：
+
+| 归类 | 含义 |
+| --- | --- |
+| duplicate | 同一条规则在这棵树里又报了一次 |
+| declared | 树里的清单文件（CMake、Bazel、Arduino……）声明的依赖，不是代码识别 |
+| bundled | 用例写明这个发布版确实带着的组件（`bundled:`，逐条人工核对过） |
+| unexpected | 以上都不是：**误报**，和 `wrong`、`missing` 一样算失败 |
 
 现有 SBOM 评测（sbomify、sbombenchmark.dev）都只覆盖有锁文件的语言生态，没有 C/C++ 和嵌入式。
 这里的每个数字都能由任何人复现。
@@ -47,6 +57,12 @@ python bench.py --rules my-rules/ -o results/mine   # 叠加自己的规则，�
     - pristine                           # 原样
     - strip: [include/mbedtls/version.h, include/mbedtls/build_info.h]   # 只剩函数能判断
 ```
+
+变体还有 `touch`：给每个 `.c`/`.h` 末尾追加一行注释，所有逐字节吻合的锚点和文件集哈希都失效，只剩函数能判断。
+
+一个发布版里确实带着别的组件（比如 OpenSSL 1.1.x 里没有，zstd 里带 xxhash）时，用 `bundled:` 列出这些规则 id，它们就不算误报；每一条都要核对过源码再加。
+
+芯片 SDK 用例带 `copies:` 列表：固定的 SDK 整棵扫一遍（不改名，厂商就是这样发布的），列表里每份副本在自己的路径上按厂商自己头文件里写的版本评分；SDK 里其余的结论按 SDK 级的 `bundled:` 归类。
 
 固件镜像用例（`cases/firmware-images.yaml`）带一个 `binary:` 块：把固定的源码树只编译库代码、去符号（RISC-V rv32imac，不链接 libc），
 对这一个 ELF 做扫描并评分。所选发布版刻意不在规则的指纹发布版之列，所以答案只能来自相邻版本的函数，而不是同一份构建。
