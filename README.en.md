@@ -33,7 +33,7 @@ It starts by printing the path and version of the `gangmu` it measures (the firs
 
 All 23 cases use only the free rule base; 21 are graded out of the box, and the 2 firmware-image cases need a cross compiler, capstone and the gangmu sources, and are marked skipped without them.
 
-Sources are cached in `~/.cache/gangmu-bench`. Latest results: [results/latest.md](results/latest.md) (run with gangmu-sbom 0.12.0 and rules 2026.10.18; anyone can reproduce it: all 27 rows graded, 22 exact, 5 range, 0 wrong, 0 missing).
+Sources are cached in `~/.cache/gangmu-bench`. Latest results: [results/latest.md](results/latest.md) (run with gangmu-sbom 0.15.0 and rules 2026.10.29; anyone can reproduce it: all 27 rows graded, 26 exact, 1 range, 0 wrong, 0 missing. The one range is the littlefs 2.4.0 RISC-V firmware image, reported as `2.0.4~2.11.0`).
 
 ## Cases
 
