@@ -26,6 +26,10 @@ no libc) for the given target with the build recipe of gangmu's
 (``--gangmu-src``, default ``.gangmu`` or ``../gangmu``) and the target's cross compiler; a case
 whose compiler is missing is skipped.
 
+A case with a ``copies:`` list is a vendor SDK: the pinned tree is scanned once,
+in place and under its own name (that is how a vendor ships it), and each copy is
+graded at its own path against the version the vendor left in its own header.
+
 Clones are cached under ~/.cache/gangmu-bench (or --cache).
 """
 
@@ -33,6 +37,7 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
+import hashlib
 import json
 import os
 import re
@@ -68,9 +73,16 @@ def load_cases(selected: List[str]) -> List[dict]:
     return cases
 
 
+class FetchError(Exception):
+    """A case's source could not be fetched: the case is skipped, the run goes on."""
+
+
 def fetch(case: dict, cache: Path) -> Path:
     """A checkout of the case's ref, without .git, cached by URL and ref."""
+    subdirs = _subdirs(case)
     key = re.sub(r"[^A-Za-z0-9._-]+", "_", f"{case['git']}@{case['ref']}")
+    if subdirs:
+        key += "+" + hashlib.sha256("\n".join(subdirs).encode()).hexdigest()[:12]
     dest = cache / key
     if (dest / ".complete").exists():
         return dest
@@ -79,16 +91,58 @@ def fetch(case: dict, cache: Path) -> Path:
     dest.mkdir(parents=True)
     git = ["git", "-c", "advice.detachedHead=false"]
     subprocess.run(git + ["init", "-q", str(dest)], check=True)
-    subprocess.run(git + ["-C", str(dest), "fetch", "-q", "--depth", "1",
-                          case["git"], case["ref"]], check=True)
-    subprocess.run(git + ["-C", str(dest), "checkout", "-q", "FETCH_HEAD"], check=True)
+    fetch_cmd = git + ["-C", str(dest), "fetch", "-q", "--depth", "1", case["git"], case["ref"]]
+    if subdirs:
+        # Only the component's directory of a large repository (an RTOS kernel
+        # inside a whole SDK): a blobless fetch and a sparse checkout. A server
+        # without partial clone (Gitee) gets the plain shallow fetch.
+        subprocess.run(git + ["-C", str(dest), "sparse-checkout", "set", "--no-cone",
+                              *[f"/{d}/" for d in subdirs]], check=True)
+        attempts = [fetch_cmd[:6] + ["--filter=blob:none"] + fetch_cmd[6:], fetch_cmd]
+    else:
+        attempts = [fetch_cmd]
+    checkout = git + ["-C", str(dest), "checkout", "-q", "FETCH_HEAD"]
+
+    def done(cmd) -> bool:
+        # A blobless checkout fetches its blobs then, so the checkout can fail too.
+        return (subprocess.run(cmd).returncode == 0
+                and subprocess.run(checkout).returncode == 0)
+
+    for attempt in range(3):            # some hosts drop connections now and then
+        if any(done(cmd) for cmd in attempts):
+            break
+        time.sleep(5 * (attempt + 1))
+    else:
+        shutil.rmtree(dest, ignore_errors=True)
+        raise FetchError(f"{case['git']} {case['ref']}: fetch failed three times")
     shutil.rmtree(dest / ".git")
     (dest / ".complete").write_text(case["ref"])
     return dest
 
 
+def _subdirs(case: dict) -> List[str]:
+    sub = case.get("subdir")
+    return [] if not sub else [sub] if isinstance(sub, str) else list(sub)
+
+
+def component_root(case: dict, source: Path) -> Path:
+    """The directory a case grades: its first ``subdir`` present, or the checkout."""
+    for sub in _subdirs(case):
+        if (source / sub).is_dir():
+            return source / sub
+    if _subdirs(case):
+        raise SystemExit(f"{case['id']}: none of {_subdirs(case)} exists at {case['ref']}")
+    return source
+
+
 def prepare(source: Path, work: Path, variant) -> Tuple[str, Path]:
-    name = "pristine" if variant == "pristine" else "stripped"
+    """pristine; ``{strip: [files]}`` deletes those files (the version must come
+    from functions); ``touch`` appends a comment to every C source and header,
+    which breaks every byte-for-byte anchor and file-set hash."""
+    if variant == "touch":
+        name = "touched"
+    else:
+        name = "pristine" if variant == "pristine" else "stripped"
     root = work / name
     tree = root / NEUTRAL
     shutil.copytree(source, tree, symlinks=True,
@@ -99,6 +153,11 @@ def prepare(source: Path, work: Path, variant) -> Tuple[str, Path]:
             if not target.exists():
                 raise SystemExit(f"strip: {rel} does not exist in {source}")
             target.unlink()
+    if variant == "touch":
+        for path in sorted(tree.rglob("*")):
+            if path.suffix in (".c", ".h") and path.is_file() and not path.is_symlink():
+                with open(path, "a", encoding="utf-8", errors="replace") as fh:
+                    fh.write("\n/* vendor build */\n")
     return name, root
 
 
@@ -129,14 +188,53 @@ def grade(findings: List[dict], expect: dict, where: str = NEUTRAL) -> Tuple[str
                                               -(f.get("confidence") or 0)))
     if finding.get("rule_id") != expect["rule"]:
         return "wrong", finding
+    if expect.get("version") is None:      # the tree states no version to check against
+        return "identified", finding
     reported, truth = str(finding.get("version") or ""), str(expect["version"])
-    if reported == truth:
+    # A vendor that states less than a release number (littlefs's LFS_VERSION is
+    # major.minor: 2.11) is matched by any release of it (2.11.3).
+    if reported == truth or (reported.startswith(truth + ".") and "~" not in reported):
         return "exact", finding
     if "~" in reported:
         low, high = reported.split("~", 1)
         if _le(low, truth) and _le(truth, high):
             return "range", finding
     return "wrong", finding
+
+
+def known(verdict: str, reported, expect: dict, variant: str) -> str:
+    """``known`` for a wrong answer the case records as understood: the vendor's
+    or upstream's own statement is off, and the tool reports what the code is
+    (``expect.known``: the reported version, or {variant: reported version},
+    with ``known_why``). Shown in the results, not a failure; any other wrong
+    answer still is."""
+    k = expect.get("known")
+    if verdict != "wrong" or k is None:
+        return verdict
+    want = k.get(variant) if isinstance(k, dict) else k
+    return "known" if want is not None and str(want) == str(reported) else verdict
+
+
+def extras(findings: List[dict], graded: Optional[dict], expect: dict) -> List[dict]:
+    """Every finding besides the graded one, labelled. ``unexpected`` is a false
+    positive: neither the expected component again, nor a dependency a manifest
+    in the tree declares, nor a component the case says this release bundles."""
+    out = []
+    for f in findings:
+        if f is graded:
+            continue
+        rule = str(f.get("rule_id") or "")
+        if rule == expect["rule"]:
+            kind = "duplicate"
+        elif rule.startswith("declared/"):
+            kind = "declared"
+        elif rule in expect.get("bundled", []):
+            kind = "bundled"
+        else:
+            kind = "unexpected"
+        out.append({"kind": kind, "rule": rule, "directory": f.get("directory"),
+                    "version": f.get("version")})
+    return out
 
 
 def find_builder(explicit: Optional[str]):
@@ -181,6 +279,58 @@ def scan(root: Path, rules: List[str]) -> Tuple[List[dict], float]:
     if proc.returncode != 0:
         raise RuntimeError(proc.stderr.strip()[-2000:])
     return json.loads(proc.stdout)["findings"], elapsed
+
+
+def run_sdk(case: dict, cache: Path, rules: List[str], installed: set) -> List[dict]:
+    """Scan a vendor SDK once and grade every copy it lists at its own path."""
+    def row(copy, verdict, finding=None, others=(), seconds=0.0):
+        return {
+            "case": case["id"], "variant": copy["path"],
+            "truth": str(copy["expect"]["version"] or "not stated"),
+            "expected_rule": copy["expect"]["rule"],
+            "rule": finding and finding.get("rule_id"),
+            "reported": finding and finding.get("version"),
+            "confidence": finding and finding.get("confidence"),
+            "verdict": verdict,
+            "directory": finding and finding.get("directory"),
+            "other_findings": len(others), "others": list(others),
+            "seconds": round(seconds, 2),
+        }
+
+    graded = [c for c in case["copies"] if c["expect"]["rule"] in installed]
+    out = [row(c, "skipped") for c in case["copies"] if c not in graded]
+    for c in out:
+        print(f"skipped  {case['id']:22s} {c['variant']}  rule {c['expected_rule']} "
+              f"not installed", flush=True)
+    if not graded:
+        return out
+    try:
+        source = fetch(case, cache)
+    except FetchError as exc:
+        print(f"skipped  {case['id']:22s} {exc}", flush=True)
+        return out + [row(c, "skipped") for c in graded]
+    findings, seconds = scan(source, rules)
+    chosen = []
+    for copy in graded:
+        verdict, finding = grade(findings, copy["expect"], copy["path"].strip("/"))
+        verdict = known(verdict, finding and finding.get("version"), copy["expect"], "copy")
+        chosen.append((copy, verdict, finding))
+    # The SDK's other findings are labelled once, on its first row: against the
+    # components the case lists as bundled, or any rule a graded copy expects.
+    picked = [f for _, _, f in chosen if f is not None]
+    expect = {"rule": None, "bundled": list(case.get("bundled", []))
+              + [c["expect"]["rule"] for c in graded]}
+    others = extras([f for f in findings if not any(f is p for p in picked)], None, expect)
+    for i, (copy, verdict, finding) in enumerate(chosen):
+        out.append(row(copy, verdict, finding, others if i == 0 else (), seconds))
+        print(f"{verdict:8s} {case['id']:22s} {copy['path']}  reported "
+              f"{finding and finding.get('version')} ({finding and finding.get('rule_id')})",
+              flush=True)
+    for o in others:
+        if o["kind"] == "unexpected":
+            print(f"         false positive: {o['rule']} {o['version']} at {o['directory']}",
+                  flush=True)
+    return out
 
 
 def available_rules(rules: List[str]) -> set:
@@ -243,6 +393,9 @@ def main(argv=None) -> int:
     installed = available_rules(args.rules)
     builder = None
     for case in load_cases(args.case):
+        if "copies" in case:
+            rows.extend(run_sdk(case, cache, args.rules, installed))
+            continue
         needed = case.get("requires", case["expect"]["rule"])
         reason = f"rule {needed} not installed" if needed not in installed else ""
         if not reason and "binary" in case:
@@ -251,20 +404,28 @@ def main(argv=None) -> int:
                 reason = "no gangmu checkout for the build recipe (--gangmu-src)"
             elif shutil.which(builder.TARGETS[case["binary"].get("target", "arm")]["cc"]) is None:
                 reason = f"cross compiler for {case['binary'].get('target', 'arm')} not installed"
+        source = None
+        if not reason and "binary" not in case:
+            try:
+                source = fetch(case, cache)
+            except FetchError as exc:
+                reason = str(exc)
         if reason:
             for variant in case.get("variants", ["pristine"]):
-                name = "pristine" if variant == "pristine" else "stripped"
+                name = ("pristine" if variant == "pristine" else
+                        "touched" if variant == "touch" else "stripped")
                 rows.append({
                     "case": case["id"], "variant": name,
                     "truth": str(case["expect"]["version"]),
                     "expected_rule": case["expect"]["rule"], "rule": None,
                     "reported": None, "confidence": None, "verdict": "skipped",
-                    "directory": None, "other_findings": 0, "seconds": 0.0,
+                    "directory": None, "other_findings": 0, "others": [], "seconds": 0.0,
                 })
                 print(f"skipped  {case['id']:22s} {name:9s} "
                       f"{reason}", flush=True)
             continue
-        source = fetch(case, cache)
+        if source is None:
+            source = fetch(case, cache)
         with tempfile.TemporaryDirectory(prefix="gangmu-bench-") as tmp:
             for variant in case.get("variants", ["pristine"]):
                 if "binary" in case:
@@ -272,10 +433,13 @@ def main(argv=None) -> int:
                     root = build_image(case, source, Path(tmp) / case["id"], builder)
                     where = "firmware.elf"
                 else:
-                    name, root = prepare(source, Path(tmp) / case["id"], variant)
+                    name, root = prepare(component_root(case, source),
+                                         Path(tmp) / case["id"], variant)
                     where = NEUTRAL
                 findings, seconds = scan(root, args.rules)
                 verdict, finding = grade(findings, case["expect"], where)
+                verdict = known(verdict, finding and finding.get("version"), case["expect"], name)
+                others = extras(findings, finding, case["expect"])
                 row = {
                     "case": case["id"], "variant": name,
                     "truth": str(case["expect"]["version"]),
@@ -285,32 +449,102 @@ def main(argv=None) -> int:
                     "confidence": finding and finding.get("confidence"),
                     "verdict": verdict,
                     "directory": finding and finding.get("directory"),
-                    "other_findings": len(findings) - (1 if finding else 0),
+                    "other_findings": len(others),
+                    "others": others,
                     "seconds": round(seconds, 2),
                 }
                 rows.append(row)
                 print(f"{verdict:8s} {case['id']:22s} {name:9s} "
                       f"reported {row['reported']} ({row['rule']})", flush=True)
+                for o in others:
+                    if o["kind"] == "unexpected":
+                        print(f"         false positive: {o['rule']} {o['version']} "
+                              f"at {o['directory']}", flush=True)
 
     counts = {v: sum(r["verdict"] == v for r in rows)
-              for v in ("exact", "range", "wrong", "missing", "skipped")}
+              for v in ("exact", "range", "identified", "known", "wrong", "missing", "skipped")}
+    kinds = ("bundled", "declared", "duplicate", "unexpected")
+    other = {k: sum(o["kind"] == k for r in rows for o in r["others"]) for k in kinds}
+    reported = sum(r["verdict"] in ("exact", "range", "identified", "known", "wrong") for r in rows) + sum(
+        other[k] for k in ("bundled", "unexpected"))
+    counts["false_positive"] = other["unexpected"]
     print("\n" + ", ".join(f"{v} {n}" for v, n in counts.items()))
+    print("other findings: " + ", ".join(f"{k} {n}" for k, n in other.items())
+          + f"; components reported {reported}, of them false {other['unexpected']}")
+    m = metrics(rows)
+    print(f"recall {_pct(m['recall'])} ({m['found']}/{m['expected']}), "
+          f"precision {_pct(m['precision'])} ({m['reported'] - m['false']}/{m['reported']}), "
+          f"version exact {_pct(m['version_exact'])}, exact or a range containing it "
+          f"{_pct(m['version_contains_truth'])} (of {m['version_checked']} with a stated version)")
     if args.output:
         meta = tool_versions()
         out = Path(args.output)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.with_suffix(".json").write_text(json.dumps(
-            {"versions": meta, "counts": counts, "rows": rows}, indent=2) + "\n")
+            {"versions": meta, "counts": counts, "other_findings": other,
+             "components_reported": reported, "metrics": m, "rows": rows}, indent=2) + "\n")
         lines = [f"# Benchmark results", "",
                  f"{meta['gangmu']}; rules: {meta['rules']}", "",
-                 "| case | variant | truth | reported | rule | verdict |",
-                 "| --- | --- | --- | --- | --- | --- |"]
+                 "| recall | precision | version exact | exact or range containing truth |",
+                 "| --- | --- | --- | --- |",
+                 f"| {_pct(m['recall'])} ({m['found']}/{m['expected']}) "
+                 f"| {_pct(m['precision'])} ({m['reported'] - m['false']}/{m['reported']}) "
+                 f"| {_pct(m['version_exact'])} | {_pct(m['version_contains_truth'])} "
+                 f"(of {m['version_checked']}) |", "",
+                 "| case | variant | truth | reported | rule | verdict | other findings |",
+                 "| --- | --- | --- | --- | --- | --- | --- |"]
         lines += [f"| {r['case']} | {r['variant']} | {r['truth']} | {r['reported'] or '-'} "
-                  f"| {r['rule'] or '-'} | {r['verdict']} |" for r in rows]
-        lines += ["", ", ".join(f"**{v}** {n}" for v, n in counts.items()), ""]
+                  f"| {r['rule'] or '-'} | {r['verdict']} | {_others(r['others'])} |"
+                  for r in rows]
+        lines += ["", ", ".join(f"**{v.replace('_', ' ')}** {n}" for v, n in counts.items()),
+                  "", "Other findings: " + ", ".join(f"{k} {n}" for k, n in other.items())
+                  + f". Of {reported} components reported (graded ones and every other"
+                  f" code or binary finding), {other['unexpected']} are false positives.", ""]
         out.with_suffix(".md").write_text("\n".join(lines))
-    failed = counts["wrong"] + counts["missing"]      # a skipped case is not a failure
+    # a skipped case is not a failure; a false positive is
+    failed = counts["wrong"] + counts["missing"] + counts["false_positive"]
     return 0 if (failed == 0 or args.no_fail) else 1
+
+
+def metrics(rows: List[dict]) -> dict:
+    """Recall, precision and version accuracy over graded rows.
+
+    recall    = expected components found (the right rule, whatever the version)
+                / expected components graded
+    precision = components reported that are really there
+                / every component reported (graded ones, bundled ones, false positives)
+    version   = among found components whose truth is stated: exact, and exact or
+                a range containing the truth ("known" rows count as wrong here)"""
+    graded = [r for r in rows if r["verdict"] != "skipped"]
+    found = [r for r in graded if r["verdict"] != "missing"
+             and r.get("rule") == r.get("expected_rule")]
+    wrong_component = [r for r in graded if r["verdict"] == "wrong"
+                       and r.get("rule") != r.get("expected_rule")]
+    others = [o for r in rows for o in r.get("others", [])]
+    false = sum(o["kind"] == "unexpected" for o in others) + len(wrong_component)
+    reported = (len(found) + len(wrong_component)
+                + sum(o["kind"] in ("bundled", "unexpected") for o in others))
+    stated = [r for r in found if r["verdict"] != "identified"]
+    exact = sum(r["verdict"] == "exact" for r in stated)
+    contain = exact + sum(r["verdict"] == "range" for r in stated)
+
+    def share(n, d):
+        return round(n / d, 4) if d else None
+    return {"expected": len(graded), "found": len(found), "recall": share(len(found), len(graded)),
+            "reported": reported, "false": false,
+            "precision": share(reported - false, reported),
+            "version_checked": len(stated), "version_exact": share(exact, len(stated)),
+            "version_contains_truth": share(contain, len(stated))}
+
+
+def _pct(x) -> str:
+    return "-" if x is None else f"{100 * x:.1f}%"
+
+
+def _others(others: List[dict]) -> str:
+    if not others:
+        return "-"
+    return "; ".join(f"{o['kind']}: {o['rule']} {o['version'] or ''}".rstrip() for o in others)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,268 @@
+# Release trees behind BENCHMARK.md sections 1c-1e of gangmu: national-crypto
+# generations and their OpenSSL base, and the libraries the Chinese vendor SDK survey
+# found most often. "strip" deletes the version headers, so only functions decide;
+# "touch" appends a comment to every C file, which breaks every byte-for-byte anchor.
+
+- id: gmssl-2.0.0
+  git: https://github.com/guanzhi/GmSSL
+  ref: a9b31e17a524d2e30b208dbc2e3fd8f111a73d1f
+  expect: {rule: generic/gmssl-2, version: '2.0.0'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: gmssl-2.3.3
+  git: https://github.com/guanzhi/GmSSL
+  ref: eaf4002536dd1c9b77752aed95748b79f4b08ebc
+  expect: {rule: generic/gmssl-2, version: '2.3.3'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: gmssl-2.4.5
+  git: https://github.com/guanzhi/GmSSL
+  ref: 22027d66569e08f2ad082b8735fb92d43198d741
+  expect: {rule: generic/gmssl-2, version: '2.4.5'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: gmssl-2.5.0
+  git: https://github.com/guanzhi/GmSSL
+  ref: 258e44ea89467d191f98f14a91ea0b9180aa7442
+  expect: {rule: generic/gmssl-2, version: '2.5.0'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: gmssl-2.5.3
+  git: https://github.com/guanzhi/GmSSL
+  ref: b42251945e5a1e0791ee84e5105803e50619dfdc
+  expect: {rule: generic/gmssl-2, version: '2.5.3'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: gmssl-2.5.4
+  git: https://github.com/guanzhi/GmSSL
+  ref: c403e37cfc22ff1d678fb1e481eff31f1738b04d
+  expect: {rule: generic/gmssl-2, version: '2.5.4'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: gmssl-3.0.0
+  git: https://github.com/guanzhi/GmSSL
+  ref: v3.0.0
+  expect: {rule: generic/gmssl, version: '3.0.0'}
+  variants: [pristine, {strip: [include/gmssl/version.h]}]
+
+- id: gmssl-3.2.0
+  git: https://github.com/guanzhi/GmSSL
+  ref: v3.2.0
+  expect: {rule: generic/gmssl, version: '3.2.0'}
+  variants: [pristine, {strip: [include/gmssl/version.h]}]
+
+- id: tongsuo-8.1.3
+  git: https://github.com/Tongsuo-Project/Tongsuo
+  ref: 8.1.3
+  expect: {rule: generic/tongsuo, version: '8.1.3'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: tongsuo-8.2.1
+  git: https://github.com/Tongsuo-Project/Tongsuo
+  ref: 8.2.1
+  expect: {rule: generic/tongsuo, version: '8.2.1'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: tongsuo-8.3.3
+  git: https://github.com/Tongsuo-Project/Tongsuo
+  ref: 8.3.3
+  expect: {rule: generic/tongsuo, version: '8.3.3'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: tongsuo-8.4.0
+  git: https://github.com/Tongsuo-Project/Tongsuo
+  ref: 8.4.0
+  expect: {rule: generic/tongsuo, version: '8.4.0'}
+  variants: [pristine, {strip: [VERSION.dat]}]
+
+- id: tongsuo-8.5.0
+  git: https://github.com/Tongsuo-Project/Tongsuo
+  ref: 8.5.0
+  expect: {rule: generic/tongsuo, version: '8.5.0'}
+  variants: [pristine, {strip: [VERSION.dat]}]
+
+- id: openssl-1.1.0g
+  git: https://github.com/openssl/openssl
+  ref: OpenSSL_1_1_0g
+  expect: {rule: generic/openssl, version: '1.1.0g'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: openssl-1.1.0l
+  git: https://github.com/openssl/openssl
+  ref: OpenSSL_1_1_0l
+  expect: {rule: generic/openssl, version: '1.1.0l'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: openssl-1.1.1k
+  git: https://github.com/openssl/openssl
+  ref: OpenSSL_1_1_1k
+  expect: {rule: generic/openssl, version: '1.1.1k'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: openssl-1.1.1w
+  git: https://github.com/openssl/openssl
+  ref: OpenSSL_1_1_1w
+  expect: {rule: generic/openssl, version: '1.1.1w'}
+  variants: [pristine, {strip: [include/openssl/opensslv.h]}]
+
+- id: openssl-3.0.22
+  git: https://github.com/openssl/openssl
+  ref: openssl-3.0.22
+  expect: {rule: generic/openssl, version: '3.0.22'}
+  variants: [pristine, {strip: [VERSION.dat]}]
+
+- id: openssl-3.5.9
+  git: https://github.com/openssl/openssl
+  ref: openssl-3.5.9
+  expect: {rule: generic/openssl, version: '3.5.9'}
+  variants: [pristine, {strip: [VERSION.dat]}]
+
+- id: mbedtls-2.7.19
+  git: https://github.com/Mbed-TLS/mbedtls
+  ref: mbedtls-2.7.19
+  expect: {rule: generic/mbedtls, version: '2.7.19'}
+  variants: [pristine, {strip: [include/mbedtls/version.h]}]
+
+- id: mbedtls-2.16.12
+  git: https://github.com/Mbed-TLS/mbedtls
+  ref: mbedtls-2.16.12
+  expect: {rule: generic/mbedtls, version: '2.16.12'}
+  variants: [pristine, {strip: [include/mbedtls/version.h]}]
+
+- id: mbedtls-3.1.0
+  git: https://github.com/Mbed-TLS/mbedtls
+  ref: mbedtls-3.1.0
+  expect: {rule: generic/mbedtls, version: '3.1.0'}
+  variants: [pristine, {strip: [include/mbedtls/version.h, include/mbedtls/build_info.h]}]
+
+- id: mbedtls-3.5.2
+  git: https://github.com/Mbed-TLS/mbedtls
+  ref: mbedtls-3.5.2
+  expect: {rule: generic/mbedtls, version: '3.5.2'}
+  variants: [pristine, {strip: [include/mbedtls/version.h, include/mbedtls/build_info.h]}]
+
+- id: mbedtls-3.6.7
+  git: https://github.com/Mbed-TLS/mbedtls
+  ref: mbedtls-3.6.7
+  expect: {rule: generic/mbedtls, version: '3.6.7'}
+  variants: [pristine, {strip: [include/mbedtls/version.h, include/mbedtls/build_info.h]}]
+
+- id: mbedtls-4.1.1
+  git: https://github.com/Mbed-TLS/mbedtls
+  ref: mbedtls-4.1.1
+  expect: {rule: generic/mbedtls, version: '4.1.1'}
+  variants: [pristine, {strip: [include/mbedtls/version.h, include/mbedtls/build_info.h]}]
+
+- id: fatfs-0.10c
+  git: https://github.com/abbrev/fatfs
+  ref: R0.10c
+  expect: {rule: generic/fatfs, version: '0.10c'}
+  variants: [pristine, touch]
+
+- id: fatfs-0.12c
+  git: https://github.com/abbrev/fatfs
+  ref: R0.12c
+  expect: {rule: generic/fatfs, version: '0.12c'}
+  variants: [pristine, touch]
+
+- id: fatfs-0.13c
+  git: https://github.com/abbrev/fatfs
+  ref: R0.13c
+  expect: {rule: generic/fatfs, version: '0.13c'}
+  variants: [pristine, touch]
+
+- id: fatfs-0.14b
+  git: https://github.com/abbrev/fatfs
+  ref: R0.14b
+  expect: {rule: generic/fatfs, version: '0.14b'}
+  variants: [pristine, touch]
+
+- id: fatfs-0.15a
+  git: https://github.com/abbrev/fatfs
+  ref: R0.15a
+  expect: {rule: generic/fatfs, version: '0.15a'}
+  variants: [pristine, touch]
+
+- id: fatfs-0.16
+  git: https://github.com/abbrev/fatfs
+  ref: R0.16
+  expect: {rule: generic/fatfs, version: '0.16'}
+  variants: [pristine, touch]
+
+- id: littlefs-2.0.5
+  git: https://github.com/littlefs-project/littlefs
+  ref: v2.0.5
+  expect: {rule: generic/littlefs, version: '2.0.5'}
+  variants: [pristine, touch]
+
+- id: littlefs-2.5.0
+  git: https://github.com/littlefs-project/littlefs
+  ref: v2.5.0
+  expect: {rule: generic/littlefs, version: '2.5.0'}
+  variants: [pristine, touch]
+
+- id: lvgl-7.11.0
+  git: https://github.com/lvgl/lvgl
+  ref: v7.11.0
+  expect: {rule: generic/lvgl, version: '7.11.0'}
+  variants: [pristine, {strip: [lvgl.h]}]
+
+- id: lvgl-8.4.0
+  git: https://github.com/lvgl/lvgl
+  ref: v8.4.0
+  expect: {rule: generic/lvgl, version: '8.4.0', bundled: [generic/lodepng, generic/unity]}
+  variants: [pristine, {strip: [lvgl.h]}]
+
+- id: lvgl-9.2.2
+  git: https://github.com/lvgl/lvgl
+  ref: v9.2.2
+  expect: {rule: generic/lvgl, version: '9.2.2', bundled: [generic/lodepng, generic/unity]}
+  variants: [pristine, {strip: [lvgl.h, lv_version.h]}]
+
+- id: lvgl-9.5.0
+  git: https://github.com/lvgl/lvgl
+  ref: v9.5.0
+  expect: {rule: generic/lvgl, version: '9.5.0', bundled: [generic/lodepng, generic/unity]}
+  variants: [pristine, {strip: [lvgl.h, lv_version.h]}]
+
+- id: lvgl-9.6.0
+  git: https://github.com/lvgl/lvgl
+  ref: v9.6.0
+  expect: {rule: generic/lvgl, version: '9.6.0', bundled: [generic/lodepng, generic/unity]}
+  variants: [pristine, {strip: [lvgl.h, lv_version.h]}]
+
+- id: libcoap-4.1.2
+  git: https://github.com/obgm/libcoap
+  ref: v4.1.2
+  expect: {rule: generic/libcoap, version: '4.1.2'}
+  variants: [pristine, {strip: [ChangeLog]}]
+
+- id: libcoap-4.2.1
+  git: https://github.com/obgm/libcoap
+  ref: v4.2.1
+  expect: {rule: generic/libcoap, version: '4.2.1'}
+  variants: [pristine, {strip: [ChangeLog]}]
+
+- id: libcoap-4.3.0
+  git: https://github.com/obgm/libcoap
+  ref: v4.3.0
+  expect: {rule: generic/libcoap, version: '4.3.0'}
+  variants: [pristine, {strip: [ChangeLog]}]
+
+- id: libcoap-4.3.5
+  git: https://github.com/obgm/libcoap
+  ref: v4.3.5
+  expect: {rule: generic/libcoap, version: '4.3.5'}
+  variants: [pristine, {strip: [ChangeLog]}]
+
+- id: tinycrypt-0.2.5
+  git: https://github.com/intel/tinycrypt
+  ref: v0.2.5
+  expect: {rule: generic/tinycrypt, version: '0.2.5'}
+  variants: [pristine]
+
+- id: tinycrypt-0.2.7
+  git: https://github.com/intel/tinycrypt
+  ref: v0.2.7
+  expect: {rule: generic/tinycrypt, version: '0.2.7'}
+  variants: [pristine]

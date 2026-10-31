@@ -1,0 +1,412 @@
+# Generated from the rules (BENCHMARK.md 1f-1i): refs from the rule's functions.pins or
+# its tags, "strip" deletes the files the rule probes or anchors its version on.
+
+- id: tencentos-tiny-kernel-2.1.0
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: v2.1.0
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.1.0'}
+  variants: [pristine]
+
+- id: tencentos-tiny-kernel-2.2.0
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: 9d36cbeff99a5522e0e9c5ba3911a196a124626e
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.2.0'}
+  variants: [pristine, {strip: [include/tos_version.h]}]
+
+- id: tencentos-tiny-kernel-2.2.1
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: 3fc92b3c91812a3c13fe7d5849c41f30ddd21528
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.2.1'}
+  variants: [pristine, {strip: [include/tos_version.h]}]
+
+- id: tencentos-tiny-kernel-2.3.1
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: 9311ef85d3d15aa9c057d4012f7524ea1b0b10bc
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.3.1'}
+  variants: [pristine, {strip: [include/tos_version.h]}]
+
+- id: tencentos-tiny-kernel-2.4.0
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: 3aaafde714d39c45ad281eedc8a54be16b663d48
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.4.0'}
+  variants: [pristine, {strip: [include/tos_version.h]}]
+
+- id: tencentos-tiny-kernel-2.4.1
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: 0193dc6142ad142b8e54e1ddd67b80ace71fbc5e
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.4.1'}
+  variants: [pristine, {strip: [include/tos_version.h]}]
+
+- id: tencentos-tiny-kernel-2.4.2
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: 8e9024cacaf0677a016e56a586064a2945544cf8
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.4.2'}
+  variants: [pristine, {strip: [include/tos_version.h]}]
+
+- id: tencentos-tiny-kernel-2.4.3
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: fb7715a3c5397d1e7a6f2c3b8adaf37227e6c1fe
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.4.3'}
+  variants: [pristine, {strip: [include/tos_version.h]}]
+
+- id: tencentos-tiny-kernel-2.4.4
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: 67799dc84c412df656aa1afff9b675af412f5fa2
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.4.4'}
+  variants: [pristine, {strip: [include/tos_version.h]}]
+
+- id: tencentos-tiny-kernel-2.4.5
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: 249825fa50baac2bdfdb89e197e878117e95d2aa
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.4.5'}
+  variants: [pristine, {strip: [include/tos_version.h]}]
+
+- id: tencentos-tiny-kernel-2.5.0
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: 565cd29e940441ac577d774accc32b99b7e858d7
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.5.0'}
+  variants: [pristine, {strip: [include/tos_version.h]}]
+
+- id: tencentos-tiny-kernel-2.5.1
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: 86bc533bb8371ca44e27cd26814d405f564a45b3
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.5.1'}
+  variants: [pristine, {strip: [include/tos_version.h]}]
+
+- id: tencentos-tiny-kernel-2.5.2
+  git: https://github.com/OpenAtomFoundation/TencentOS-tiny
+  ref: 87fd8e839d042163954acb4365684a5401039840
+  subdir: kernel/core
+  expect: {rule: generic/tencentos-tiny-kernel, version: '2.5.2'}
+  variants: [pristine, {strip: [include/tos_version.h]}]
+
+- id: nghttp2-1.20.0
+  git: https://github.com/nghttp2/nghttp2
+  ref: v1.20.0
+  expect: {rule: generic/nghttp2, version: '1.20.0', bundled: [generic/http-parser]}
+  variants: [pristine, {strip: [CMakeLists.txt, configure.ac]}]
+
+- id: nghttp2-1.40.0
+  git: https://github.com/nghttp2/nghttp2
+  ref: v1.40.0
+  expect: {rule: generic/nghttp2, version: '1.40.0', bundled: [generic/llhttp]}
+  variants: [pristine, {strip: [CMakeLists.txt, configure.ac]}]
+
+- id: nghttp2-1.52.0
+  git: https://github.com/nghttp2/nghttp2
+  ref: v1.52.0
+  expect: {rule: generic/nghttp2, version: '1.52.0', bundled: [generic/llhttp]}
+  variants: [pristine, {strip: [CMakeLists.txt, configure.ac]}]
+
+- id: nghttp2-1.59.0
+  git: https://github.com/nghttp2/nghttp2
+  ref: v1.59.0
+  expect: {rule: generic/nghttp2, version: '1.59.0', bundled: [generic/llhttp]}
+  variants: [pristine, {strip: [CMakeLists.txt, configure.ac]}]
+
+- id: nghttp2-1.66.0
+  git: https://github.com/nghttp2/nghttp2
+  ref: v1.66.0
+  expect: {rule: generic/nghttp2, version: '1.66.0', bundled: [generic/llhttp]}
+  variants: [pristine, {strip: [CMakeLists.txt, configure.ac]}]
+
+- id: nghttp2-1.70.0
+  git: https://github.com/nghttp2/nghttp2
+  ref: v1.70.0
+  expect: {rule: generic/nghttp2, version: '1.70.0', bundled: [generic/llhttp]}
+  variants: [pristine, {strip: [CMakeLists.txt, configure.ac]}]
+
+- id: libwebsockets-3.0.1
+  git: https://github.com/warmcat/libwebsockets
+  ref: v3.0.1
+  expect: {rule: generic/libwebsockets, version: '3.0.1', bundled: [generic/zlib]}
+  variants: [pristine, {strip: [CMakeLists.txt]}]
+
+- id: libwebsockets-3.2.2
+  git: https://github.com/warmcat/libwebsockets
+  ref: v3.2.2
+  expect: {rule: generic/libwebsockets, version: '3.2.2', bundled: [generic/zlib]}
+  variants: [pristine, {strip: [CMakeLists.txt]}]
+
+- id: libwebsockets-4.0.21
+  git: https://github.com/warmcat/libwebsockets
+  ref: v4.0.21
+  expect: {rule: generic/libwebsockets, version: '4.0.21', bundled: [generic/zlib],
+           known: {pristine: '4.0.22'},
+           known_why: "the v4.0.21 tag's own CMakeLists.txt already says 4.0.22 (upstream bumped it before tagging)"}
+  variants: [pristine, {strip: [CMakeLists.txt]}]
+
+- id: libwebsockets-4.1.6
+  git: https://github.com/warmcat/libwebsockets
+  ref: v4.1.6
+  expect: {rule: generic/libwebsockets, version: '4.1.6', bundled: [generic/zlib]}
+  variants: [pristine, {strip: [CMakeLists.txt]}]
+
+- id: libwebsockets-4.5.8
+  git: https://github.com/warmcat/libwebsockets
+  ref: v4.5.8
+  expect: {rule: generic/libwebsockets, version: '4.5.8', bundled: [generic/zlib, generic/cmsis5-core]}
+  variants: [pristine, {strip: [CMakeLists.txt]}]
+
+- id: paho-mqtt-c-1.1.0
+  git: https://github.com/eclipse-paho/paho.mqtt.c
+  ref: v1.1.0
+  expect: {rule: generic/paho-mqtt-c, version: '1.1.0'}
+  variants: [pristine, {strip: [CMakeLists.txt, src/MQTTClient.c]}]
+
+- id: paho-mqtt-c-1.3.1
+  git: https://github.com/eclipse-paho/paho.mqtt.c
+  ref: v1.3.1
+  expect: {rule: generic/paho-mqtt-c, version: '1.3.1'}
+  variants: [pristine, {strip: [CMakeLists.txt, src/MQTTClient.c]}]
+
+- id: paho-mqtt-c-1.3.11
+  git: https://github.com/eclipse-paho/paho.mqtt.c
+  ref: v1.3.11
+  expect: {rule: generic/paho-mqtt-c, version: '1.3.11'}
+  variants: [pristine, {strip: [CMakeLists.txt, src/MQTTClient.c]}]
+
+- id: paho-mqtt-c-1.3.14
+  git: https://github.com/eclipse-paho/paho.mqtt.c
+  ref: v1.3.14
+  expect: {rule: generic/paho-mqtt-c, version: '1.3.14'}
+  variants: [pristine, {strip: [CMakeLists.txt, src/MQTTClient.c]}]
+
+- id: paho-mqtt-c-1.3.16
+  git: https://github.com/eclipse-paho/paho.mqtt.c
+  ref: v1.3.16
+  expect: {rule: generic/paho-mqtt-c, version: '1.3.16'}
+  variants: [pristine, {strip: [CMakeLists.txt, src/MQTTClient.c]}]
+
+- id: openthread-2026.06.0
+  git: https://github.com/openthread/openthread
+  ref: v2026.06.0
+  expect: {rule: generic/openthread, version: '2026.06.0', bundled: [generic/mbedtls, binary/mbedtls]}
+  variants: [pristine]
+
+- id: openthread-2026.07.0
+  git: https://github.com/openthread/openthread
+  ref: v2026.07.0
+  expect: {rule: generic/openthread, version: '2026.07.0', bundled: [generic/mbedtls, binary/mbedtls]}
+  variants: [pristine]
+
+- id: openthread-2026.08.0
+  git: https://github.com/openthread/openthread
+  ref: v2026.08.0
+  expect: {rule: generic/openthread, version: '2026.08.0', bundled: [generic/mbedtls, binary/mbedtls]}
+  variants: [pristine]
+
+- id: openthread-2026.09.0
+  git: https://github.com/openthread/openthread
+  ref: v2026.09.0
+  expect: {rule: generic/openthread, version: '2026.09.0', bundled: [generic/mbedtls, binary/mbedtls]}
+  variants: [pristine]
+
+- id: openthread-2026.10.0
+  git: https://github.com/openthread/openthread
+  ref: v2026.10.0
+  expect: {rule: generic/openthread, version: '2026.10.0', bundled: [generic/mbedtls, binary/mbedtls]}
+  variants: [pristine]
+
+- id: openthread-20191113
+  git: https://github.com/openthread/openthread
+  ref: thread-reference-20191113
+  expect: {rule: generic/openthread, version: '20191113', bundled: [generic/mbedtls, binary/mbedtls]}
+  variants: [pristine]
+
+- id: openthread-20200818
+  git: https://github.com/openthread/openthread
+  ref: thread-reference-20200818
+  expect: {rule: generic/openthread, version: '20200818', bundled: [generic/mbedtls, binary/mbedtls]}
+  variants: [pristine]
+
+- id: openthread-20221027
+  git: https://github.com/openthread/openthread
+  ref: thread-reference-20221027
+  expect: {rule: generic/openthread, version: '20221027', bundled: [generic/mbedtls, binary/mbedtls]}
+  variants: [pristine]
+
+- id: openthread-20230119
+  git: https://github.com/openthread/openthread
+  ref: thread-reference-20230119
+  expect: {rule: generic/openthread, version: '20230119', bundled: [generic/mbedtls, binary/mbedtls]}
+  variants: [pristine]
+
+- id: openthread-20230706
+  git: https://github.com/openthread/openthread
+  ref: thread-reference-20230706
+  expect: {rule: generic/openthread, version: '20230706', bundled: [generic/mbedtls, binary/mbedtls]}
+  variants: [pristine]
+
+- id: openthread-20250612
+  git: https://github.com/openthread/openthread
+  ref: thread-reference-20250612
+  expect: {rule: generic/openthread, version: '20250612', bundled: [generic/mbedtls, binary/mbedtls]}
+  variants: [pristine]
+
+- id: aws-iot-device-sdk-c-2.0.0
+  git: https://github.com/aws/aws-iot-device-sdk-embedded-C
+  ref: v2.0.0
+  expect: {rule: generic/aws-iot-device-sdk-c, version: '2.0.0', bundled: [generic/jsmn]}
+  variants: [pristine]
+
+- id: aws-iot-device-sdk-c-2.2.1
+  git: https://github.com/aws/aws-iot-device-sdk-embedded-C
+  ref: v2.2.1
+  expect: {rule: generic/aws-iot-device-sdk-c, version: '2.2.1', bundled: [generic/jsmn]}
+  variants: [pristine]
+
+- id: aws-iot-device-sdk-c-3.0.1
+  git: https://github.com/aws/aws-iot-device-sdk-embedded-C
+  ref: v3.0.1
+  expect: {rule: generic/aws-iot-device-sdk-c, version: '3.0.1', bundled: [generic/jsmn]}
+  variants: [pristine]
+
+- id: aws-iot-device-sdk-c-3.1.0
+  git: https://github.com/aws/aws-iot-device-sdk-embedded-C
+  ref: v3.1.0
+  expect: {rule: generic/aws-iot-device-sdk-c, version: '3.1.0', bundled: [generic/jsmn]}
+  variants: [pristine]
+
+- id: aws-iot-device-sdk-c-3.1.5
+  git: https://github.com/aws/aws-iot-device-sdk-embedded-C
+  ref: v3.1.5
+  expect: {rule: generic/aws-iot-device-sdk-c, version: '3.1.5', bundled: [generic/jsmn]}
+  variants: [pristine]
+
+- id: alios-things-kernel-1.1.0
+  git: https://github.com/alibaba/AliOS-Things
+  ref: aos1.1.0
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '1.1.0'}
+  variants: [pristine]
+
+- id: alios-things-kernel-1.1.1
+  git: https://github.com/alibaba/AliOS-Things
+  ref: aos1.1.1
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '1.1.1'}
+  variants: [pristine]
+
+- id: alios-things-kernel-1.1.2
+  git: https://github.com/alibaba/AliOS-Things
+  ref: v1.1.2
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '1.1.2'}
+  variants: [pristine]
+
+- id: alios-things-kernel-1.2.0
+  git: https://github.com/alibaba/AliOS-Things
+  ref: v1.2.0
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '1.2.0'}
+  variants: [pristine]
+
+- id: alios-things-kernel-1.2.1
+  git: https://github.com/alibaba/AliOS-Things
+  ref: v1.2.1
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '1.2.1'}
+  variants: [pristine]
+
+- id: alios-things-kernel-1.2.2
+  git: https://github.com/alibaba/AliOS-Things
+  ref: v1.2.2
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '1.2.2'}
+  variants: [pristine]
+
+- id: alios-things-kernel-1.3.0
+  git: https://github.com/alibaba/AliOS-Things
+  ref: v1.3.0
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '1.3.0'}
+  variants: [pristine]
+
+- id: alios-things-kernel-1.3.1
+  git: https://github.com/alibaba/AliOS-Things
+  ref: v1.3.1
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '1.3.1'}
+  variants: [pristine]
+
+- id: alios-things-kernel-1.3.2
+  git: https://github.com/alibaba/AliOS-Things
+  ref: v1.3.2
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '1.3.2'}
+  variants: [pristine]
+
+- id: alios-things-kernel-1.3.3
+  git: https://github.com/alibaba/AliOS-Things
+  ref: v1.3.3
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '1.3.3'}
+  variants: [pristine]
+
+- id: alios-things-kernel-1.3.4
+  git: https://github.com/alibaba/AliOS-Things
+  ref: v1.3.4
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '1.3.4'}
+  variants: [pristine]
+
+- id: alios-things-kernel-2.0.0
+  git: https://github.com/alibaba/AliOS-Things
+  ref: v2.0.0
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '2.0.0'}
+  variants: [pristine]
+
+- id: alios-things-kernel-2.1.0
+  git: https://github.com/alibaba/AliOS-Things
+  ref: v2.1.0
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '2.1.0'}
+  variants: [pristine]
+- id: alios-things-kernel-3.0.0
+  git: https://github.com/alibaba/AliOS-Things
+  ref: bacc144bdc5df8fe8e302e3732675a920aa40bc5   # tip of rel_3.0.0
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '3.0.0'}
+  variants: [pristine]
+
+- id: alios-things-kernel-3.1.0
+  git: https://github.com/alibaba/AliOS-Things
+  ref: b1ea7e6a0ae7aa4716283ad42673febda5f914e3   # tip of rel_3.1.0
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '3.1.0'}
+  variants: [pristine]
+
+- id: alios-things-kernel-3.3.0
+  git: https://github.com/alibaba/AliOS-Things
+  ref: b34bf7cdcc9e191efa6d70c5b3b88b159e6c2936   # tip of rel_3.3.0
+  subdir: [kernel/rhino, core/rhino]
+  expect: {rule: generic/alios-things-kernel, version: '3.3.0'}
+  variants: [pristine]
+
+- id: liteos-kernel-5.0.0
+  git: https://gitee.com/LiteOS/LiteOS
+  ref: v5.0.0
+  subdir: kernel
+  expect: {rule: generic/liteos-kernel, version: '5.0.0'}
+  variants: [pristine, touch]
+
+- id: liteos-kernel-5.1.0
+  git: https://gitee.com/LiteOS/LiteOS
+  ref: v5.1.0
+  subdir: kernel
+  expect: {rule: generic/liteos-kernel, version: '5.1.0'}
+  variants: [pristine, touch]
