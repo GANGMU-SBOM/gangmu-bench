@@ -471,15 +471,26 @@ def main(argv=None) -> int:
     print("\n" + ", ".join(f"{v} {n}" for v, n in counts.items()))
     print("other findings: " + ", ".join(f"{k} {n}" for k, n in other.items())
           + f"; components reported {reported}, of them false {other['unexpected']}")
+    m = metrics(rows)
+    print(f"recall {_pct(m['recall'])} ({m['found']}/{m['expected']}), "
+          f"precision {_pct(m['precision'])} ({m['reported'] - m['false']}/{m['reported']}), "
+          f"version exact {_pct(m['version_exact'])}, exact or a range containing it "
+          f"{_pct(m['version_contains_truth'])} (of {m['version_checked']} with a stated version)")
     if args.output:
         meta = tool_versions()
         out = Path(args.output)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.with_suffix(".json").write_text(json.dumps(
             {"versions": meta, "counts": counts, "other_findings": other,
-             "components_reported": reported, "rows": rows}, indent=2) + "\n")
+             "components_reported": reported, "metrics": m, "rows": rows}, indent=2) + "\n")
         lines = [f"# Benchmark results", "",
                  f"{meta['gangmu']}; rules: {meta['rules']}", "",
+                 "| recall | precision | version exact | exact or range containing truth |",
+                 "| --- | --- | --- | --- |",
+                 f"| {_pct(m['recall'])} ({m['found']}/{m['expected']}) "
+                 f"| {_pct(m['precision'])} ({m['reported'] - m['false']}/{m['reported']}) "
+                 f"| {_pct(m['version_exact'])} | {_pct(m['version_contains_truth'])} "
+                 f"(of {m['version_checked']}) |", "",
                  "| case | variant | truth | reported | rule | verdict | other findings |",
                  "| --- | --- | --- | --- | --- | --- | --- |"]
         lines += [f"| {r['case']} | {r['variant']} | {r['truth']} | {r['reported'] or '-'} "
@@ -493,6 +504,41 @@ def main(argv=None) -> int:
     # a skipped case is not a failure; a false positive is
     failed = counts["wrong"] + counts["missing"] + counts["false_positive"]
     return 0 if (failed == 0 or args.no_fail) else 1
+
+
+def metrics(rows: List[dict]) -> dict:
+    """Recall, precision and version accuracy over graded rows.
+
+    recall    = expected components found (the right rule, whatever the version)
+                / expected components graded
+    precision = components reported that are really there
+                / every component reported (graded ones, bundled ones, false positives)
+    version   = among found components whose truth is stated: exact, and exact or
+                a range containing the truth ("known" rows count as wrong here)"""
+    graded = [r for r in rows if r["verdict"] != "skipped"]
+    found = [r for r in graded if r["verdict"] != "missing"
+             and r.get("rule") == r.get("expected_rule")]
+    wrong_component = [r for r in graded if r["verdict"] == "wrong"
+                       and r.get("rule") != r.get("expected_rule")]
+    others = [o for r in rows for o in r.get("others", [])]
+    false = sum(o["kind"] == "unexpected" for o in others) + len(wrong_component)
+    reported = (len(found) + len(wrong_component)
+                + sum(o["kind"] in ("bundled", "unexpected") for o in others))
+    stated = [r for r in found if r["verdict"] != "identified"]
+    exact = sum(r["verdict"] == "exact" for r in stated)
+    contain = exact + sum(r["verdict"] == "range" for r in stated)
+
+    def share(n, d):
+        return round(n / d, 4) if d else None
+    return {"expected": len(graded), "found": len(found), "recall": share(len(found), len(graded)),
+            "reported": reported, "false": false,
+            "precision": share(reported - false, reported),
+            "version_checked": len(stated), "version_exact": share(exact, len(stated)),
+            "version_contains_truth": share(contain, len(stated))}
+
+
+def _pct(x) -> str:
+    return "-" if x is None else f"{100 * x:.1f}%"
 
 
 def _others(others: List[dict]) -> str:
