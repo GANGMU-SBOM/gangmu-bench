@@ -1,6 +1,10 @@
 # Benchmark results
 
-gangmu-sbom 0.15.0; rules: community 2026.10.29 (pack:community)
+gangmu-sbom 0.15.0 + GANGMU-SBOM/gangmu#157; rules: community 2026.10.29 (pack:community)
+
+| recall | precision | version exact | exact or range containing truth |
+| --- | --- | --- | --- |
+| 100.0% (264/264) | 100.0% (329/329) | 89.8% | 98.8% (of 256) |
 
 | case | variant | truth | reported | rule | verdict | other findings |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -10,6 +14,7 @@ gangmu-sbom 0.15.0; rules: community 2026.10.29 (pack:community)
 | nghttp2-1.64.0 | pristine | 1.64.0 | 1.64.0 | generic/nghttp2 | exact | bundled: generic/llhttp |
 | libwebsockets-4.1.4 | pristine | 4.1.4 | 4.1.4 | generic/libwebsockets | exact | bundled: generic/zlib 1.2.5 |
 | libwebsockets-4.3.3 | pristine | 4.3.3 | 4.3.3 | generic/libwebsockets | exact | bundled: generic/zlib 1.2.5 |
+| libwebsockets-4.3.3 | stripped | 4.3.3 | 4.3.3 | generic/libwebsockets | exact | bundled: generic/zlib 1.2.5 |
 | open62541-1.4.4 | pristine | 1.4.4 | 1.4.4 | generic/open62541 | exact | - |
 | paho-mqtt-c-1.3.5 | pristine | 1.3.5 | 1.3.5 | generic/paho-mqtt-c | exact | - |
 | hostap-2.10 | pristine | 2.10 | 2.10 | generic/hostap | exact | - |
@@ -59,7 +64,7 @@ gangmu-sbom 0.15.0; rules: community 2026.10.29 (pack:community)
 | libwebsockets-3.0.1 | stripped | 3.0.1 | 3.0.1 | generic/libwebsockets | exact | bundled: generic/zlib 1.2.5 |
 | libwebsockets-3.2.2 | pristine | 3.2.2 | 3.2.2 | generic/libwebsockets | exact | bundled: generic/zlib 1.2.5 |
 | libwebsockets-3.2.2 | stripped | 3.2.2 | 3.2.2 | generic/libwebsockets | exact | bundled: generic/zlib 1.2.5 |
-| libwebsockets-4.0.21 | pristine | 4.0.21 | 4.0.22 | generic/libwebsockets | wrong | bundled: generic/zlib 1.2.5 |
+| libwebsockets-4.0.21 | pristine | 4.0.21 | 4.0.22 | generic/libwebsockets | known | bundled: generic/zlib 1.2.5 |
 | libwebsockets-4.0.21 | stripped | 4.0.21 | 4.0.21 | generic/libwebsockets | exact | bundled: generic/zlib 1.2.5 |
 | libwebsockets-4.1.6 | pristine | 4.1.6 | 4.1.6 | generic/libwebsockets | exact | bundled: generic/zlib 1.2.5 |
 | libwebsockets-4.1.6 | stripped | 4.1.6 | 4.1.6 | generic/libwebsockets | exact | bundled: generic/zlib 1.2.5 |
@@ -210,10 +215,10 @@ gangmu-sbom 0.15.0; rules: community 2026.10.29 (pack:community)
 | libcoap-4.3.4 | stripped | 4.3.4 | 4.3.4 | generic/libcoap | exact | declared: declared/cmake/external_tinydtls |
 | lvgl-8.3.11 | pristine | 8.3.11 | 8.3.11 | generic/lvgl | exact | declared: declared/cmsis-pack/LVGL.lvgl 8.3.11; bundled: generic/lodepng 2020-10-17; bundled: generic/unity 2.5.1~2.5.2 |
 | lvgl-8.3.11 | stripped | 8.3.11 | 8.3.11 | generic/lvgl | exact | declared: declared/arduino/lvgl 8.3.11; declared: declared/cmsis-pack/LVGL.lvgl 8.3.11; bundled: generic/lodepng 2020-10-17; bundled: generic/unity 2.5.1~2.5.2 |
-| sdk-allwinner-r128s2-sdk-09 | lichee/rtos/components/thirdparty/elmfat/src | 0.13c | 0.13c | generic/fatfs | exact | bundled: generic/lodepng 2020-10-17; bundled: generic/unity 2.5.1~2.5.2; bundled: generic/freertos-kernel 10.4.0~10.4.3 |
+| sdk-allwinner-r128s2-sdk-09 | lichee/rtos/components/thirdparty/elmfat/src | 0.13c | 0.13c | generic/fatfs | exact | bundled: generic/lodepng 2020-10-17; bundled: generic/unity 2.5.1~2.5.2 |
 | sdk-allwinner-r128s2-sdk-09 | lichee/dsp/kernel/FreeRTOS_xtensa_v1.7/FreeRTOS | not stated | 10.2.0~10.2.1 | generic/freertos-kernel | identified | - |
-| sdk-allwinner-r128s2-sdk-09 | lichee/rtos/kernel/FreeRTOS-orig/Source | 10.4.3 | - | - | missing | - |
-| sdk-allwinner-r128s2-sdk-09 | lichee/rtos/kernel/FreeRTOS/Source | 10.2.0 | - | - | missing | - |
+| sdk-allwinner-r128s2-sdk-09 | lichee/rtos/kernel/FreeRTOS-orig/Source | 10.4.3 | 10.4.3 | generic/freertos-kernel | exact | - |
+| sdk-allwinner-r128s2-sdk-09 | lichee/rtos/kernel/FreeRTOS/Source | 10.2.0 | 10.2.0 | generic/freertos-kernel | exact | - |
 | sdk-allwinner-r128s2-sdk-09 | lichee/rtos-components/thirdparty/freetype | 2.13.0 | 2.13.0 | generic/freetype | exact | - |
 | sdk-allwinner-r128s2-sdk-09 | lichee/rtos-components/thirdparty/giflib/giflib-5.2.1 | 5.2.1 | 5.2.1 | generic/giflib | exact | - |
 | sdk-allwinner-r128s2-sdk-09 | lichee/rtos-components/thirdparty/libjpeg-turbo/source | 2.1.5.1 | 2.1.5~2.1.5.1 | generic/libjpeg-turbo | range | - |
@@ -238,14 +243,14 @@ gangmu-sbom 0.15.0; rules: community 2026.10.29 (pack:community)
 | sdk-bl_iot_sdk | components/network/thread/openthread/third_party/mbedtls/repo | 2.28.0 | 2.28.0 | generic/mbedtls | exact | - |
 | sdk-bl_iot_sdk | components/security/mbedtls_lts/mbedtls | 2.28.1 | 2.28.1 | generic/mbedtls | exact | - |
 | sdk-bl_iot_sdk | components/network/thread/openthread | not stated | 20221027 | generic/openthread | identified | - |
-| sdk-bl_iot_sdk | components/network/ble/blestack/src/common/tinycrypt | 0.2.7 | 0.2.8 | generic/tinycrypt | wrong | - |
+| sdk-bl_iot_sdk | components/network/ble/blestack/src/common/tinycrypt | 0.2.7 | 0.2.8 | generic/tinycrypt | known | - |
 | sdk-bouffalo_sdk | components/fs/fatfs | 0.15 | 0.15 | generic/fatfs | exact | - |
 | sdk-bouffalo_sdk | components/os/freertos | 10.6.2 | 10.6.2 | generic/freertos-kernel | exact | - |
 | sdk-bouffalo_sdk | components/fs/littlefs/littlefs | 2.11 | 2.11.3 | generic/littlefs | exact | - |
 | sdk-bouffalo_sdk | components/crypto/mbedtls/mbedtls | 2.28.2 | 2.28.2 | generic/mbedtls | exact | - |
 | sdk-bouffalo_sdk | components/crypto/mbedtls/mbedtls_v3 | 3.6.5 | 3.6.5 | generic/mbedtls | exact | - |
 | sdk-bouffalo_sdk | components/ipc/open-amp/open-amp | not stated | 2025.10.0 | generic/open-amp | identified | - |
-| sdk-bouffalo_sdk | components/wireless/bluetooth/blestack/src/common/tinycrypt | 0.2.7 | 0.2.8 | generic/tinycrypt | wrong | - |
+| sdk-bouffalo_sdk | components/wireless/bluetooth/blestack/src/common/tinycrypt | 0.2.7 | 0.2.8 | generic/tinycrypt | known | - |
 | sdk-ch32v20x | EVT/EXAM/FreeRTOS/FreeRTOS_Core/FreeRTOS | 10.4.6 | 10.4.6 | generic/freertos-kernel | exact | - |
 | sdk-ch32v20x | EVT/EXAM/HarmonyOS/LiteOS_m/LiteOS/kernel | not stated | 3.0~3.0.3 | generic/liteos-m-kernel | identified | - |
 | sdk-ch32v20x | EVT/EXAM/RT-Thread/rt-thread/rtthread | 3.1.3 | 3.1.3 | generic/rt-thread-kernel | exact | - |
@@ -268,6 +273,6 @@ gangmu-sbom 0.15.0; rules: community 2026.10.29 (pack:community)
 | sdk-wm_iot_sdk | components/wm_httpclient/http2/nghttp2 | 1.59.0 | 1.59.0 | generic/nghttp2 | exact | - |
 | sdk-wm_iot_sdk | components/mqtt/paho.mqtt.c | 1.3.11 | 1.3.11 | generic/paho-mqtt-c | exact | - |
 
-**exact** 227, **range** 23, **identified** 8, **wrong** 3, **missing** 2, **skipped** 0, **false positive** 0
+**exact** 230, **range** 23, **identified** 8, **known** 3, **wrong** 0, **missing** 0, **skipped** 0, **false positive** 0
 
-Other findings: bundled 65, declared 48, duplicate 0, unexpected 0. Of 326 components reported (graded ones and every other code or binary finding), 0 are false positives.
+Other findings: bundled 65, declared 48, duplicate 0, unexpected 0. Of 329 components reported (graded ones and every other code or binary finding), 0 are false positives.
